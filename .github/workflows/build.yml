@@ -1,0 +1,18 @@
+name: Build
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+steps:
+  - name: Checkout
+    uses: actions/checkout@main
+  - name: Setup .NET
+    uses: actions/setup-dotnet@v1
+    with:
+      dotnet-version: "5.0.x"
+  - name: Build
+    run: dotnet build WeepingSnake
