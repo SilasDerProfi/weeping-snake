@@ -9,10 +9,11 @@ jobs:
     runs-on: ubuntu-latest
     name: Build
     steps:
-      - uses: actions/checkout@main
+      - name: Checkout
+        uses: actions/checkout@main
       - name: Setup .NET
         uses: actions/setup-dotnet@v1
         with:
           dotnet-version: "5.0.x"
       - name: Build
-        run: dotnet build WeepingSnake
+        run: dotnet build src/WeepingSnake
