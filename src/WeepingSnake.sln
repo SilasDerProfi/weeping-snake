@@ -7,6 +7,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WeepingSnake.WebService", "
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WeepingSnake.ConsoleClient", "WeepingSnake.ConsoleClient\WeepingSnake.ConsoleClient.csproj", "{936E842E-5599-484F-B45D-E462F73804C7}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WeepingSnake.Game", "WeepingSnake.Game\WeepingSnake.Game.csproj", "{7872E8DB-328C-4FE0-8C62-E05B88074EB6}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{936E842E-5599-484F-B45D-E462F73804C7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{936E842E-5599-484F-B45D-E462F73804C7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{936E842E-5599-484F-B45D-E462F73804C7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7872E8DB-328C-4FE0-8C62-E05B88074EB6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7872E8DB-328C-4FE0-8C62-E05B88074EB6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7872E8DB-328C-4FE0-8C62-E05B88074EB6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7872E8DB-328C-4FE0-8C62-E05B88074EB6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
