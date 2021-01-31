@@ -33,6 +33,9 @@ namespace WeepingSnake.Game.Geometry
         public override int GetHashCode() => HashCode.Combine(_x, _y, _z);
 
         public override string ToString() => $"({_x:F2}|{_y:F2}|{_z:F2})";
-        
+
+        public static bool operator ==(GameCoordinate left, GameCoordinate right) => left.Equals(right);
+
+        public static bool operator !=(GameCoordinate left, GameCoordinate right) => !(left == right);
     }
 }

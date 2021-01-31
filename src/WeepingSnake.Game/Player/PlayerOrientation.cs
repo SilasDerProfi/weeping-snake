@@ -1,15 +1,36 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Numerics;
-using System.Windows;
-using System.Text;
 using WeepingSnake.Game.Geometry;
 
 namespace WeepingSnake.Game.Player
 {
-    public class PlayerOrientation
+    public struct PlayerOrientation
     {
-        private Vector<double> _direction;
-        private GameCoordinate _position;
+        private readonly GameCoordinate _position;
+        private readonly Vector2 _direction;
+
+        internal PlayerOrientation(double posX, double posY, uint time, int directionX, int directionY)
+        {
+            _position = new GameCoordinate(posX, posY, time);
+            _direction = new Vector2(directionX, directionY);
+        }
+
+        public override bool Equals(object obj)
+        {
+            return obj is PlayerOrientation orientation &&
+                   _position.Equals(orientation._position) &&
+                   _direction.Equals(orientation._direction);
+        }
+
+        public GameCoordinate Position => _position;
+        public Vector2 Direction => _direction;
+
+        public override int GetHashCode() => HashCode.Combine(_position, _direction);
+
+        public static bool operator ==(PlayerOrientation left, PlayerOrientation right) => left.Equals(right);
+
+        public static bool operator !=(PlayerOrientation left, PlayerOrientation right) => !(left == right);
+
+        public override string ToString() => $"{_position} | {_direction}";
     }
 }
