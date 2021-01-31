@@ -2,13 +2,16 @@
 
 namespace WeepingSnake.Game.Geometry
 {
-    public struct GameBoardPoint
+    /// <summary>
+    /// A three-dimensional point. Two dimensions represent the position in 2d space (decimal). the third deminsion is the time (integer).
+    /// </summary>
+    public struct GameCoordinate
     {
         private readonly double _x;
         private readonly double _y;
         private readonly uint _z;
 
-        public GameBoardPoint(double x, double y, uint z)
+        public GameCoordinate(double x, double y, uint z)
         {
             _x = x;
             _y = y;
@@ -21,7 +24,7 @@ namespace WeepingSnake.Game.Geometry
 
         public override bool Equals(object obj)
         {
-            return obj is GameBoardPoint point &&
+            return obj is GameCoordinate point &&
                    _x == point._x &&
                    _y == point._y &&
                    _z == point._z;

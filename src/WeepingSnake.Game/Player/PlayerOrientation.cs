@@ -10,6 +10,6 @@ namespace WeepingSnake.Game.Player
     public class PlayerOrientation
     {
         private Vector<double> _direction;
-        private GameBoardPoint<double> _position;
+        private GameCoordinate _position;
     }
 }
