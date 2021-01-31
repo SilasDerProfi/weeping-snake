@@ -8,10 +8,12 @@ namespace WeepingSnake.Game.Player
         private readonly Game _game;
         private readonly Person.Person _person;
 
-        public Player(Game game)
+        public Player(Person.Person person, Game game)
         {
             _playerId = Guid.NewGuid();
+            _person = person;
             _game = game;
+            game.Join(this);
         }
     }
 }

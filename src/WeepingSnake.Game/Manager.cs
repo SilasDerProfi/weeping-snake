@@ -25,19 +25,18 @@ namespace WeepingSnake.Game
         public Game CreateGame() => _games.AddAndReturn(new Game(_allowedPlayerCount, _boardDimensions));
 
 
-        public Player.Player JoinGame()
+        public Player.Player JoinGame() => JoinGame(null, null);
+
+        public Player.Player JoinGame(Person.Person person) => JoinGame(person, null);
+
+        public Player.Player JoinGame(Game game) => JoinGame(null, game);
+
+        public Player.Player JoinGame(Person.Person person, Game game)
         {
-            var game = _games.FirstOrDefault(game => game.PlayerCanJoin()) ?? CreateGame();
+            game ??= _games.FirstOrDefault(game => game.PlayerCanJoin()) ?? CreateGame();
 
-            return new Player.Player(game);
+            return new Player.Player(person, game);
         }
-
-        public Player.Player JoinGame(Guid personId) => throw new NotImplementedException();
-
-        public Player.Player JoinGame(Guid personId, Guid gameId) => throw new NotImplementedException();
-
-
-
     }
 
     /// <summary>

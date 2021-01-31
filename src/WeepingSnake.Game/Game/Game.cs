@@ -9,10 +9,9 @@ namespace WeepingSnake.Game
     public sealed class Game
     {
         private readonly Guid _gameId;
-        private List<Player.Player> _players;
+        private readonly List<Player.Player> _players;
         private readonly PlayerRange _allowedPlayerCount;
         private readonly BoardDimensions _boardDimensions;
-
 
         public Game(PlayerRange allowedPlayerCount, BoardDimensions boardDimensions)
         {
@@ -27,5 +26,13 @@ namespace WeepingSnake.Game
         public Player.Player Participate(Guid? personId = null) => throw new NotImplementedException();
 
         internal bool PlayerCanJoin() => _allowedPlayerCount.Max - _players.Count > 0;
+
+        internal void Join(Player.Player player)
+        {
+            if (!PlayerCanJoin())
+                throw new ArgumentOutOfRangeException(nameof(player), "A player cannot join a crowded game.");
+
+            _players.Add(player);
+        }
     }
 }
