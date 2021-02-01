@@ -22,8 +22,7 @@ namespace WeepingSnake.Game
             _games = new List<Game>();
         }
 
-
-        public Game CreateGame() => _games.AddAndReturn(new Game(_allowedPlayerCount, _boardDimensions));
+        private Game InitializeGame() => _games.AddAndReturn(new Game(_allowedPlayerCount, _boardDimensions));
 
         public Player.Player JoinGame() => JoinGame(null, null);
 
@@ -33,9 +32,13 @@ namespace WeepingSnake.Game
 
         public Player.Player JoinGame(Person.Person person, Game game)
         {
-            game ??= _games.FirstOrDefault(game => game.PlayerCanJoin()) ?? CreateGame();
+            game ??= _games.FirstOrDefault(game => game.PlayerCanJoin()) ?? InitializeGame();
 
-            return new Player.Player(person, game);
+            var player = new Player.Player(person);
+            player.Join(game);
+
+            return player;
         }
+
     }
 }

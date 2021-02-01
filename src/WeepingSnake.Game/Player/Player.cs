@@ -5,15 +5,22 @@ namespace WeepingSnake.Game.Player
     public class Player
     {
         private readonly Guid _playerId;
-        private readonly Game _game;
         private readonly Person.Person _person;
+        private Game _game;
 
-        public Player(Person.Person person, Game game)
+        public Player(Person.Person person)
         {
             _playerId = Guid.NewGuid();
             _person = person;
-            _game = game;
-            game.Join(this);
         }
+
+        public Game AssignedGame => _game;
+
+        internal void Join(Game game)
+        {
+            _game = game;
+            _game.Join(this);
+        }
+
     }
 }

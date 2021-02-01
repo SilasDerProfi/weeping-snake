@@ -5,7 +5,7 @@ using WeepingSnake.Game.Structs;
 namespace WeepingSnake.Game
 {
     /// <summary>
-    /// Represents one game
+    /// Represents one running game
     /// </summary>
     public sealed class Game
     {
@@ -24,8 +24,6 @@ namespace WeepingSnake.Game
 
         public Guid GameId => _gameId;
 
-        public Player.Player Participate(Guid? personId = null) => throw new NotImplementedException();
-
         internal bool PlayerCanJoin() => _allowedPlayerCount.Max - _players.Count > 0;
 
         internal void Join(Player.Player player)
@@ -33,7 +31,14 @@ namespace WeepingSnake.Game
             if (!PlayerCanJoin())
                 throw new ArgumentOutOfRangeException(nameof(player), "A player cannot join a crowded game.");
 
+            if(!Equals(player.AssignedGame))
+                throw new ArgumentException("A player can join only the game assigned to him.", nameof(player));
+
             _players.Add(player);
         }
+
+        public override bool Equals(object obj) => obj is Game game && _gameId.Equals(game._gameId);
+
+        public override int GetHashCode() => HashCode.Combine(_gameId);
     }
 }
