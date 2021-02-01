@@ -9,18 +9,24 @@ namespace WeepingSnake.Game
     /// <summary>
     /// Manages multiple games and the players participating in them.
     /// </summary>
-    public sealed class Manager
+    public sealed class GameController : IDisposable
     {
         private readonly PlayerRange _allowedPlayerCount;
         private readonly BoardDimensions _boardDimensions;
         private readonly List<Game> _games;
+        private readonly GameLoop _gameLoop;
 
-        public Manager(PlayerRange allowedPlayerCount, BoardDimensions boardDimensions)
+        public GameController(PlayerRange allowedPlayerCount, BoardDimensions boardDimensions)
         {
             _allowedPlayerCount = allowedPlayerCount;
             _boardDimensions = boardDimensions;
+
             _games = new List<Game>();
+            _gameLoop = new GameLoop(ref _games);
+            _gameLoop.RunAsync();
         }
+
+        public void Dispose() => _gameLoop.Dispose();
 
         private Game InitializeGame() => _games.AddAndReturn(new Game(_allowedPlayerCount, _boardDimensions));
 
@@ -39,6 +45,5 @@ namespace WeepingSnake.Game
 
             return player;
         }
-
     }
 }

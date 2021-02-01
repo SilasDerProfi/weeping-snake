@@ -5,9 +5,9 @@ using WeepingSnake.Game.Structs;
 namespace WeepingSnake.Game
 {
     /// <summary>
-    /// Represents one running game
+    /// Represents a single running game
     /// </summary>
-    public sealed class Game
+    public sealed partial class Game
     {
         private readonly Guid _gameId;
         private readonly List<Player.Player> _players;
@@ -36,6 +36,8 @@ namespace WeepingSnake.Game
 
             _players.Add(player);
         }
+
+        internal void DoTick() => throw new NotImplementedException();
 
         public override bool Equals(object obj) => obj is Game game && _gameId.Equals(game._gameId);
 

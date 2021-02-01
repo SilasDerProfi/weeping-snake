@@ -4,10 +4,18 @@ namespace WeepingSnake.Game.Utility.Extensions
 {
     public static class ListExtensions
     {
-        public static T AddAndReturn<T>(this List<T> list, T newItem)
+        public static T AddAndReturn<T>(this List<T> source, T newItem)
         {
-            list.Add(newItem);
+            source.Add(newItem);
             return newItem;
+        }
+
+        public static IEnumerable<T> GetInfiniteEnumerator<T>(this List<T> source)
+        {
+            for (int index = 0; index < source.Count; index = (index + 1) % source.Count)
+            {
+                yield return source[index];
+            }
         }
     }
 }
