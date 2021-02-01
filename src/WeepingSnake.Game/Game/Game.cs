@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using WeepingSnake.Game.Structs;
 
 namespace WeepingSnake.Game
 {

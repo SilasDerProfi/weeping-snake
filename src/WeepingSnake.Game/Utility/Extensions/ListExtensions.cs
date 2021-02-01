@@ -9,6 +9,5 @@ namespace WeepingSnake.Game.Utility.Extensions
             list.Add(newItem);
             return newItem;
         }
-
     }
 }
