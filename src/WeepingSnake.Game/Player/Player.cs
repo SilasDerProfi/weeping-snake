@@ -22,5 +22,6 @@ namespace WeepingSnake.Game.Player
             _game.Join(this);
         }
 
+        internal PlayerAction PopNextAction() => throw new NotImplementedException();
     }
 }
