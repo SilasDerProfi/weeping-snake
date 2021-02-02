@@ -7,23 +7,22 @@ namespace WeepingSnake.Game
     /// <summary>
     /// Represents a single running game
     /// </summary>
-    public sealed class Game
+    public sealed partial class Game
     {
         private readonly Guid _gameId;
         private readonly List<Player.Player> _players;
         private readonly PlayerRange _allowedPlayerCount;
-        private readonly GameBoard _board;
+        private readonly Game.Board _board;
 
         public Game(PlayerRange allowedPlayerCount, BoardDimensions boardDimensions)
         {
             _gameId = Guid.NewGuid();
             _players = new List<Player.Player>();
             _allowedPlayerCount = allowedPlayerCount;
-            _board = new GameBoard(boardDimensions);
+            _board = new Game.Board(boardDimensions);
         }
 
         public Guid GameId => _gameId;
-        public GameBoard Board => _board;
 
         internal bool PlayerCanJoin() => _allowedPlayerCount.Max - _players.Count > 0;
 
@@ -43,7 +42,7 @@ namespace WeepingSnake.Game
             foreach(var player in _players)
             {
                 var action = player.PopNextAction();
-                Board.ApplyAction(action);
+                _board.ApplyAction(action);
             }
         }
 
