@@ -38,7 +38,7 @@ namespace WeepingSnake.Game
 
         public Player.Player JoinGame(Person.Person person, Game game)
         {
-            game ??= _games.FirstOrDefault(game => game.PlayerCanJoin()) ?? InitializeGame();
+            game ??= _games.FirstOrDefault(game => game.IsCrowded()) ?? InitializeGame();
 
             var player = new Player.Player(person);
             player.Join(game);

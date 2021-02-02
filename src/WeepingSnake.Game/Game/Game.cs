@@ -19,16 +19,16 @@ namespace WeepingSnake.Game
             _gameId = Guid.NewGuid();
             _players = new List<Player.Player>();
             _allowedPlayerCount = allowedPlayerCount;
-            _board = new Game.Board(boardDimensions);
+            _board = new Board(boardDimensions);
         }
 
         public Guid GameId => _gameId;
 
-        internal bool PlayerCanJoin() => _allowedPlayerCount.Max - _players.Count > 0;
+        internal bool IsCrowded() => _allowedPlayerCount.Max - _players.Count > 0;
 
         internal void Join(Player.Player player)
         {
-            if (!PlayerCanJoin())
+            if (!IsCrowded())
                 throw new ArgumentOutOfRangeException(nameof(player), "A player cannot join a crowded game.");
 
             if(!Equals(player.AssignedGame))
