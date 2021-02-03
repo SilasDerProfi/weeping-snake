@@ -9,10 +9,23 @@ namespace WeepingSnake.Game.Player
     /// </summary>
     public sealed class PlayerAction
     {
+#warning should know the player
+        private readonly PlayerOrientation _newOrientation;
+        private readonly Action _action;
+
+        public PlayerAction(PlayerOrientation orientation, Action action)
+        {
+            _newOrientation = orientation.Apply(action);
+            _newOrientation.MoveOneTick();
+        }
+
+        public PlayerOrientation NewOrientation => _newOrientation;
 
         public enum Action
         {
-            CHANGE_ANGLE,
+            CHANGE_NOTHING,
+            TURN_LEFT,
+            TURN_RIGHT,
             SPEED_UP,
             SLOW_DOWN,
             JUMP,

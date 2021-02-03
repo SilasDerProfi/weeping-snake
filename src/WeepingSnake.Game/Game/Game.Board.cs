@@ -16,6 +16,8 @@ namespace WeepingSnake.Game
             }
 
             internal void ApplyAction(PlayerAction action) => throw new NotImplementedException();
+
+            internal PlayerOrientation GetOrientationForPlayer(Player.Player player) => throw new NotImplementedException();
         }
     }
 }

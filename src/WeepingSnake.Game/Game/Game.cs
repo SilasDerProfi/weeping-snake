@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using WeepingSnake.Game.Player;
 using WeepingSnake.Game.Structs;
 
 namespace WeepingSnake.Game
@@ -24,24 +25,26 @@ namespace WeepingSnake.Game
 
         public Guid GameId => _gameId;
 
-        internal bool IsCrowded() => _allowedPlayerCount.Max == _players.Count;
+        internal bool IsFull() => _allowedPlayerCount.Max == _players.Count;
 
-        internal void Join(Player.Player player)
+        internal PlayerOrientation Join(Player.Player player)
         {
-            if (IsCrowded())
-                throw new ArgumentOutOfRangeException(nameof(player), "A player cannot join a crowded game.");
+            if (IsFull())
+                throw new ArgumentOutOfRangeException(nameof(player), "A player cannot join a full game.");
 
             if(!Equals(player.AssignedGame))
                 throw new ArgumentException("A player can join only the game assigned to him.", nameof(player));
 
             _players.Add(player);
+
+            return _board.GetOrientationForPlayer(player);
         }
 
         internal void ApplyOneActionPerPlayer()
         {
             foreach(var player in _players)
             {
-                var action = player.PopNextAction();
+                var action = player.PopAndApplyNextAction();
                 _board.ApplyAction(action);
             }
         }

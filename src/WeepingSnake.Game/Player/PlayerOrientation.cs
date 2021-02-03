@@ -15,12 +15,17 @@ namespace WeepingSnake.Game.Player
             _direction = new Vector2(directionX, directionY);
         }
 
+        internal PlayerOrientation Apply(PlayerAction.Action action) => throw new NotImplementedException();
+
+        internal void MoveOneTick() => throw new NotImplementedException();
+
         public override bool Equals(object obj)
         {
             return obj is PlayerOrientation orientation &&
                    _position.Equals(orientation._position) &&
                    _direction.Equals(orientation._direction);
         }
+
 
         public GameCoordinate Position => _position;
         public Vector2 Direction => _direction;
