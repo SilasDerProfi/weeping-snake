@@ -9,7 +9,7 @@ namespace WeepingSnake.Game.Player
         private readonly GameCoordinate _position;
         private readonly Vector2 _direction;
 
-        internal PlayerOrientation(double posX, double posY, uint time, int directionX, int directionY)
+        internal PlayerOrientation(double posX, double posY, uint time, float directionX, float directionY)
         {
             _position = new GameCoordinate(posX, posY, time);
             _direction = new Vector2(directionX, directionY);
