@@ -24,7 +24,7 @@ namespace WeepingSnake.Game
 
             internal PlayerOrientation CalculateRandomStartOrientation()
             {
-                var direction = PlayerDirection.GetRandomPlayerDirection();
+                var direction = PlayerDirection.RandomPlayerDirection();
                 var position = CalculateRandomStarCoordinates();
 
                 return new PlayerOrientation(position, direction);

@@ -18,7 +18,7 @@ namespace WeepingSnake.Game.Player
 
         public float Length() => _direction.Length();
         
-        public static PlayerDirection GetRandomPlayerDirection()
+        public static PlayerDirection RandomPlayerDirection()
         {
             var random = new Random();
 
@@ -28,5 +28,17 @@ namespace WeepingSnake.Game.Player
 
             return new PlayerDirection(directionX, directionY);
         }
+
+        public override bool Equals(object obj)
+        {
+            return obj is PlayerDirection direction &&
+                   _direction.Equals(direction._direction);
+        }
+
+        public override int GetHashCode() => HashCode.Combine(_direction, 23);
+
+        public static bool operator ==(PlayerDirection left, PlayerDirection right) => left.Equals(right);
+
+        public static bool operator !=(PlayerDirection left, PlayerDirection right) => !(left == right);
     }
 }
