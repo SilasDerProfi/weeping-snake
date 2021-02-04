@@ -33,12 +33,12 @@ namespace WeepingSnake.Game
                 var time = (uint)_paths.Count;
 
                 // Random start position with a padding
-                throw new NotImplementedException();
-                var posX = 0; // random empty in radius [min;max]
-                var posY = 0; // random empty in radius [min;max]
+                (var positionX, var positionY) = CalculateRandomStartposition();
 
-                return new PlayerOrientation(posX, posY, time, directionX, directionY);
+                return new PlayerOrientation(positionX, positionY, time, directionX, directionY);
             }
+
+            private (int, int) CalculateRandomStartposition() => throw new NotImplementedException();
         }
     }
 }
