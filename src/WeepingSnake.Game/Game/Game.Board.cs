@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Numerics;
+using WeepingSnake.Game.Geometry;
 using WeepingSnake.Game.Player;
 using WeepingSnake.Game.Structs;
 
@@ -28,17 +29,15 @@ namespace WeepingSnake.Game
                 // Random direction vector with Length=1
                 var directionX = (float)random.NextDouble() * 2 - 1;
                 var directionY = (float)Math.Sqrt(1 - directionX * directionX);
-
-                // The current time is the start time
-                var time = (uint)_paths.Count;
+                var direction = new Vector2(directionX, directionY);
 
                 // Random start position with a padding
-                (var positionX, var positionY) = CalculateRandomStartposition();
+                var position = CalculateRandomStarCoordinates();
 
-                return new PlayerOrientation(positionX, positionY, time, directionX, directionY);
+                return new PlayerOrientation(position, direction);
             }
 
-            private (int, int) CalculateRandomStartposition() => throw new NotImplementedException();
+            private GameCoordinate CalculateRandomStarCoordinates() => throw new NotImplementedException();
         }
     }
 }
