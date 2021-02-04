@@ -13,10 +13,11 @@ namespace WeepingSnake.Game.Player
             _direction.Y = directionY;
         }
 
-        public double Length => _direction.Length();
         public double X => _direction.X;
         public double Y => _direction.Y;
 
+        public float Length() => _direction.Length();
+        
         public static PlayerDirection GetRandomPlayerDirection()
         {
             var random = new Random();
