@@ -7,9 +7,9 @@ namespace WeepingSnake.Game.Player
     public struct PlayerOrientation
     {
         private readonly GameCoordinate _position;
-        private readonly Vector2 _direction;
+        private readonly PlayerDirection _direction;
 
-        internal PlayerOrientation(GameCoordinate position, Vector2 direction)
+        internal PlayerOrientation(GameCoordinate position, PlayerDirection direction)
         {
             _position = position;
             _direction = direction;
@@ -28,7 +28,7 @@ namespace WeepingSnake.Game.Player
 
 
         public GameCoordinate Position => _position;
-        public Vector2 Direction => _direction;
+        public PlayerDirection Direction => _direction;
 
         public override int GetHashCode() => HashCode.Combine(_position, _direction);
 

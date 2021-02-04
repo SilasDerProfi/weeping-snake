@@ -37,7 +37,7 @@ namespace WeepingSnake.Game
 
             _players.Add(player);
 
-            return _board.GetRandomStartOrientation(player);
+            return _board.CalculateRandomStartOrientation();
         }
 
         internal void ApplyOneActionPerPlayer()

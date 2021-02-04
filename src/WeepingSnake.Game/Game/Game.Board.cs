@@ -22,21 +22,15 @@ namespace WeepingSnake.Game
 
             internal void ApplyAction(PlayerAction action) => throw new NotImplementedException();
 
-            internal PlayerOrientation GetRandomStartOrientation(Player.Player player)
+            internal PlayerOrientation CalculateRandomStartOrientation()
             {
-                var random = new Random(player.GetHashCode());
-
-                // Random direction vector with Length=1
-                var directionX = (float)random.NextDouble() * 2 - 1;
-                var directionY = (float)Math.Sqrt(1 - directionX * directionX);
-                var direction = new Vector2(directionX, directionY);
-
-                // Random start position with a padding
+                var direction = PlayerDirection.GetRandomPlayerDirection();
                 var position = CalculateRandomStarCoordinates();
 
                 return new PlayerOrientation(position, direction);
             }
 
+            // Random start position with a padding
             private GameCoordinate CalculateRandomStarCoordinates() => throw new NotImplementedException();
         }
     }
