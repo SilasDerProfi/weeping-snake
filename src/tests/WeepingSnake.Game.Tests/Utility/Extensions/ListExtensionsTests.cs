@@ -47,5 +47,18 @@ namespace WeepingSnake.Game.Tests.Utility.Extensions
             Assert.Equal(dummyList, doubleListFirstHalf);
             Assert.Equal(dummyList, doubleListSecondHalf);
         }
+
+        [Fact]
+        public void TestAddAndReturn()
+        {
+            var dummyList = CreateDummyList();
+            var dummyListCount = dummyList.Count;
+
+            var newListItem = "!";
+            var addAndReturnResult = dummyList.AddAndReturn(newListItem);
+
+            Assert.Equal(newListItem, addAndReturnResult);
+            Assert.Equal(dummyListCount + 1, dummyList.Count);
+        }
     }
 }
