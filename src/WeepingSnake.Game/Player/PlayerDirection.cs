@@ -19,12 +19,13 @@ namespace WeepingSnake.Game.Player
         public double Y => _direction.Y;
 
         public float Length => _length;
-        
+
+        /// <summary>
+        /// Calculates a random direction vector with Length = 1.
+        /// </summary>
         public static PlayerDirection RandomPlayerDirection()
         {
             var random = new Random();
-
-            // Random direction vector with Length=1
             var directionX = (float)random.NextDouble() * 2 - 1;
             var directionY = (float)Math.Sqrt(1 - directionX * directionX);
 
@@ -33,7 +34,7 @@ namespace WeepingSnake.Game.Player
 
         public override bool Equals(object obj)
         {
-            return obj is PlayerDirection direction &&
+            return obj is PlayerDirection direction && 
                    _direction.Equals(direction._direction);
         }
 
