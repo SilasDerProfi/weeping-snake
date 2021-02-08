@@ -71,18 +71,18 @@ namespace WeepingSnake.Game
             {
                 int deltaX = x1 - x0;
                 int deltaY = Math.Abs(y1 - y0);
-                int incrementE = 2 * deltaY;
-                int incrementNe = 2 * (deltaY - deltaX);
-                int d = 2 * deltaY - deltaX;
+                int deltaError = deltaX / 2;
+                int yStep = (y0 < y1) ? 1 : -1;
 
                 for (int x = x0, y = y0; x <= x1; x++)
                 {
                     yield return (x, y);
-                    if (d <= 0) d += incrementE;
-                    else
+                    deltaError -= deltaY;
+
+                    if (deltaError < 0)
                     {
-                        d += incrementNe;
-                        y++;
+                        y += yStep;
+                        deltaError += deltaX;
                     }
                 }
             }
