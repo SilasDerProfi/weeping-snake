@@ -69,20 +69,20 @@ namespace WeepingSnake.Game
 
             static IEnumerable<(int, int)> Bresenham(int x0, int y0, int x1, int y1)
             {
-                int dx = x1 - x0;
-                int dy = Math.Abs(y1 - y0);
-                int error = dx / 2;
-                int ystep = (y0 < y1) ? 1 : -1;
-                int y = y0;
+                int deltaX = x1 - x0;
+                int deltaY = Math.Abs(y1 - y0);
+                int incrementE = 2 * deltaY;
+                int incrementNe = 2 * (deltaY - deltaX);
+                int d = 2 * deltaY - deltaX;
 
-                for (int x = x0; x <= x1; x++)
+                for (int x = x0, y = y0; x <= x1; x++)
                 {
                     yield return (x, y);
-                    error -= dy;
-                    if (error < 0)
+                    if (d <= 0) d += incrementE;
+                    else
                     {
-                        y += ystep;
-                        error += dx;
+                        d += incrementNe;
+                        y++;
                     }
                 }
             }
