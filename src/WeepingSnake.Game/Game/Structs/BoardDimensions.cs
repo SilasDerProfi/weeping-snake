@@ -1,11 +1,12 @@
 ﻿using System;
+using WeepingSnake.Game.Geometry;
 
 namespace WeepingSnake.Game.Structs
 {
     /// <summary>
     /// A struct to encapsulate the dimensions and the behavior of the game board
     /// </summary>
-    public struct BoardDimensions
+    public struct BoardDimensions : ICoordinateSystemDimensions
     {
         private readonly uint _width;
         private readonly uint _height;
