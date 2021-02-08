@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace WeepingSnake.Game.Geometry
 {
@@ -21,6 +22,36 @@ namespace WeepingSnake.Game.Geometry
         public double X => _x;
         public double Y => _y;
         public uint Z => _z;
+
+        /// <summary>
+        /// Calculates the von Neumann neighborhood (4-neighborhood).
+        /// </summary>
+        /// <returns>4 neighbors (top, bottom, left, right)</returns>
+        public IEnumerable<(double, double)> VonNeumannNeighborhood()
+        {
+            var west = (X - 1, Y);
+            var north = (X, Y - 1);
+            var east = (X + 1, Y);
+            var south = (X, Y + 1);
+            return new List<(double, double)>() { west, north, east, south };
+        }
+
+        /// <summary>
+        /// Calculates the von Moore neighborhood (8-neighborhood).
+        /// </summary>
+        /// <returns>8 neighbors (all surrounding cells)</returns>
+        public IEnumerable<(double, double)> MooreNeighborhood()
+        {
+            var west = (X - 1, Y);
+            var northWest = (X - 1, Y - 1);
+            var north = (X, Y - 1);
+            var northEast = (X + 1, Y - 1);
+            var east = (X + 1, Y);
+            var southEast = (X + 1, Y + 1);
+            var south = (X, Y + 1);
+            var southWest = (X - 1, Y + 1);
+            return new List<(double, double)>() { west, northWest, north, northEast, east, southEast, south, southWest };
+        }
 
         public override bool Equals(object obj)
         {
