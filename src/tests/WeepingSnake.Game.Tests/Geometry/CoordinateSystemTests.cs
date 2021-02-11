@@ -72,8 +72,33 @@ namespace WeepingSnake.Game.Tests.Geometry
         [Fact]
         public void CalculatePointsOnBisectorTest()
         {
-            var coordinateSystem = new MockCoordinateSystem();
-            //throw new NotImplementedException();
+            var actualA = MockCoordinateSystem.CalculatePointsOnLine(-4, -4, 2, 2);
+            var expectedA = new List<(int, int)>()
+            {
+                (-4,-4), (-3,-3), (-2,-2), (-1,-1), (0,0), (1,1), (2,2)
+            };
+            Assert.Equal(expectedA, actualA);
+
+            var actualB = MockCoordinateSystem.CalculatePointsOnLine(3, 3, -2, -2);
+            var expectedB = new List<(int, int)>()
+            {
+                 (-2,-2), (-1,-1), (0,0), (1,1), (2,2), (3,3)
+            };
+            Assert.Equal(expectedB, actualB);
+
+            var actualC = MockCoordinateSystem.CalculatePointsOnLine(-5, 5, -1, 1);
+            var expectedC = new List<(int, int)>()
+            {
+                (-5,5), (-4,4), (-3,3), (-2,2), (-1,1)
+            };
+            Assert.Equal(expectedC, actualC);
+
+            var actualD = MockCoordinateSystem.CalculatePointsOnLine(4, -4, -4, 4);
+            var expectedD = new List<(int, int)>()
+            {
+                (-4,4),(-3,3),(-2,2),(-1,1),(0,0),(1,-1),(2,-2),(3,-3),(4,-4)
+            };
+            Assert.Equal(expectedD, actualD);
         }
 
         [Fact]
