@@ -27,9 +27,9 @@ namespace WeepingSnake.Game.Geometry
             else if (x0 > x1)
                 return CalculatePointsOnLine(x1, y1, x0, y0);
             else
-                return Bresenham(x0, y0, x1, y1);
+                return SimpleBresenham(x0, y0, x1, y1);
 
-            static IEnumerable<(int, int)> Bresenham(int x0, int y0, int x1, int y1)
+            static IEnumerable<(int, int)> SimpleBresenham(int x0, int y0, int x1, int y1)
             {
                 int deltaX = x1 - x0;
                 int deltaY = Math.Abs(y1 - y0);
