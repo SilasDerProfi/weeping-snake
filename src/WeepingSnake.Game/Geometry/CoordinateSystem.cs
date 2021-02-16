@@ -20,7 +20,7 @@ namespace WeepingSnake.Game.Geometry
         /// Rasterisation via Bresenham's line algorithm
         /// </summary>
         /// <returns>Enumeration of the sweeping pixel</returns>
-        protected static IEnumerable<(int, int)> CalculatePointsOnLine(int x0, int y0, int x1, int y1)
+        protected IEnumerable<(int, int)> CalculatePointsOnLine(int x0, int y0, int x1, int y1)
         {
             if (Math.Abs(y1 - y0) > Math.Abs(x1 - x0))
                 return CalculatePointsOnLine(y0, x0, y1, x1).Select(i => (i.Item2, i.Item1));
@@ -29,7 +29,7 @@ namespace WeepingSnake.Game.Geometry
             else
                 return SimpleBresenham(x0, y0, x1, y1);
 
-            static IEnumerable<(int, int)> SimpleBresenham(int x0, int y0, int x1, int y1)
+            IEnumerable<(int, int)> SimpleBresenham(int x0, int y0, int x1, int y1)
             {
                 int deltaX = x1 - x0;
                 int deltaY = Math.Abs(y1 - y0);
