@@ -6,7 +6,7 @@ namespace WeepingSnake.Game.Geometry
     /// <summary>
     /// A three-dimensional point. Two dimensions represent the position in 2d space (decimal). the third deminsion is the time (integer).
     /// </summary>
-    public struct GameCoordinate
+    public readonly struct GameCoordinate
     {
         private readonly double _x;
         private readonly double _y;
@@ -52,6 +52,8 @@ namespace WeepingSnake.Game.Geometry
             var southWest = (X - 1, Y + 1);
             return new List<(double, double)>() { west, northWest, north, northEast, east, southEast, south, southWest };
         }
+
+        // TODO: do not use the 1 hardcoded, but use min-speed
 
         public override bool Equals(object obj)
         {

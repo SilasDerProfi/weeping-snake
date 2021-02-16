@@ -29,23 +29,22 @@ namespace WeepingSnake.Game.Geometry
             else
                 return SimpleBresenham(x0, y0, x1, y1);
 
-            IEnumerable<(int, int)> SimpleBresenham(int x0, int y0, int x1, int y1)
+            static IEnumerable<(int, int)> SimpleBresenham(int x0, int y0, int x1, int y1)
             {
-                int deltaX = x1 - x0;
-                int deltaY = Math.Abs(y1 - y0);
-                int deltaError = deltaX / 2;
-                int yStep = (y0 < y1) ? 1 : -1;
+                var deltaX = x1 - x0;
+                var deltaY = Math.Abs(y1 - y0);
+                var deltaError = deltaX / 2;
+                var yStep = y0 < y1 ? 1 : -1;
 
                 for (int x = x0, y = y0; x <= x1; x++)
                 {
                     yield return (x, y);
                     deltaError -= deltaY;
 
-                    if (deltaError < 0)
-                    {
-                        y += yStep;
-                        deltaError += deltaX;
-                    }
+                    if (deltaError >= 0) continue;
+                    
+                    y += yStep;
+                    deltaError += deltaX;
                 }
             }
         }

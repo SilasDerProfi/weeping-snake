@@ -3,7 +3,7 @@ using System.Numerics;
 
 namespace WeepingSnake.Game.Player
 {
-    public struct PlayerDirection
+    public readonly struct PlayerDirection
     {
         private readonly Vector2 _direction;
         private readonly float _length;
