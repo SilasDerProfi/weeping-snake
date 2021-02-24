@@ -13,7 +13,7 @@ namespace WeepingSnake.Game.Utility.Extensions
         public static IEnumerable<T> GetInfiniteEnumerator<T>(this List<T> source)
         {
             // Iterate over the entire list again and again
-            for (int index = 0; index < source.Count; index = (index + 1) % source.Count)
+            for (var index = 0; index < source.Count; index = (index + 1) % source.Count)
             {
                 yield return source[index];
             }

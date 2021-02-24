@@ -15,8 +15,8 @@ namespace WeepingSnake.Game.Player
             _length = _direction.Length();
         }
 
-        public double X => _direction.X;
-        public double Y => _direction.Y;
+        public float X => _direction.X;
+        public float Y => _direction.Y;
 
         public float Length => _length;
 

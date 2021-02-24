@@ -53,7 +53,7 @@ namespace WeepingSnake.Game.Geometry
             return new List<(double, double)>() { west, northWest, north, northEast, east, southEast, south, southWest };
         }
 
-        // TODO: do not use the 1 hardcoded, but use min-speed
+#warning TODO: do not use the 1 hardcoded, but use min-speed
 
         public override bool Equals(object obj)
         {

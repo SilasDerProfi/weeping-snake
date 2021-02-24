@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using WeepingSnake.Game.Utility.Extensions;
 using Xunit;
 
@@ -10,7 +8,7 @@ namespace WeepingSnake.Game.Tests.Utility.Extensions
 {
     public class ListExtensionsTests
     {
-        private static List<string> CreateDummyList() => new List<string>()
+        private static List<string> CreateDummyList() => new()
         {
             "This",
             "is",

@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using WeepingSnake.Game.Geometry;
 using WeepingSnake.Game.Player;
 using WeepingSnake.Game.Structs;
+using WeepingSnake.Game.Utility.Extensions;
 
 namespace WeepingSnake.Game
 {
@@ -32,7 +33,7 @@ namespace WeepingSnake.Game
 
             private GameCoordinate CalculateRandomStartCoordinates()
             {
-                var zPosition = (uint)_paths.Count;
+                var zPosition = (uint) _paths.Count;
                 var possiblePositions = new HashSet<GameCoordinate>();
 
                 for (var x = 1; x < Width - 1; x++)
@@ -54,8 +55,8 @@ namespace WeepingSnake.Game
                     }
                 }
 
-                throw new NotImplementedException();
-                // return a remaining start position (random or the one in the largest cluster (Lloyd) nearest to the center)
+#warning TODO: select the one in the largest cluster (Lloyd) nearest to the center
+                return possiblePositions.Random();
             }
         }
     }
