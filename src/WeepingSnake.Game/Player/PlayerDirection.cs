@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Numerics;
+using WeepingSnake.Game.Utility.Extensions;
 
 namespace WeepingSnake.Game.Player
 {
@@ -32,6 +33,17 @@ namespace WeepingSnake.Game.Player
             return new PlayerDirection(directionX, directionY);
         }
 
+        internal PlayerDirection Apply(PlayerAction.Action action) => action switch
+        {
+            PlayerAction.Action.CHANGE_NOTHING => new PlayerDirection(X, Y),
+            PlayerAction.Action.TURN_LEFT => _direction.RotateLeft(90),
+            PlayerAction.Action.TURN_RIGHT => _direction.RotateRight(90),
+            PlayerAction.Action.SPEED_UP => _direction.Increase(),
+            PlayerAction.Action.SLOW_DOWN => _direction.Decrease(),
+            PlayerAction.Action.JUMP => new PlayerDirection(X, Y),
+            _ => throw new ArgumentOutOfRangeException(nameof(action), $"Not expected ${nameof(action)} value: {action}"),
+        };
+
         public override bool Equals(object obj)
         {
             return obj is PlayerDirection direction && 
@@ -43,5 +55,7 @@ namespace WeepingSnake.Game.Player
         public static bool operator ==(PlayerDirection left, PlayerDirection right) => left.Equals(right);
 
         public static bool operator !=(PlayerDirection left, PlayerDirection right) => !(left == right);
+
+        public static implicit operator PlayerDirection(Vector2 direction) => new(direction.X, direction.Y);
     }
 }

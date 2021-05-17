@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using WeepingSnake.Game.Geometry;
 
 namespace WeepingSnake.ConsoleClient
 {
@@ -11,11 +13,12 @@ namespace WeepingSnake.ConsoleClient
             var playerA = gctrl.JoinGame();
             playerA.AssignedGame.OnLoopTick += PrintGameState;
             gctrl.DoAction(playerA, Game.Player.PlayerAction.Action.SPEED_UP);
+            Console.ReadLine();
         }
 
-        private static void PrintGameState(Game.Game sender)
+        private static void PrintGameState(List<GameDistance> newPaths)
         {
-            Console.WriteLine($"Gamestate of Game {sender.GameId}");
+            Console.WriteLine($"New Gamestate with {newPaths.Count} new Paths");
         }
     }
 }

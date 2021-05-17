@@ -23,7 +23,12 @@ namespace WeepingSnake.Game
 
             internal void ApplyAction(PlayerAction action)
             {
-                // alter the player
+                // change player orientation
+                // move the player
+                // add the move as gamedistance
+
+
+
                 throw new NotImplementedException();
             }
 
@@ -44,17 +49,20 @@ namespace WeepingSnake.Game
                     for (var y = 1; y < Height - 1; y++)
                         possiblePositions.Add(new GameCoordinate(x, y, zPosition));
 
-                foreach (var pathPoints in _paths[^1].Select(vector => CalculatePointsOnLine(0, 0, 0, 0)))
+                if (zPosition > 0)
                 {
-                    foreach (var (pathX, pathY) in pathPoints)
+                    foreach (var pathPoints in _paths[^1].Select(vector => CalculatePointsOnLine(0, 0, 0, 0)))
                     {
-                        var coordinate = new GameCoordinate(pathX, pathY, zPosition);
-                        possiblePositions.Remove(coordinate);
-
-                        foreach (var (neighborX, neighborY) in coordinate.MooreNeighborhood())
+                        foreach (var (pathX, pathY) in pathPoints)
                         {
-                            var neighbor = new GameCoordinate(neighborX, neighborY, zPosition);
-                            possiblePositions.Remove(neighbor);
+                            var coordinate = new GameCoordinate(pathX, pathY, zPosition);
+                            possiblePositions.Remove(coordinate);
+
+                            foreach (var (neighborX, neighborY) in coordinate.MooreNeighborhood())
+                            {
+                                var neighbor = new GameCoordinate(neighborX, neighborY, zPosition);
+                                possiblePositions.Remove(neighbor);
+                            }
                         }
                     }
                 }
@@ -62,6 +70,8 @@ namespace WeepingSnake.Game
 #warning TODO: select the one in the largest cluster (Lloyd) nearest to the center
                 return possiblePositions.Random();
             }
+
+            internal List<List<GameDistance>> Paths => _paths;
         }
     }
 }

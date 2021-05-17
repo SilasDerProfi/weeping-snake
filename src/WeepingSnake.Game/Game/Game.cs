@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using WeepingSnake.Game.Geometry;
 using WeepingSnake.Game.Player;
 using WeepingSnake.Game.Structs;
 
@@ -25,6 +26,8 @@ namespace WeepingSnake.Game
 
         public Guid GameId => _gameId;
 
+        public List<List<GameDistance>> BoardPaths => _board.Paths;
+
         internal bool IsFull() => _allowedPlayerCount.Max == _players.Count;
 
         internal PlayerOrientation Join(Player.Player player)
@@ -46,12 +49,11 @@ namespace WeepingSnake.Game
             {
                 var action = player.PopAndApplyNextAction();
                 _board.ApplyAction(action);
-#warning move
             }
-            OnLoopTick?.Invoke(this);
+            OnLoopTick?.Invoke(_board.Paths[^1]);
         }
 
-        public delegate void LoopTickHandler(Game sender);
+        public delegate void LoopTickHandler(List<GameDistance> newPaths);
         public event LoopTickHandler OnLoopTick;
 
         public override bool Equals(object obj) => obj is Game game && _gameId.Equals(game._gameId);

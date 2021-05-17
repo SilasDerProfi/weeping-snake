@@ -32,7 +32,7 @@ namespace WeepingSnake.Game.Player
         {
             _undoneActions.TryDequeue(out var nextAction);
 
-            var playerAction = new PlayerAction(_orientation, nextAction);
+            var playerAction = new PlayerAction(this, _orientation, nextAction);
 
             _orientation = playerAction.NewOrientation;
 
