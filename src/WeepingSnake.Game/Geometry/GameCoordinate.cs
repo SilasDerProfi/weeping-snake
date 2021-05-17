@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using WeepingSnake.Game.Player;
 
 namespace WeepingSnake.Game.Geometry
 {
@@ -21,6 +22,9 @@ namespace WeepingSnake.Game.Geometry
 
         public double X => _x;
         public double Y => _y;
+
+        internal GameCoordinate Translate(PlayerDirection direction) => new(X + direction.X, Y + direction.Y, Z + 1);
+
         public uint Z => _z;
 
         /// <summary>

@@ -15,15 +15,12 @@ namespace WeepingSnake.Game.Player
             _direction = direction;
         }
 
-        internal PlayerOrientation Apply(PlayerAction.Action action)
+        internal PlayerOrientation ApplyAndMove(PlayerAction.Action action)
         {
-            throw new NotImplementedException();
-        }
+            var newDirection = _direction.Apply(action);
+            var newPostion = _position.Translate(newDirection);
 
-        internal void MoveOneTick()
-        {
-            // alter the board (add path)
-            throw new NotImplementedException();
+            return new PlayerOrientation(newPostion, newDirection);
         }
 
         public override bool Equals(object obj)
