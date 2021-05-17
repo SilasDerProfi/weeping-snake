@@ -14,12 +14,21 @@ namespace WeepingSnake.ConsoleClient
             var playerA = gctrl.JoinGame();
             playerA.AssignedGame.OnLoopTick += PrintGameState;
 
-            gctrl.DoAction(playerA, Game.Player.PlayerAction.Action.CHANGE_NOTHING);
-            gctrl.DoAction(playerA, Game.Player.PlayerAction.Action.SPEED_UP);
-            gctrl.DoAction(playerA, Game.Player.PlayerAction.Action.TURN_LEFT);
-            gctrl.DoAction(playerA, Game.Player.PlayerAction.Action.TURN_RIGHT);
-            gctrl.DoAction(playerA, Game.Player.PlayerAction.Action.SPEED_UP);
-
+            ConsoleKeyInfo pressedKey;
+            while ((pressedKey = Console.ReadKey()).Key != ConsoleKey.Escape)
+            {
+                gctrl.DoAction(playerA, pressedKey.Key switch
+                {
+                    ConsoleKey.DownArrow => Game.Player.PlayerAction.Action.SLOW_DOWN,
+                    ConsoleKey.UpArrow => Game.Player.PlayerAction.Action.SPEED_UP,
+                    ConsoleKey.RightArrow => Game.Player.PlayerAction.Action.TURN_RIGHT,
+                    ConsoleKey.LeftArrow => Game.Player.PlayerAction.Action.TURN_LEFT,
+                    ConsoleKey.Spacebar => Game.Player.PlayerAction.Action.JUMP,
+                    _ => Game.Player.PlayerAction.Action.CHANGE_NOTHING
+                });
+            }
+            
+            
             Console.ReadLine();
         }
 
