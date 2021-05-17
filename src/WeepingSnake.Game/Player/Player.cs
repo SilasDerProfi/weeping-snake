@@ -29,15 +29,11 @@ namespace WeepingSnake.Game.Player
 
         internal void AddAction(PlayerAction.Action action) => _undoneActions.Enqueue(action);
 
-        internal PlayerAction PopAndApplyNextAction()
+        internal PlayerAction PopNextAction()
         {
             _undoneActions.TryDequeue(out var nextAction);
 
-            var playerAction = new PlayerAction(this, _orientation, nextAction);
-
-            _orientation = playerAction.NewOrientation;
-
-            return playerAction;
+            return new PlayerAction(this, _orientation, nextAction);
         }
 
         internal GameDistance ApplyOrientationAndMove(PlayerOrientation newOrientation)

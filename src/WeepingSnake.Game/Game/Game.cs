@@ -47,7 +47,7 @@ namespace WeepingSnake.Game
         {
             foreach(var player in _players)
             {
-                var action = player.PopAndApplyNextAction();
+                var action = player.PopNextAction();
                 _board.ApplyAction(action);
             }
             OnLoopTick?.Invoke(_board.Paths[^1]);
