@@ -78,9 +78,9 @@ namespace WeepingSnake.Game.Tests.Utility.Extensions
         [Fact]
         public void TestIncrease()
         {
-            var vector = new Vector2(4, 5);
+            var vector = new Vector2(1, 0);
             var decreasedVector = vector.Increase();
-            var expectedVector = new Vector2(5, 6);
+            var expectedVector = new Vector2(2, 0);
 
             Assert.Equal(expectedVector, decreasedVector);
         }
@@ -88,9 +88,9 @@ namespace WeepingSnake.Game.Tests.Utility.Extensions
         [Fact]
         public void TestDecrease()
         {
-            var vector = new Vector2(4, 5);
+            var vector = new Vector2(0, -2);
             var decreasedVector = vector.Decrease();
-            var expectedVector = new Vector2(3, 4);
+            var expectedVector = new Vector2(0, -1);
 
             Assert.Equal(expectedVector, decreasedVector);
         }
