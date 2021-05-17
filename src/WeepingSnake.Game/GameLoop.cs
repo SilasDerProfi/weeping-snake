@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 using WeepingSnake.Game.Utility.Extensions;
 
@@ -17,14 +18,20 @@ namespace WeepingSnake.Game
 
         internal void RunAsync()
         {
-#warning TODO: Check if this Dispose()-Call stops the task correct
             _loopTask?.Dispose();
             _loopTask = Task.Run(() => RunInfinite());
         }
 
-        private void RunInfinite() => Parallel.ForEach(_games.GetInfiniteEnumerator(), game => game.ApplyOneActionPerPlayer());
+#warning todo: dont use fixed 1000, use the const "round length"
+        private void RunInfinite() => Parallel.ForEach(_games.GetInfiniteEnumerator(), game =>
+        {
+            lock (game)
+            {
+                game.ApplyOneActionPerPlayer();
+                Thread.Sleep(1000);
+            }
+        });
 
-#warning TODO: Check if this Dispose()-Call stops the task correct
         public void Dispose() => _loopTask.Dispose();
     }
 }

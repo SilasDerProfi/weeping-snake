@@ -28,7 +28,6 @@ namespace WeepingSnake.ConsoleClient
         {
             Console.WriteLine($"New Gamestate with {newPaths.Count} new Paths:");
             newPaths.ForEach(p => Console.WriteLine($"- ({(int)p.StartX};{(int)p.StartY}) - ({(int)p.EndX};{(int)p.EndY})"));
-            
         }
     }
 }

@@ -31,8 +31,7 @@ namespace WeepingSnake.Game
                 currentRoundPathList.Add(newPath);
 
 
-                #warning calculate points!!!!
-                throw new NotImplementedException();
+                #warning calculate points for the player
             }
 
             internal PlayerOrientation CalculateRandomStartOrientation()
@@ -48,7 +47,7 @@ namespace WeepingSnake.Game
                 var zPosition = (ushort) _paths.Count;
                 var possiblePositions = new HashSet<GameCoordinate>();
 
-#warning TODO: do not use 90 degree hardcoded, but use a const like "default rotation angle"
+#warning TODO: do not use 1 hardcoded, but use a const like "default distance"
                 for (var x = 1; x < Width - 1; x++)
                     for (var y = 1; y < Height - 1; y++)
                         possiblePositions.Add(new GameCoordinate(x, y, zPosition));

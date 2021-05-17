@@ -45,7 +45,7 @@ namespace WeepingSnake.Game
 
         internal void ApplyOneActionPerPlayer()
         {
-            foreach(var player in _players)
+            foreach (var player in _players)
             {
                 var action = player.PopNextAction();
                 _board.ApplyAction(action);
