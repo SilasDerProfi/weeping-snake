@@ -16,6 +16,7 @@ namespace WeepingSnake.Game.Utility.Extensions
 
         public static Vector2 RotateRight(this Vector2 v, int degrees) => RotateLeft(v, -degrees);
 
+#warning TODO: do not use the 1 hardcoded, but use a const like "speed step"
         public static Vector2 Increase(this Vector2 v) => new(v.X + 1, v.Y + 1);
 
         public static Vector2 Decrease(this Vector2 v) => new(v.X - 1, v.Y - 1);

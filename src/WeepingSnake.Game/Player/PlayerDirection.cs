@@ -33,14 +33,15 @@ namespace WeepingSnake.Game.Player
             return new PlayerDirection(directionX, directionY);
         }
 
+#warning TODO: do not use 90 degree hardcoded, but use a const like "default rotation angle"
         internal PlayerDirection Apply(PlayerAction.Action action) => action switch
         {
-            PlayerAction.Action.CHANGE_NOTHING => new PlayerDirection(X, Y),
+            PlayerAction.Action.CHANGE_NOTHING => new(X, Y),
             PlayerAction.Action.TURN_LEFT => _direction.RotateLeft(90),
             PlayerAction.Action.TURN_RIGHT => _direction.RotateRight(90),
             PlayerAction.Action.SPEED_UP => _direction.Increase(),
             PlayerAction.Action.SLOW_DOWN => _direction.Decrease(),
-            PlayerAction.Action.JUMP => new PlayerDirection(X, Y),
+            PlayerAction.Action.JUMP => new(X, Y),
             _ => throw new ArgumentOutOfRangeException(nameof(action), $"Not expected ${nameof(action)} value: {action}"),
         };
 

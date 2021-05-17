@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using WeepingSnake.Game.Geometry;
 
 namespace WeepingSnake.Game.Player
 {
@@ -30,6 +31,16 @@ namespace WeepingSnake.Game.Player
             SPEED_UP,
             SLOW_DOWN,
             JUMP,
+        }
+
+        internal GameDistance Apply()
+        {
+            var path = _player.ApplyOrientationAndMove(_newOrientation);
+
+            if (_action == Action.JUMP)
+                return new GameDistance(path.EndX, path.EndY, new PlayerDirection(0, 0));
+            else
+                return path;
         }
     }
 }

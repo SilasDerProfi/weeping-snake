@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace WeepingSnake.Game.Utility.Extensions
 {
@@ -17,6 +18,14 @@ namespace WeepingSnake.Game.Utility.Extensions
             {
                 yield return source[index];
             }
+        }
+
+        public static T GetOrCreate<T>(this List<T> source, int index, Func<T> createFunction)
+        {
+            while (source.Count <= index)
+                source.Add(createFunction());
+
+            return source[index];
         }
     }
 }

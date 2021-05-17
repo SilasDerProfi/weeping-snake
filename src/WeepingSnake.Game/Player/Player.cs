@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using WeepingSnake.Game.Geometry;
 
 namespace WeepingSnake.Game.Player
 {
@@ -37,6 +38,17 @@ namespace WeepingSnake.Game.Player
             _orientation = playerAction.NewOrientation;
 
             return playerAction;
+        }
+
+        internal GameDistance ApplyOrientationAndMove(PlayerOrientation newOrientation)
+        {
+            var oldX = (float)_orientation.Position.X;
+            var oldY = (float)_orientation.Position.Y;
+            var currentDirection = newOrientation.Direction;
+
+            _orientation = newOrientation;
+            
+            return new GameDistance(oldX, oldY, currentDirection);
         }
     }
 }

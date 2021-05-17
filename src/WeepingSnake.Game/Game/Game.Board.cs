@@ -23,12 +23,15 @@ namespace WeepingSnake.Game
 
             internal void ApplyAction(PlayerAction action)
             {
-                // change player orientation
-                // move the player
-                // add the move as gamedistance
+                var roundNumber = action.NewOrientation.Position.Z;
+
+                var newPath = action.Apply();
+
+                var currentRoundPathList = _paths.GetOrCreate(roundNumber - 1, () => new List<GameDistance>());
+                currentRoundPathList.Add(newPath);
 
 
-
+                #warning calculate points!!!!
                 throw new NotImplementedException();
             }
 
@@ -42,9 +45,10 @@ namespace WeepingSnake.Game
 
             private GameCoordinate CalculateRandomStartCoordinates()
             {
-                var zPosition = (uint) _paths.Count;
+                var zPosition = (ushort) _paths.Count;
                 var possiblePositions = new HashSet<GameCoordinate>();
 
+#warning TODO: do not use 90 degree hardcoded, but use a const like "default rotation angle"
                 for (var x = 1; x < Width - 1; x++)
                     for (var y = 1; y < Height - 1; y++)
                         possiblePositions.Add(new GameCoordinate(x, y, zPosition));

@@ -11,9 +11,9 @@ namespace WeepingSnake.Game.Geometry
     {
         private readonly double _x;
         private readonly double _y;
-        private readonly uint _z;
+        private readonly ushort _z;
 
-        public GameCoordinate(double x, double y, uint z)
+        public GameCoordinate(double x, double y, ushort z)
         {
             _x = x;
             _y = y;
@@ -23,9 +23,9 @@ namespace WeepingSnake.Game.Geometry
         public double X => _x;
         public double Y => _y;
 
-        internal GameCoordinate Translate(PlayerDirection direction) => new(X + direction.X, Y + direction.Y, Z + 1);
+        internal GameCoordinate Translate(PlayerDirection direction) => new(X + direction.X, Y + direction.Y, (ushort)(Z + 1));
 
-        public uint Z => _z;
+        public ushort Z => _z;
 
         /// <summary>
         /// Calculates the von Neumann neighborhood (4-neighborhood).
@@ -57,7 +57,7 @@ namespace WeepingSnake.Game.Geometry
             return new List<(double, double)>() { west, northWest, north, northEast, east, southEast, south, southWest };
         }
 
-#warning TODO: do not use the 1 hardcoded, but use min-speed
+#warning TODO: do not use the 1 hardcoded, but use a const like "speed step"
 
         public override bool Equals(object obj)
         {
