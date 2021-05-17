@@ -26,11 +26,13 @@ namespace WeepingSnake.Game.Player
         /// </summary>
         public static PlayerDirection RandomPlayerDirection()
         {
+#warning TODO: do not use 1 hardcoded, but use a const like "default speed  step"
+            var defaultDirection = new Vector2(0, 1);
             var random = new Random();
-            var directionX = (float)random.NextDouble() * 2 - 1;
-            var directionY = (float)Math.Sqrt(1 - directionX * directionX);
-
-            return new PlayerDirection(directionX, directionY);
+#warning TODO: do not use 90 degree hardcoded, but use a const like "minimum rotation angle"
+            var rotations = random.Next(0, 360 / 90);
+            var rotatedDirection = defaultDirection.RotateRight(90 * rotations);
+            return new PlayerDirection(rotatedDirection.X, rotatedDirection.Y);
         }
 
 #warning TODO: do not use 90 degree hardcoded, but use a const like "default rotation angle"
