@@ -16,11 +16,14 @@ namespace WeepingSnake.Game.Utility.Extensions
 
         public static Vector2 RotateRight(this Vector2 v, int degrees) => RotateLeft(v, -degrees);
 
-#warning TODO: do not use the 1 hardcoded, but use a const like "speed step"
+#warning TODO: do not use the 1 & 0.0001 hardcoded, but use a const like "speed step"
         public static Vector2 Increase(this Vector2 v)
         {
             var length = v.Length();
             var desiredLength = length + 1;
+            if (desiredLength == 0)
+                desiredLength = 0.0001f;
+
             var unitvector = new Vector2(v.X / length, v.Y / length);
             return new Vector2(unitvector.X * desiredLength, unitvector.Y * desiredLength);
         }
@@ -29,6 +32,9 @@ namespace WeepingSnake.Game.Utility.Extensions
         {
             var length = v.Length();
             var desiredLength = length - 1;
+            if (desiredLength == 0)
+                desiredLength = 0.0001f;
+
             var unitvector = new Vector2(v.X / length, v.Y / length);
             return new Vector2(unitvector.X * desiredLength, unitvector.Y * desiredLength);
         }
