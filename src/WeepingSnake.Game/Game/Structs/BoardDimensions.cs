@@ -39,5 +39,7 @@ namespace WeepingSnake.Game.Structs
         public static bool operator ==(BoardDimensions left, BoardDimensions right) => left.Equals(right);
 
         public static bool operator !=(BoardDimensions left, BoardDimensions right) => !(left == right);
+
+        public static implicit operator BoardDimensions(uint dimensions) => new(dimensions, dimensions);
     }
 }

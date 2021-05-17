@@ -37,5 +37,7 @@ namespace WeepingSnake.Game.Structs
         public static bool operator ==(PlayerRange left, PlayerRange right) => left.Equals(right);
 
         public static bool operator !=(PlayerRange left, PlayerRange right) => !(left == right);
+
+        public static implicit operator PlayerRange(ushort playerCount) => new(playerCount, playerCount);
     }
 }

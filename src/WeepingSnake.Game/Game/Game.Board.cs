@@ -21,7 +21,11 @@ namespace WeepingSnake.Game
                 _paths = new List<List<GameDistance>>();
             }
 
-            internal void ApplyAction(PlayerAction action) => throw new NotImplementedException();
+            internal void ApplyAction(PlayerAction action)
+            {
+                // alter the player
+                throw new NotImplementedException();
+            }
 
             internal PlayerOrientation CalculateRandomStartOrientation()
             {

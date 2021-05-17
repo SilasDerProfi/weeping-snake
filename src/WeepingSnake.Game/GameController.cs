@@ -45,5 +45,7 @@ namespace WeepingSnake.Game
 
             return player;
         }
+
+        public void DoAction(Player.Player player, Player.PlayerAction.Action action) => player.AddAction(action);
     }
 }

@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Xunit;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using WeepingSnake.Game.Utility.Extensions;
 
 namespace WeepingSnake.Game.Tests.Utility.Extensions
