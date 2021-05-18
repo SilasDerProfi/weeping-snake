@@ -41,16 +41,17 @@ namespace WeepingSnake.ConsoleClient
                 gameField[point.Item1, point.Item2] = "#";
 
             var stringField = "";
-            for(int line = 0; line < 20; line ++)
+            for(int line = 19; line >= 0; line--)
             {
                 for(int row = 0; row < 20; row++)
                 {
-                    stringField += gameField[line, row] == null ? "  " : "# ";
+                    stringField += gameField[row, line] == null ? "- " : "# ";
                 }
                 stringField += "\b\r\n";
             }
 
             Console.Clear();
+            Console.WriteLine($"Points: {newPaths.FirstOrDefault().Player.Points}");
             Console.Write(stringField);
         }
 
