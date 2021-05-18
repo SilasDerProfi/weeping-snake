@@ -12,7 +12,7 @@ namespace WeepingSnake.ConsoleClient
 
         static void Main(string[] args)
         {
-            var gctrl = new Game.GameController(1, 20);
+            var gctrl = new Game.GameController(1, new Game.Structs.BoardDimensions(20, 20, false));
 
             var playerA = gctrl.JoinGame();
             playerA.AssignedGame.OnLoopTick += PrintGameState;
