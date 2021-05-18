@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Numerics;
 using WeepingSnake.Game.Player;
+using WeepingSnake.Game.Utility.Extensions;
 
 namespace WeepingSnake.Game.Geometry
 {
@@ -12,17 +13,24 @@ namespace WeepingSnake.Game.Geometry
         private readonly float _endX;
         private readonly float _endY;
 
+
+        public GameDistance(Vector2 locationVector, Vector2 directionVector, Player.Player player)
+            : this(locationVector.X, locationVector.Y, directionVector, player)
+        {
+
+        }
+
         public GameDistance(float startX, float startY, PlayerDirection directionVector, Player.Player player)
         {
-            _locationVector = new Vector2(startX, startY);
+            _locationVector = new Vector2((int)startX, (int)startY);
             _directionVector = directionVector;
-            _endX = _locationVector.X + _directionVector.X;
-            _endY = _locationVector.Y + _directionVector.Y;
+            _endX = (int)( _locationVector.X + _directionVector.X);
+            _endY = (int)(_locationVector.Y + _directionVector.Y);
             
             _player = player;
 
             
-            if (_endX < 0)
+            if ((int)_endX < 0)
             {
                 if(_player.AssignedGame.GameBoard.IsInfinite)
                 {
@@ -36,7 +44,7 @@ namespace WeepingSnake.Game.Geometry
                 }
             }
 
-            if (_endX >= _player.AssignedGame.GameBoard.Width)
+            if ((int)_endX >= _player.AssignedGame.GameBoard.Width)
             {
                 if (_player.AssignedGame.GameBoard.IsInfinite)
                 {
@@ -50,7 +58,7 @@ namespace WeepingSnake.Game.Geometry
                 }
             }
 
-            if (_endY < 0)
+            if ((int)_endY < 0)
             {
                 if (_player.AssignedGame.GameBoard.IsInfinite)
                 {
@@ -64,7 +72,7 @@ namespace WeepingSnake.Game.Geometry
                 }
             }
 
-            if (_endY >= _player.AssignedGame.GameBoard.Height)
+            if ((int)_endY >= _player.AssignedGame.GameBoard.Height)
             {
                 if (_player.AssignedGame.GameBoard.IsInfinite)
                 {

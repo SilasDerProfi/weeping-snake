@@ -34,6 +34,7 @@ namespace WeepingSnake.Game
 
                 var newPathPoints = CalculatePointsOnLine(newPath);
 
+                #warning for the last 5 rounds: calculate points; for older rounds: die.
                 for(int i = 2; i <= Math.Min(6, _paths.Count); i++)
                 {
                     _paths[^i].ForEach(path =>
@@ -43,7 +44,8 @@ namespace WeepingSnake.Game
                         {
                             if(path.Player == newPath.Player)
                             {
-                                path.Player.Points -= 10;
+                                if(path.EndX != newPath.StartX || path.EndY != newPath.StartY)
+                                    path.Player.Points -= 10;
                             }
                             else
                             {

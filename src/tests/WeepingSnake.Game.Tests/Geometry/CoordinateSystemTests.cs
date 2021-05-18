@@ -174,5 +174,15 @@ namespace WeepingSnake.Game.Tests.Geometry
             };
             Assert.Equal(expectedD, actualD);
         }
+
+        [Fact]
+        public void CalculatePointsOnPointTest()
+        {
+            var coordianteSystem = new MockCoordinateSystem();
+
+            var actualA = coordianteSystem.CalculatePointsOnLine(1, 4, 1, 4);
+            var expectedA = new List<(int, int)>() { (1,4) };
+            Assert.Equal(expectedA, actualA);
+        }
     }
 }

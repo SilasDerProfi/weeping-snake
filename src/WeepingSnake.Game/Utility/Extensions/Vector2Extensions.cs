@@ -37,5 +37,12 @@ namespace WeepingSnake.Game.Utility.Extensions
             return new Vector2(unitvector.X * desiredLength, unitvector.Y * desiredLength);
         }
 
+        public static Vector2 UnitVector(this Vector2 v)
+        {
+            var length = v.Length();
+            return new Vector2(v.X / length, v.Y / length);
+        }
+
+
     }
 }
