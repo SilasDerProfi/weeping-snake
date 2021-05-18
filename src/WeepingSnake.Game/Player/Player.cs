@@ -11,6 +11,7 @@ namespace WeepingSnake.Game.Player
         private readonly Queue<PlayerAction.Action> _undoneActions;
         private PlayerOrientation _orientation;
         private Game _game;
+        private int _points;
 
         public Player(Person.Person person)
         {
@@ -21,10 +22,17 @@ namespace WeepingSnake.Game.Player
 
         public Game AssignedGame => _game;
 
+        public int Points
+        {
+            get => _points;
+            set => _points = value;
+        }
+
         internal void Join(Game game)
         {
             _game = game;
             _orientation = _game.Join(this);
+            _points = 0;
         }
 
         internal void AddAction(PlayerAction.Action action) => _undoneActions.Enqueue(action);
@@ -36,6 +44,11 @@ namespace WeepingSnake.Game.Player
             return new PlayerAction(this, _orientation, nextAction);
         }
 
+        internal void Die()
+        {
+            throw new NotImplementedException();
+        }
+
         internal GameDistance ApplyOrientationAndMove(PlayerOrientation newOrientation)
         {
             var oldX = (float)_orientation.Position.X;
@@ -44,7 +57,7 @@ namespace WeepingSnake.Game.Player
 
             _orientation = newOrientation;
             
-            return new GameDistance(oldX, oldY, currentDirection);
+            return new GameDistance(oldX, oldY, currentDirection, this);
         }
     }
 }

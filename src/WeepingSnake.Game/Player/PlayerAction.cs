@@ -38,7 +38,7 @@ namespace WeepingSnake.Game.Player
             var path = _player.ApplyOrientationAndMove(_newOrientation);
 
             if (_action == Action.JUMP)
-                return new GameDistance(path.EndX, path.EndY, new PlayerDirection(0, 0));
+                return new GameDistance(path.EndX, path.EndY, new PlayerDirection(0, 0), _player);
             else
                 return path;
         }

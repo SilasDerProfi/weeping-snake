@@ -26,6 +26,8 @@ namespace WeepingSnake.Game
 
         public Guid GameId => _gameId;
 
+        public Board GameBoard => _board;
+
         public List<List<GameDistance>> BoardPaths => _board.Paths;
 
         internal bool IsFull() => _allowedPlayerCount.Max == _players.Count;

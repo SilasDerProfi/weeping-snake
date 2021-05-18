@@ -21,6 +21,8 @@ namespace WeepingSnake.Game
                 _paths = new List<List<GameDistance>>();
             }
 
+            internal bool IsInfinite => _isInfinite;
+
             internal void ApplyAction(PlayerAction action)
             {
                 var roundNumber = action.NewOrientation.Position.Z;
@@ -30,8 +32,27 @@ namespace WeepingSnake.Game
                 var currentRoundPathList = _paths.GetOrCreate(roundNumber - 1, () => new List<GameDistance>());
                 currentRoundPathList.Add(newPath);
 
+                var newPathPoints = CalculatePointsOnLine(newPath);
 
-                #warning calculate points for the player
+                for(int i = 2; i <= Math.Min(6, _paths.Count); i++)
+                {
+                    _paths[^i].ForEach(path =>
+                    {
+                        var oldPathPoints = CalculatePointsOnLine(path);
+                        if (oldPathPoints.Intersect(newPathPoints).Any())
+                        {
+                            if(path.Player == newPath.Player)
+                            {
+                                path.Player.Points -= 10;
+                            }
+                            else
+                            {
+                                newPath.Player.Points += 2;
+                                path.Player.Points -= 1;
+                            }
+                        }
+                    });
+                }
             }
 
             internal PlayerOrientation CalculateRandomStartOrientation()

@@ -13,8 +13,8 @@ namespace WeepingSnake.Game.Geometry
             _dimensions = dimensions;
         }
 
-        protected uint Height => _dimensions.Height;
-        protected uint Width => _dimensions.Width;
+        internal uint Height => _dimensions.Height;
+        internal uint Width => _dimensions.Width;
 
         /// <summary>
         /// Rasterisation via Bresenham's line algorithm
@@ -42,11 +42,20 @@ namespace WeepingSnake.Game.Geometry
                     deltaError -= deltaY;
 
                     if (deltaError >= 0) continue;
-                    
+
                     y += yStep;
                     deltaError += deltaX;
                 }
             }
+        }
+
+        /// <summary>
+        /// Rasterisation via Bresenham's line algorithm
+        /// </summary>
+        /// <returns>Enumeration of the sweeping pixel</returns>
+        protected IEnumerable<(int, int)> CalculatePointsOnLine(GameDistance path)
+        {
+            return CalculatePointsOnLine((int)path.StartX, (int)path.StartY, (int)path.EndX, (int)path.EndY);
         }
     }
 }
