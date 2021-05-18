@@ -8,11 +8,11 @@ namespace WeepingSnake.ConsoleClient
 {
     static class Program
     {
-        private static string[,] gameField = new string[50,50];
+        private static string[,] gameField = new string[20,20];
 
         static void Main(string[] args)
         {
-            var gctrl = new Game.GameController(1, 50);
+            var gctrl = new Game.GameController(1, 20);
 
             var playerA = gctrl.JoinGame();
             playerA.AssignedGame.OnLoopTick += PrintGameState;
@@ -41,9 +41,9 @@ namespace WeepingSnake.ConsoleClient
                 gameField[point.Item1, point.Item2] = "#";
 
             var stringField = "";
-            for(int line = 0; line < 50; line ++)
+            for(int line = 0; line < 20; line ++)
             {
-                for(int row = 0; row < 50; row++)
+                for(int row = 0; row < 20; row++)
                 {
                     stringField += gameField[line, row] == null ? "  " : "# ";
                 }
