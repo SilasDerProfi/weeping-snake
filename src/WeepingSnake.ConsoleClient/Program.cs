@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Runtime.CompilerServices;
 using WeepingSnake.Game.Geometry;
 
@@ -7,6 +8,8 @@ namespace WeepingSnake.ConsoleClient
 {
     static class Program
     {
+        private static string[,] gameField = new string[50,50];
+
         static void Main(string[] args)
         {
             var gctrl = new Game.GameController(1, 50);
@@ -27,16 +30,41 @@ namespace WeepingSnake.ConsoleClient
                     _ => Game.Player.PlayerAction.Action.CHANGE_NOTHING
                 });
             }
-            
-            
-            Console.ReadLine();
         }
 
         [MethodImpl(MethodImplOptions.Synchronized)]
         private static void PrintGameState(List<GameDistance> newPaths)
         {
-            Console.WriteLine($"New Gamestate with {newPaths.Count} new Paths:");
-            newPaths.ForEach(p => Console.WriteLine($"- ({(int)p.StartX};{(int)p.StartY}) - ({(int)p.EndX};{(int)p.EndY})"));
+            var points = newPaths.SelectMany(path => PointsInRectangle((int)path.StartX, (int)path.StartY, (int)path.EndX, (int)path.EndY));
+
+            foreach(var point in points)
+                gameField[point.Item1, point.Item2] = "#";
+
+            var stringField = "";
+            for(int line = 0; line < 50; line ++)
+            {
+                for(int row = 0; row < 50; row++)
+                {
+                    stringField += gameField[line, row] == null ? "  " : "# ";
+                }
+                stringField += "\b\r\n";
+            }
+
+            Console.Clear();
+            Console.Write(stringField);
+        }
+
+
+        public static IEnumerable<(int, int)> PointsInRectangle(int aX, int aY, int bX, int bY)
+        {
+            int xFrom = Math.Min(aX, bX);
+            int xTo = Math.Max(aX, bX);
+            int yFrom = Math.Min(aY, bY);
+            int yTo = Math.Max(aY, bY);
+
+            for (int xPosition = xFrom; xPosition <= xTo; xPosition++)
+                for (int yPosition = yFrom; yPosition <= yTo; yPosition++)
+                    yield return (xPosition, yPosition);
         }
     }
 }
