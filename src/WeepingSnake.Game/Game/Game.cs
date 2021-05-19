@@ -90,10 +90,16 @@ namespace WeepingSnake.Game
                 var action = player.PopNextAction();
                 _board.ApplyAction(action);
             }
-            OnLoopTick?.Invoke(_board.Paths[^1]);
+
+            var currentRoundNumber = _board.Paths.Count;
+            var playerLinesStartingRoundIndex = Math.Max(0, currentRoundNumber - 6);
+            var roundsWithPlayerLines = currentRoundNumber - playerLinesStartingRoundIndex;
+
+
+            OnLoopTick?.Invoke(_board.Paths.GetRange(playerLinesStartingRoundIndex, roundsWithPlayerLines).SelectMany(paths => paths).ToList());
         }
 
-        public delegate void LoopTickHandler(List<GameDistance> newPaths);
+        public delegate void LoopTickHandler(List<GameDistance> playerPaths);
         public event LoopTickHandler OnLoopTick;
 
         public override bool Equals(object obj) => obj is Game game && _gameId.Equals(game._gameId);

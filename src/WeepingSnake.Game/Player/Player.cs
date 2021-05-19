@@ -40,7 +40,21 @@ namespace WeepingSnake.Game.Player
             get => _points;
             set => _points = value;
         }
-        public bool IsHuman => _isHuman;
+        public bool IsHuman
+        {
+            get
+            {
+                return _isHuman;
+            }
+        }
+
+        public bool IsAlive
+        {
+            get
+            {
+                return _isAlive;
+            }
+        }
 
         internal void Join(Game game)
         {

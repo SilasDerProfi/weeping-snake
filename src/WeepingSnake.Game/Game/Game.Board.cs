@@ -40,22 +40,25 @@ namespace WeepingSnake.Game
 
                 var newPathPoints = CalculatePointsOnLine(newPath);
 
-                #warning for the last 5 rounds: calculate points; for older rounds: die.
+                #warning for the last 5 rounds: calculate points; for older rounds: die or ignore
                 for(int i = 2; i <= Math.Min(6, _paths.Count); i++)
                 {
                     _paths[^i].ForEach(path =>
                     {
-                        var oldPathPoints = CalculatePointsOnLine(path);
-                        if (oldPathPoints.Intersect(newPathPoints).Any())
+                        if (path.Player.IsAlive)
                         {
-                            if (path.Player == newPath.Player)
+                            var oldPathPoints = CalculatePointsOnLine(path);
+                            if (oldPathPoints.Intersect(newPathPoints).Any())
                             {
-                                path.Player.Points -= 10;
-                            }
-                            else
-                            {
-                                newPath.Player.Points += 2;
-                                path.Player.Points -= 1;
+                                if (path.Player == newPath.Player)
+                                {
+                                    path.Player.Points -= 10;
+                                }
+                                else
+                                {
+                                    newPath.Player.Points += 2;
+                                    path.Player.Points -= 1;
+                                }
                             }
                         }
                     });

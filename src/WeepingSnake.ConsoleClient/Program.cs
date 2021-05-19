@@ -8,11 +8,11 @@ namespace WeepingSnake.ConsoleClient
 {
     static class Program
     {
-        private static string[,] gameField = new string[20,20];
+        private static List<object> _knownPlayers = new List<object>();
 
         static void Main(string[] args)
         {
-            var gctrl = new Game.GameController(1, new Game.Structs.BoardDimensions(20, 20, false));
+            var gctrl = new Game.GameController(2, new Game.Structs.BoardDimensions(20, 20, false));
 
             var playerA = gctrl.JoinGame();
             gctrl.DoAction(playerA, Game.Player.PlayerAction.Action.JUMP);
@@ -37,25 +37,44 @@ namespace WeepingSnake.ConsoleClient
         }
 
         [MethodImpl(MethodImplOptions.Synchronized)]
-        private static void PrintGameState(List<GameDistance> newPaths)
+        private static void PrintGameState(List<GameDistance> allPlayerPaths)
         {
-            var points = newPaths.SelectMany(path => PointsInRectangle((int)path.StartX, (int)path.StartY, (int)path.EndX, (int)path.EndY));
+            string[,] gameField = new string[20, 20];
 
-            foreach(var point in points)
-                gameField[point.Item1, point.Item2] = "#";
+            foreach(var path in allPlayerPaths)
+            {
+                if (!path.Player.IsAlive)
+                    continue;
+
+                var playerNumber = _knownPlayers.IndexOf(path.Player);
+
+                if(playerNumber == -1)
+                {
+                    playerNumber = _knownPlayers.Count;
+                    _knownPlayers.Add(path.Player);
+                }
+
+                var points = PointsInRectangle((int)path.StartX, (int)path.StartY, (int)path.EndX, (int)path.EndY);
+
+                foreach(var point in points)
+                {
+                    gameField[point.Item1, point.Item2] = $"{playerNumber} ";
+                }
+            }
+
 
             var stringField = "";
             for(int line = 19; line >= 0; line--)
             {
                 for(int row = 0; row < 20; row++)
                 {
-                    stringField += gameField[row, line] == null ? "- " : "# ";
+                    stringField += gameField[row, line] == null ? "- " : gameField[row, line];
                 }
                 stringField += "\b\r\n";
             }
 
             Console.Clear();
-            Console.WriteLine(newPaths.FirstOrDefault().Player.Points);
+            Console.WriteLine(allPlayerPaths.FirstOrDefault().Player.Points);
             Console.Write(stringField);
         }
 
