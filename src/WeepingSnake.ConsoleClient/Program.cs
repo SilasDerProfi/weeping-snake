@@ -12,9 +12,13 @@ namespace WeepingSnake.ConsoleClient
 
         static void Main(string[] args)
         {
-            var gctrl = new Game.GameController(3, new Game.Structs.BoardDimensions(20, 20, false));
+            var gctrl = new Game.GameController(1, new Game.Structs.BoardDimensions(20, 20, false));
 
             var playerA = gctrl.JoinGame();
+            gctrl.DoAction(playerA, Game.Player.PlayerAction.Action.JUMP);
+            //gctrl.DoAction(playerA, Game.Player.PlayerAction.Action.TURN_RIGHT);
+            //gctrl.DoAction(playerA, Game.Player.PlayerAction.Action.TURN_RIGHT);
+            //gctrl.DoAction(playerA, Game.Player.PlayerAction.Action.TURN_RIGHT);
             playerA.AssignedGame.OnLoopTick += PrintGameState;
 
             ConsoleKeyInfo pressedKey;
@@ -51,6 +55,7 @@ namespace WeepingSnake.ConsoleClient
             }
 
             Console.Clear();
+            Console.WriteLine(newPaths.FirstOrDefault().Player.Points);
             Console.Write(stringField);
         }
 

@@ -19,6 +19,14 @@ namespace WeepingSnake.Game.Player
         public float X => _direction.X;
         public float Y => _direction.Y;
 
+        public Vector2 DirectionVector
+        {
+            get
+            {
+                return _direction;
+            }
+        }
+
         public float Length => _length;
 
         /// <summary>

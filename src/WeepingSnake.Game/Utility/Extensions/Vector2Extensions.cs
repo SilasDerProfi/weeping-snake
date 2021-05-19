@@ -42,6 +42,11 @@ namespace WeepingSnake.Game.Utility.Extensions
             return new Vector2(v.X / length, v.Y / length);
         }
 
+        public static Vector2 DefaultDistanceVector(this Vector2 v)
+        {
+            var unitVector = v.UnitVector();
+            return new Vector2(unitVector.X * GameConfiguration.DefaultDistance, unitVector.Y * GameConfiguration.DefaultDistance);
+        }
 
     }
 }

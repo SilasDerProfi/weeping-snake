@@ -24,9 +24,12 @@ namespace WeepingSnake.Game.Geometry
         {
             _locationVector = new Vector2((int)startX, (int)startY);
             _directionVector = directionVector;
-            _endX = (int)( _locationVector.X + _directionVector.X);
+            _endX = (int)(_locationVector.X + _directionVector.X);
             _endY = (int)(_locationVector.Y + _directionVector.Y);
-            
+
+            if(_directionVector.Length != 0)
+                _locationVector += _directionVector.DirectionVector.DefaultDistanceVector();
+
             _player = player;
 
             
