@@ -6,7 +6,7 @@
 
 
 
-# Getting Started
+## Getting Started
 
 1. Make sure that dotnet is installed on your machine. You need it to `build`, `test` and `run` the code
    - To **install dotnet** for example with pacman you can use `sudo pacman -S dotnet-sdk aspnet-runtime`
@@ -16,20 +16,20 @@
    - E.g. `git clone https://github.com/SilasDerProfi/weeping-snake.git`
    - Obviously you can specify a specific directory for the clone
 
-## Build
+### Build
 
 With every commit the code is compiled automatically. You can see if the build was successful by the badge in this readme.
 
 To build the code, you must run `dotnet build src` in the directory of your clone
 
-## Test
+### Test
 
 With every commit the code is tested automatically. You can see if the test were successful by the badge in this readme.
 
 To build the code, you must run `dotnet test src` in the directory of your clone
 
 
-## Run
+### Run
 
 To run the code (and build it if you haven't already), you need to run `dotnet run --project src/WeepingSnake.ConsoleClient` in the directory of your clone
 
