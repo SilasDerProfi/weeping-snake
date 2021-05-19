@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using WeepingSnake.Game.Geometry;
 using WeepingSnake.Game.Player;
+using WeepingSnake.Game.Player.ComputerPlayer;
 using WeepingSnake.Game.Structs;
 
 namespace WeepingSnake.Game
@@ -23,6 +24,13 @@ namespace WeepingSnake.Game
             _players = new List<Player.Player>();
             _allowedPlayerCount = allowedPlayerCount;
             _board = new Board(boardDimensions);
+
+            for(int playerNo = 0; playerNo < allowedPlayerCount.Max; playerNo++)
+            {
+                var bot = new Player.Player(new RandomPlayer());
+                bot.Join(this);
+            }
+
         }
 
         public Guid GameId => _gameId;
@@ -43,7 +51,7 @@ namespace WeepingSnake.Game
 
         internal PlayerOrientation Join(Player.Player player)
         {
-            if (IsFullForHumans() && player.IsHuman || IsFullForHumansOrBots())
+            if (IsFullForHumans() && player.IsHuman || IsFullForHumansOrBots() && !player.IsHuman)
                 throw new ArgumentOutOfRangeException(nameof(player), "A player cannot join a full game.");
 
             if(!Equals(player.AssignedGame))
@@ -59,6 +67,18 @@ namespace WeepingSnake.Game
             _players.Add(player);
 
             return _board.CalculateRandomStartOrientation();
+        }
+
+        internal void Leave(Player.Player player)
+        {
+            if (_players.Contains(player))
+            {
+                _players.Remove(player);
+            }
+            else
+            {
+                throw new ArgumentException("A player can leave only the game he is participating.", nameof(player));
+            }
         }
 
         internal void ApplyOneActionPerPlayer()

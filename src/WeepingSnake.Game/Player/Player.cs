@@ -10,11 +10,13 @@ namespace WeepingSnake.Game.Player
     {
         private readonly Guid _playerId;
         private readonly Person.Person _person;
+        private readonly IComputerPlayer _computerPlayer;
         private readonly Queue<PlayerAction.Action> _undoneActions;
         private PlayerOrientation _orientation;
         private Game _game;
         private int _points;
         private bool _isHuman;
+        private bool _isAlive = true;
 
         public Player(Person.Person person)
         {
@@ -24,10 +26,10 @@ namespace WeepingSnake.Game.Player
             _isHuman = true;
         }
 
-        public Player(IComputerPlayer computerplayer)
+        public Player(IComputerPlayer computerPlayer)
         {
-            _undoneActions = computerplayer.GenerateInitialActions();
-            computerplayer.ControlledPlayer = this;
+            _computerPlayer = computerPlayer;
+            _undoneActions = computerPlayer.GenerateInitialActions();
             _isHuman = false;
         }
 
@@ -45,6 +47,9 @@ namespace WeepingSnake.Game.Player
             _game = game;
             _orientation = _game.Join(this);
             _points = 0;
+            
+            if(!IsHuman)
+                _computerPlayer.ControlledPlayer = this;
         }
 
         internal void AddAction(PlayerAction.Action action) => _undoneActions.Enqueue(action);
@@ -58,7 +63,15 @@ namespace WeepingSnake.Game.Player
 
         internal void Die()
         {
-            throw new NotImplementedException();
+            _isAlive = false;
+            _game.Leave(this);
+
+            if(_person != null)
+            {
+#warning todo apply points
+            }
+
+            _game = null;
         }
 
         internal GameDistance ApplyOrientationAndMove(PlayerOrientation newOrientation)
