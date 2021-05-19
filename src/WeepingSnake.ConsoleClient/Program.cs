@@ -12,7 +12,7 @@ namespace WeepingSnake.ConsoleClient
 
         static void Main(string[] args)
         {
-            var gctrl = new Game.GameController(2, new Game.Structs.BoardDimensions(20, 20, false));
+            var gctrl = new Game.GameController(3, new Game.Structs.BoardDimensions(20, 20, false));
 
             var playerA = gctrl.JoinGame();
             playerA.AssignedGame.OnLoopTick += PrintGameState;
@@ -51,7 +51,6 @@ namespace WeepingSnake.ConsoleClient
             }
 
             Console.Clear();
-            Console.WriteLine($"Points: {newPaths.FirstOrDefault().Player.Points}");
             Console.Write(stringField);
         }
 

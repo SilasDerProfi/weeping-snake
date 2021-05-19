@@ -27,7 +27,13 @@ namespace WeepingSnake.Game
             {
                 var roundNumber = action.NewOrientation.Position.Z;
 
-                var newPath = action.Apply();
+                var resultingPath = action.Apply();
+                
+                if (!resultingPath.HasValue)
+                    return;
+
+                var newPath = resultingPath.Value;
+
 
                 var currentRoundPathList = _paths.GetOrCreate(roundNumber - 1, () => new List<GameDistance>());
                 currentRoundPathList.Add(newPath);

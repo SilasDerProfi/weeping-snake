@@ -33,14 +33,17 @@ namespace WeepingSnake.Game.Player
             JUMP,
         }
 
-        internal GameDistance Apply()
+        internal GameDistance? Apply()
         {
             var path = _player.ApplyOrientationAndMove(_newOrientation);
 
-            if (_action == Action.JUMP)
-                return new GameDistance(path.EndX, path.EndY, new PlayerDirection(0, 0), _player);
+            if (path == null)
+                return null;
+
+            if (_action == Action.JUMP && path.HasValue)
+                return new GameDistance(path.Value.EndX, path.Value.EndY, new PlayerDirection(0, 0), _player);
             else
-                return path;
+                return path.Value;
         }
     }
 }

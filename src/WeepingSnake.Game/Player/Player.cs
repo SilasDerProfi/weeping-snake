@@ -74,14 +74,19 @@ namespace WeepingSnake.Game.Player
             _game = null;
         }
 
-        internal GameDistance ApplyOrientationAndMove(PlayerOrientation newOrientation)
+        internal GameDistance? ApplyOrientationAndMove(PlayerOrientation newOrientation)
         {
-            var locationVector = new Vector2((float)_orientation.Position.X, (float)_orientation.Position.Y);
-            var directionVector = new Vector2(newOrientation.Direction.X, newOrientation.Direction.Y);
+            if (_isAlive)
+            {
+                var locationVector = new Vector2((float)_orientation.Position.X, (float)_orientation.Position.Y);
+                var directionVector = new Vector2(newOrientation.Direction.X, newOrientation.Direction.Y);
 
-            _orientation = newOrientation;
+                _orientation = newOrientation;
 
-            return new GameDistance(locationVector, directionVector, this);
+                return new GameDistance(locationVector, directionVector, this);
+            }
+
+            return null;
         }
     }
 }

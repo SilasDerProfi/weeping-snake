@@ -41,6 +41,7 @@ namespace WeepingSnake.Game.Geometry
                 {
                     _endX = 0;
                     _player.Die();
+                    return;
                 }
             }
 
@@ -55,6 +56,7 @@ namespace WeepingSnake.Game.Geometry
                 {
                     _endX = _player.AssignedGame.GameBoard.Width - 1;
                     _player.Die();
+                    return;
                 }
             }
 
@@ -69,6 +71,7 @@ namespace WeepingSnake.Game.Geometry
                 {
                     _endY = 0;
                     _player.Die();
+                    return;
                 }
             }
 
@@ -83,6 +86,7 @@ namespace WeepingSnake.Game.Geometry
                 {
                     _endY = _player.AssignedGame.GameBoard.Height - 1;
                     _player.Die();
+                    return;
                 }
             }
         }
