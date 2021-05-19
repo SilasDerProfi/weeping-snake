@@ -8,6 +8,119 @@ namespace WeepingSnake.Game.Person
     public class Person
     {
         private readonly Guid _personId;
-        private readonly MailAddress _mailAddress;
+        private MailAddress _mailAddress;
+
+        private string _password;
+        private int _playedGames;
+        private int _maximumPointsInGame;
+        private int _totalPoints;
+
+
+        private Person(Guid? personId, MailAddress mailAddress, string password, int playedGames, int maximumPointsInGame, int totalPoints)
+        {
+            _personId = personId ?? Guid.NewGuid();
+            _mailAddress = mailAddress;
+            _password = password;
+            _playedGames = playedGames;
+            _maximumPointsInGame = maximumPointsInGame;
+            _totalPoints = totalPoints;
+        }
+
+        public static void Register(string emailAddress, string password, string passwordRetyped)
+        {
+            if (PersonDatabase.Exists(emailAddress))
+                return;
+
+            if (password != passwordRetyped)
+                return;
+
+            if (!MailAddress.TryCreate(emailAddress, out var emailAdressObject))
+                return;
+
+            var newPerson = new Person(null, emailAdressObject, password, 0, 0, 0);
+
+            PersonDatabase.Register(newPerson);
+        }
+
+
+        public static Person Login(string emailAddress, string password)
+        {
+            if (!PersonDatabase.Exists(emailAddress))
+                return null;
+
+            var person = PersonDatabase.GetPerson(emailAddress);
+
+            if (person._password == password)
+                return person;
+            else
+                return null;
+        }
+
+
+        public MailAddress MailAddress
+        {
+            get
+            {
+                return _mailAddress;
+            }
+            internal set
+            {
+                _mailAddress = value;
+            }
+        }
+
+        internal Guid PersonId
+        {
+            get
+            {
+                return _personId;
+            }
+        }
+
+        internal string Password
+        {
+            get
+            {
+                return _password;
+            }
+            set
+            {
+                _password = value;
+            }
+        }
+
+        public bool ChangeEmail(string newEmailAdress)
+        {
+            if(MailAddress.TryCreate(newEmailAdress, out _mailAddress))
+            {
+                PersonDatabase.UpdateEmail(_personId, _mailAddress);
+                return true;
+            }
+
+            return false;
+        }
+
+        public bool ChangePassword(string password, string passwordRetyped)
+        {
+            if(password == passwordRetyped)
+            {
+                _password = password;
+                PersonDatabase.UpdatePassword(_personId, _password);
+                return true;
+            }
+
+            return false;
+        }
+
+        internal Person Copy()
+        {
+            return new Person(_personId, _mailAddress, _password, _playedGames, _maximumPointsInGame, _totalPoints);
+        }
+
+        public override int GetHashCode()
+        {
+            return HashCode.Combine(_mailAddress, _personId);
+        }
+
     }
 }
