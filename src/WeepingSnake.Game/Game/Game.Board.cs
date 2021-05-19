@@ -70,9 +70,8 @@ namespace WeepingSnake.Game
                 var zPosition = (ushort) _paths.Count;
                 var possiblePositions = new HashSet<GameCoordinate>();
 
-#warning TODO: do not use 1 hardcoded, but use a const like "default distance"
-                for (var x = 1; x < Width - 1; x++)
-                    for (var y = 1; y < Height - 1; y++)
+                for (var x = GameConfiguration.DefaultDistance; x < Width - GameConfiguration.DefaultDistance; x++)
+                    for (var y = GameConfiguration.DefaultDistance; y < Height - GameConfiguration.DefaultDistance; y++)
                         possiblePositions.Add(new GameCoordinate(x, y, zPosition));
 
                 if (zPosition > 0)
@@ -93,7 +92,6 @@ namespace WeepingSnake.Game
                     }
                 }
 
-#warning TODO: select the one in the largest cluster (Lloyd) nearest to the center
                 return possiblePositions.Random();
             }
 

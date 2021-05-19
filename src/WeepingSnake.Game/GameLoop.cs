@@ -21,14 +21,12 @@ namespace WeepingSnake.Game
             _loopTask?.Dispose();
             _loopTask = Task.Run(() => RunInfinite());
         }
-
-#warning todo: dont use fixed 1000, use the const "round length"
         private void RunInfinite() => Parallel.ForEach(_games.GetInfiniteEnumerator(), game =>
         {
             lock (game)
             {
                 game.ApplyOneActionPerPlayer();
-                Thread.Sleep(1000);
+                Thread.Sleep(GameConfiguration.RoundDuration);
             }
         });
 

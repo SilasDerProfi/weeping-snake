@@ -33,10 +33,10 @@ namespace WeepingSnake.Game.Geometry
         /// <returns>4 neighbors (top, bottom, left, right)</returns>
         public IEnumerable<(double, double)> VonNeumannNeighborhood()
         {
-            var west = (X - 1, Y);
-            var north = (X, Y - 1);
-            var east = (X + 1, Y);
-            var south = (X, Y + 1);
+            var west = (X - GameConfiguration.DefaultDistance, Y);
+            var north = (X, Y - GameConfiguration.DefaultDistance);
+            var east = (X + GameConfiguration.DefaultDistance, Y);
+            var south = (X, Y + GameConfiguration.DefaultDistance);
             return new List<(double, double)>() { west, north, east, south };
         }
 
@@ -46,18 +46,16 @@ namespace WeepingSnake.Game.Geometry
         /// <returns>8 neighbors (all surrounding cells)</returns>
         public IEnumerable<(double, double)> MooreNeighborhood()
         {
-            var west = (X - 1, Y);
-            var northWest = (X - 1, Y - 1);
-            var north = (X, Y - 1);
-            var northEast = (X + 1, Y - 1);
-            var east = (X + 1, Y);
-            var southEast = (X + 1, Y + 1);
-            var south = (X, Y + 1);
-            var southWest = (X - 1, Y + 1);
+            var west = (X - GameConfiguration.DefaultDistance, Y);
+            var northWest = (X - GameConfiguration.DefaultDistance, Y - GameConfiguration.DefaultDistance);
+            var north = (X, Y - GameConfiguration.DefaultDistance);
+            var northEast = (X + GameConfiguration.DefaultDistance, Y - GameConfiguration.DefaultDistance);
+            var east = (X + GameConfiguration.DefaultDistance, Y);
+            var southEast = (X + GameConfiguration.DefaultDistance, Y + GameConfiguration.DefaultDistance);
+            var south = (X, Y + GameConfiguration.DefaultDistance);
+            var southWest = (X - GameConfiguration.DefaultDistance, Y + GameConfiguration.DefaultDistance);
             return new List<(double, double)>() { west, northWest, north, northEast, east, southEast, south, southWest };
         }
-
-#warning TODO: do not use the 1 hardcoded, but use a const like "speed step"
 
         public override bool Equals(object obj)
         {
