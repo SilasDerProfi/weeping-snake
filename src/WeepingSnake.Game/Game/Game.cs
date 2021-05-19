@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using WeepingSnake.Game.Geometry;
 using WeepingSnake.Game.Player;
 using WeepingSnake.Game.Structs;
@@ -30,15 +31,30 @@ namespace WeepingSnake.Game
 
         public List<List<GameDistance>> BoardPaths => _board.Paths;
 
-        internal bool IsFull() => _allowedPlayerCount.Max == _players.Count;
+        internal bool IsFullForHumans()
+        {
+            return _allowedPlayerCount.Max == _players.Count(player => player.IsHuman);
+        }
+
+        internal bool IsFullForHumansOrBots()
+        {
+            return _allowedPlayerCount.Max == _players.Count();
+        }
 
         internal PlayerOrientation Join(Player.Player player)
         {
-            if (IsFull())
+            if (IsFullForHumans() && player.IsHuman || IsFullForHumansOrBots())
                 throw new ArgumentOutOfRangeException(nameof(player), "A player cannot join a full game.");
 
             if(!Equals(player.AssignedGame))
                 throw new ArgumentException("A player can join only the game assigned to him.", nameof(player));
+
+            if (player.IsHuman && IsFullForHumansOrBots())
+            {
+                var firstFoundBot = _players.FirstOrDefault(player => !player.IsHuman);
+                firstFoundBot.Die();
+                _players.Remove(firstFoundBot);
+            }
 
             _players.Add(player);
 

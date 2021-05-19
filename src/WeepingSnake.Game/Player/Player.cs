@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Numerics;
 using WeepingSnake.Game.Geometry;
+using WeepingSnake.Game.Player.ComputerPlayer;
 
 namespace WeepingSnake.Game.Player
 {
@@ -13,12 +14,21 @@ namespace WeepingSnake.Game.Player
         private PlayerOrientation _orientation;
         private Game _game;
         private int _points;
+        private bool _isHuman;
 
         public Player(Person.Person person)
         {
             _playerId = Guid.NewGuid();
             _person = person;
             _undoneActions = new Queue<PlayerAction.Action>();
+            _isHuman = true;
+        }
+
+        public Player(IComputerPlayer computerplayer)
+        {
+            _undoneActions = computerplayer.GenerateInitialActions();
+            computerplayer.ControlledPlayer = this;
+            _isHuman = false;
         }
 
         public Game AssignedGame => _game;
@@ -28,6 +38,7 @@ namespace WeepingSnake.Game.Player
             get => _points;
             set => _points = value;
         }
+        public bool IsHuman => _isHuman;
 
         internal void Join(Game game)
         {
