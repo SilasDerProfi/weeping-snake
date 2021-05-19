@@ -48,10 +48,9 @@ namespace WeepingSnake.Game
                         var oldPathPoints = CalculatePointsOnLine(path);
                         if (oldPathPoints.Intersect(newPathPoints).Any())
                         {
-                            if(path.Player == newPath.Player)
+                            if (path.Player == newPath.Player)
                             {
-                                if(path.EndX != newPath.StartX || path.EndY != newPath.StartY)
-                                    path.Player.Points -= 10;
+                                path.Player.Points -= 10;
                             }
                             else
                             {
