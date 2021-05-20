@@ -24,13 +24,14 @@ namespace WeepingSnake.ConsoleClient.Navigation
         public void PrintPage()
         {
             Console.Clear();
-            Console.WriteLine(@" _  _ _      _                          ");
-            Console.WriteLine(@"| || (_)__ _| |_  ___ __ ___ _ _ ___ ___");
-            Console.WriteLine(@"| __ | / _` | ' \(_-</ _/ _ \ '_/ -_|_-<");
-            Console.WriteLine(@"|_||_|_\__, |_||_/__/\__\___/_| \___/__/");
-            Console.WriteLine(@"       |___/                            ");
             Console.WriteLine();
-            Console.WriteLine(@"========================================");
+            Console.WriteLine(@"         _  _ _      _                          ");
+            Console.WriteLine(@"        | || (_)__ _| |_  ___ __ ___ _ _ ___ ___");
+            Console.WriteLine(@"        | __ | / _` | ' \(_-</ _/ _ \ '_/ -_|_-<");
+            Console.WriteLine(@"        |_||_|_\__, |_||_/__/\__\___/_| \___/__/");
+            Console.WriteLine(@"               |___/                            ");
+            Console.WriteLine();
+            Console.WriteLine(@"=========================================================");
             Console.WriteLine();
 
             PrintHighscores();
@@ -45,42 +46,54 @@ namespace WeepingSnake.ConsoleClient.Navigation
 
         public Action ProcessInput()
         {
-            var userInput = Console.ReadLine().ToUpper();
+            Console.ReadKey();
 
-            if (userInput == "B")
+            return () =>
             {
-                return () =>
+                if (_person == null)
                 {
-                    if(_person == null)
-                    {
-                        new StartPage().Open(_gameController);
-                    }
-                    else
-                    {
-                        new UserPage().Open((_gameController, _person));
-                    }
-                };
-            }
-            else
-            {
-                return () =>
+                    new StartPage().Open(_gameController);
+                }
+                else
                 {
-                    Console.WriteLine("There was an error. Press any key.");
-                    Console.ReadKey();
-                    new ShowHighscoresPage().Open((_gameController, _person));
-                };
-            }
+                    new UserPage().Open((_gameController, _person));
+                }
+            };
         }
 
         private void PrintHighscores()
         {
-            Console.WriteLine($" Username    | Max. Points | Total Points | Played Games");
+            Console.WriteLine($"    Username | Max. Points | Total Points | Played Games");
             Console.WriteLine("---------------------------------------------------------");
 
-            foreach (var highscoreEntry in HighscoreEntry.GetHighscoreEntries())
+            var highscores = HighscoreEntry.GetHighscoreEntries();
+
+            var developerUsername = "Silas";
+            var developerPlayedGames = 1;
+            var developerMaximumPoints = 1;
+            var developerTotalPoints = 1;
+
+            if (highscores.Any())
             {
-                Console.WriteLine($" {highscoreEntry.Username:12}| {highscoreEntry.MaximumPointsInGame:12}| {highscoreEntry.TotalPoints: 13}| {highscoreEntry.PlayedGames:11}");
+                developerPlayedGames += highscores.Max(h => h.PlayedGames);
+                developerMaximumPoints += highscores.Max(h => h.MaximumPointsInGame);
+                developerTotalPoints += highscores.Max(h => h.TotalPoints);
             }
+
+            highscores.Insert(0, new HighscoreEntry(developerUsername, developerPlayedGames, developerMaximumPoints, developerTotalPoints));
+
+            for(int scoreBoardPlace = 1; scoreBoardPlace <= highscores.Count; scoreBoardPlace++)
+            {
+                var highscoreEntry = highscores[scoreBoardPlace - 1];
+
+                var scoreBoardPlaceString = $"#{scoreBoardPlace}";
+                var userName = scoreBoardPlaceString + highscoreEntry.Username.PadLeft(12 - scoreBoardPlaceString.Length);
+
+                Console.WriteLine($"{userName} |{highscoreEntry.MaximumPointsInGame,12} |{highscoreEntry.TotalPoints,13} |{highscoreEntry.PlayedGames,13}");
+            }
+
+            Console.WriteLine("---------------------------------------------------------");
+            Console.WriteLine();
         }
     }
 }

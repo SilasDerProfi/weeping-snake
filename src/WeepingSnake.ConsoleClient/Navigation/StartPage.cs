@@ -22,6 +22,7 @@ namespace WeepingSnake.ConsoleClient.Navigation
         public void PrintPage()
         {
             Console.Clear();
+            Console.WriteLine();
             Console.WriteLine(@"__      __            _             ___           _       ");
             Console.WriteLine(@"\ \    / /__ ___ _ __(_)_ _  __ _  / __|_ _  __ _| |_____ ");
             Console.WriteLine(@" \ \/\/ / -_) -_) '_ \ | ' \/ _` | \__ \ ' \/ _` | / / -_)");
@@ -31,7 +32,8 @@ namespace WeepingSnake.ConsoleClient.Navigation
             Console.WriteLine(@"==========================================================");
             Console.WriteLine();
 
-            Console.WriteLine("Welcome to the offline Console-Client of the game weeping snake!");
+            Console.WriteLine("Welcome to the offline Console-Client of the game weeping");
+            Console.WriteLine("snake!");
             Console.WriteLine();
 
             Console.WriteLine("You have the following options:");
