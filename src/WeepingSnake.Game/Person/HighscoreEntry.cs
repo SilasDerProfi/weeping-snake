@@ -52,5 +52,10 @@ namespace WeepingSnake.Game.Person
                 return _totalPoints;
             }
         }
+
+        public static List<HighscoreEntry> GetHighscoreEntries()
+        {
+            return PersonDatabase.Highscores().ToList();
+        }
     }
 }

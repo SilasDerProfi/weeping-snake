@@ -12,7 +12,7 @@ namespace WeepingSnake.Game.Structs
 
         public PlayerRange(ushort min, ushort max)
         {
-            if (min < max || min < 1)
+            if (min > max || min < 1)
                 throw new ArgumentException("At least 1 player must be allowed.");
 
             _min = min;
