@@ -47,5 +47,31 @@ namespace WeepingSnake.Game
         }
 
         public void DoAction(Player.Player player, Player.PlayerAction.Action action) => player.AddAction(action);
+
+        public Player.Player FindPlayer(Guid playerId)
+        {
+            Player.Player foundPlayer = null;
+
+            foreach(var game in _games)
+            {
+                foreach(var player in game.Players)
+                {
+                    if(player.PlayerId == playerId)
+                    {
+                        foundPlayer = player;
+                        break;
+                    }
+                }
+            }
+
+            if(foundPlayer == null)
+            {
+                return null;
+            }
+            else
+            {
+                return foundPlayer;
+            }
+        }
     }
 }

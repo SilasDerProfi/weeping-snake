@@ -16,7 +16,7 @@ namespace WeepingSnake.Game.Player
         private Game _game;
         private int _points;
         private readonly bool _isHuman;
-        private bool _isAlive;
+        private bool _isAlive = true;
 
         public Player(Person.Person person)
         {
@@ -56,12 +56,22 @@ namespace WeepingSnake.Game.Player
             }
         }
 
+        public Guid PlayerId
+        {
+            get
+            {
+                return _playerId;
+            }
+        }
+
         internal void Join(Game game)
         {
-            Die();
+            if(!_isAlive || _game != null)
+            {
+                throw new InvalidOperationException("A player can only join a game if he has never participated in a game before.");
+            } 
 
             _game = game;
-            _isAlive = true;
             _orientation = _game.Join(this);
             _points = 0;
             
@@ -109,6 +119,7 @@ namespace WeepingSnake.Game.Player
             }
 
             _points = 0;
+            _isAlive = false;
         }
     }
 }

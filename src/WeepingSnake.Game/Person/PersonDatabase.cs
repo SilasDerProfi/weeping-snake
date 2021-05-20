@@ -54,6 +54,17 @@ namespace WeepingSnake.Game.Person
             return null;
         }
 
+        internal static Person GetPerson(Guid personId)
+        {
+            foreach (var person in _registeredPersons)
+            {
+                if (person.PersonId == personId)
+                    return person.Copy();
+            }
+
+            return null;
+        }
+
         internal static void UpdateEmail(Guid personId, MailAddress mailAddress)
         {
             foreach (var person in _registeredPersons)

@@ -58,6 +58,18 @@ namespace WeepingSnake.Game.Person
                 return null;
         }
 
+        public static Person GetById(Guid personId)
+        {
+            if (PersonDatabase.Exists(personId))
+            {
+                var person = PersonDatabase.GetPerson(personId);
+                return person;
+            }
+            else
+            {
+                return null;
+            }
+        }
 
         public MailAddress MailAddress
         {

@@ -39,6 +39,14 @@ namespace WeepingSnake.Game
 
         public List<List<GameDistance>> BoardPaths => _board.Paths;
 
+        public List<Player.Player> Players
+        {
+            get
+            {
+                return _players;
+            }
+        }
+
         internal bool IsFullForHumans()
         {
             return _allowedPlayerCount.Max == _players.Count(player => player.IsHuman);
@@ -76,6 +84,7 @@ namespace WeepingSnake.Game
                 _players.Remove(player);
 
                 player.ApplyPointsToPerson();
+
             }
             else
             {
