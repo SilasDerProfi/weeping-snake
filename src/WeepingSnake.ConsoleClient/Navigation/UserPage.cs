@@ -46,7 +46,7 @@ namespace WeepingSnake.ConsoleClient.Navigation
                 return () =>
                 {
                     var player = _gameController.JoinGame(_person);
-                    new GamePage().Open(player);
+                    new GamePage().Open((_gameController, player));
                 };
             }
             else if (userInput == "P")

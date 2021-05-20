@@ -12,7 +12,7 @@ namespace WeepingSnake.Game.Structs
         private readonly uint _height;
         private readonly bool _isInfinite;
 
-        public BoardDimensions(uint width, uint height, bool isInfinite = true)
+        public BoardDimensions(uint width, uint height, bool isInfinite = false)
         {
             if (height == 0 || width == 0)
                 throw new ArgumentException("The width and height of the game board must be greater than 0.");

@@ -21,14 +21,22 @@ namespace WeepingSnake.Game
             _loopTask?.Dispose();
             _loopTask = Task.Run(() => RunInfinite());
         }
-        private void RunInfinite() => Parallel.ForEach(_games.GetInfiniteEnumerator(), game =>
+        private void RunInfinite()
         {
-            lock (game)
+            while(_games.Count == 0)
             {
-                game.ApplyOneActionPerPlayer();
-                Thread.Sleep(GameConfiguration.RoundDuration);
+                Thread.Sleep(1000);
             }
-        });
+
+            Parallel.ForEach(_games.GetInfiniteEnumerator(), game =>
+            {
+                lock (game)
+                {
+                    game.ApplyOneActionPerPlayer();
+                    Thread.Sleep(GameConfiguration.RoundDuration);
+                }
+            });
+        }
 
         public void Dispose() => _loopTask.Dispose();
     }

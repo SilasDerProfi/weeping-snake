@@ -64,6 +64,23 @@ namespace WeepingSnake.Game.Player
             }
         }
 
+
+        public bool IsGuest
+        {
+            get
+            {
+                return _person == null;
+            }
+        }
+
+        public Person.Person ControllingPerson
+        {
+            get
+            {
+                return _person;
+            }
+        }
+
         internal void Join(Game game)
         {
             if(!_isAlive || _game != null)
