@@ -29,11 +29,7 @@ namespace WeepingSnake.ConsoleClient.Navigation
 
         public void PrintPage()
         {
-            Console.Clear();
-
-            Console.WriteLine("Turn: [Arrow Left] [Arrow Right] | Change Speed: [Arrow Up] [Arrow Down] | Jump: [Space] | Exit: [Esc]");
-            Console.WriteLine("======================================================================================================");
-            _gamefieldStartCursorPosition = Console.GetCursorPosition();
+            ClearConsole();
 
             _currentGame.OnLoopTick += PrintGameState;
 
@@ -58,8 +54,9 @@ namespace WeepingSnake.ConsoleClient.Navigation
             }
 
             _currentGame.OnLoopTick -= PrintGameState;
+            _currentGame.Leave(_player);
             Console.WriteLine();
-            Console.WriteLine("GGame Over. Press any key.");
+            Console.WriteLine("Game Over. Press any key.");
             Console.ReadKey();
 
             return () =>
@@ -78,7 +75,7 @@ namespace WeepingSnake.ConsoleClient.Navigation
         [MethodImpl(MethodImplOptions.Synchronized)]
         private void PrintGameState(List<GameDistance> allPlayerPaths)
         {
-            string[,] gameField = new string[20, 20];
+            string[,] gameField = new string[_currentGame.GameBoard.Width, _currentGame.GameBoard.Height];
 
             foreach (var path in allPlayerPaths)
             {
@@ -89,8 +86,16 @@ namespace WeepingSnake.ConsoleClient.Navigation
 
                 if (playerNumber == -1)
                 {
-                    playerNumber = _knownPlayers.Count;
-                    _knownPlayers.Add(path.Player);
+                    if (_knownPlayers.Count == 10)
+                    {
+                        _currentGame.Leave(_player);
+                    }
+                    else
+                    {
+                        ClearConsole();
+                        playerNumber = _knownPlayers.Count;
+                        _knownPlayers.Add(path.Player);
+                    }
                 }
 
                 var points = PointsInRectangle((int)path.StartX, (int)path.StartY, (int)path.EndX, (int)path.EndY);
@@ -103,9 +108,9 @@ namespace WeepingSnake.ConsoleClient.Navigation
 
 
             var stringField = "";
-            for (int line = 19; line >= 0; line--)
+            for (int line = ((int)_currentGame.GameBoard.Height - 1); line >= 0; line--)
             {
-                for (int row = 0; row < 20; row++)
+                for (int row = 0; row < _currentGame.GameBoard.Width; row++)
                 {
                     stringField += gameField[row, line] == null ? "- " : gameField[row, line];
                 }
@@ -138,6 +143,14 @@ namespace WeepingSnake.ConsoleClient.Navigation
             Console.Write(stringField);
         }
 
+        private void ClearConsole()
+        {
+            Console.Clear();
+
+            Console.WriteLine("Turn: [Arrow Left] [Arrow Right] | Change Speed: [Arrow Up] [Arrow Down] | Jump: [Space] | Exit: [Esc]");
+            Console.WriteLine("======================================================================================================");
+            _gamefieldStartCursorPosition = Console.GetCursorPosition();
+        }
 
         private static IEnumerable<(int, int)> PointsInRectangle(int aX, int aY, int bX, int bY)
         {

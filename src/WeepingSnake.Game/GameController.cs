@@ -23,12 +23,21 @@ namespace WeepingSnake.Game
 
             _games = new List<Game>();
             _gameLoop = new GameLoop(ref _games);
-            _gameLoop.RunAsync();
         }
 
         public void Dispose() => _gameLoop.Dispose();
 
-        private Game InitializeGame() => _games.AddAndReturn(new Game(_allowedPlayerCount, _boardDimensions));
+        private Game InitializeGame()
+        {
+            var newGame = _games.AddAndReturn(new Game(_allowedPlayerCount, _boardDimensions));
+
+            if(_games.Count == 1)
+            {
+                _gameLoop.RunAsync();
+            }
+
+            return newGame;
+        }
 
         public Player.Player JoinGame() => JoinGame(null, null);
 
@@ -38,7 +47,23 @@ namespace WeepingSnake.Game
 
         public Player.Player JoinGame(Person.Person person, Game game)
         {
-            game ??= _games.FirstOrDefault(game => !game.IsFullForHumans()) ?? InitializeGame();
+            if(game is null)
+            {
+                foreach(var possibleGame in _games)
+                {
+                    if(!possibleGame.IsFullForHumans() && possibleGame.IsActive)
+                    {
+                        game = possibleGame;
+                        break;
+                    }
+                }
+
+                if(game is null)
+                {
+                    game = InitializeGame();
+                }
+            }
+
 
             var player = new Player.Player(person);
             player.Join(game);

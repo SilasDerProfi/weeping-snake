@@ -7,7 +7,7 @@ using WeepingSnake.Game.Utility.Extensions;
 
 namespace WeepingSnake.Game.Player.ComputerPlayer
 {
-    public class RandomPlayer : IComputerPlayer
+    internal class RandomPlayer : IComputerPlayer
     {
         private Player _controlledPlayer;
 

@@ -77,9 +77,13 @@ namespace WeepingSnake.Game
                 var zPosition = (ushort) _paths.Count;
                 var possiblePositions = new HashSet<GameCoordinate>();
 
-                for (var x = GameConfiguration.DefaultDistance; x < Width - GameConfiguration.DefaultDistance; x++)
-                    for (var y = GameConfiguration.DefaultDistance; y < Height - GameConfiguration.DefaultDistance; y++)
+                for (var x = GameConfiguration.DefaultDistance * 2; x < Width - GameConfiguration.DefaultDistance * 2; x++)
+                {
+                    for (var y = GameConfiguration.DefaultDistance * 2; y < Height - GameConfiguration.DefaultDistance * 2; y++)
+                    {
                         possiblePositions.Add(new GameCoordinate(x, y, zPosition));
+                    }
+                }
 
                 if (zPosition > 0)
                 {

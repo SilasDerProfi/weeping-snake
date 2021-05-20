@@ -4,7 +4,7 @@ using WeepingSnake.Game.Utility.Extensions;
 
 namespace WeepingSnake.Game.Player.ComputerPlayer
 {
-    class RandomNotKillingItselfPlayer : IComputerPlayer
+    internal class RandomNotKillingItselfPlayer : IComputerPlayer
     {
         private Player _controlledPlayer;
 
@@ -39,14 +39,14 @@ namespace WeepingSnake.Game.Player.ComputerPlayer
 
         private void AssignedGame_OnLoopTick(List<Geometry.GameDistance> newPaths)
         {
-
             var board = _controlledPlayer?.AssignedGame?.GameBoard;
 
             if (board != null)
             {
                 var randomAction = Enum.GetValues<PlayerAction.Action>().Random();
 
-                for (int retries = 0; retries < 100; retries++)
+                int retries;
+                for (retries = 0; retries < 100; retries++)
                 {
                     var newOrientation = _controlledPlayer.Orientation.ApplyAndMove(randomAction);
 

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace WeepingSnake.Game.Player.ComputerPlayer
 {
-    public class DoNothingPlayer : IComputerPlayer
+    internal class DoNothingPlayer : IComputerPlayer
     {
         private Player _controlledPlayer;
 

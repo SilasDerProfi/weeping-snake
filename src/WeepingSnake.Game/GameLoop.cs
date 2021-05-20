@@ -23,16 +23,15 @@ namespace WeepingSnake.Game
         }
         private void RunInfinite()
         {
-            while(_games.Count == 0)
-            {
-                Thread.Sleep(1000);
-            }
-
             Parallel.ForEach(_games.GetInfiniteEnumerator(), game =>
             {
                 lock (game)
                 {
-                    game.ApplyOneActionPerPlayer();
+                    if (game.IsActive)
+                    {
+                        game.ApplyOneActionPerPlayer();
+                    }
+
                     Thread.Sleep(GameConfiguration.RoundDuration);
                 }
             });

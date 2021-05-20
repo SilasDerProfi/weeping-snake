@@ -17,6 +17,7 @@ namespace WeepingSnake.Game
         private readonly List<Player.Player> _players;
         private readonly PlayerRange _allowedPlayerCount;
         private readonly Game.Board _board;
+        private bool _isActive = true;
 
         public Game(PlayerRange allowedPlayerCount, BoardDimensions boardDimensions)
         {
@@ -27,7 +28,7 @@ namespace WeepingSnake.Game
 
             for(int playerNo = 0; playerNo < allowedPlayerCount.Max; playerNo++)
             {
-                var bot = new Player.Player(new RandomNotKillingItselfPlayer());
+                var bot = new Player.Player(ComputerPlayer.GetAnyComputerPlayer());
                 bot.Join(this);
             }
 
@@ -44,6 +45,14 @@ namespace WeepingSnake.Game
             get
             {
                 return _players;
+            }
+        }
+
+        public bool IsActive
+        {
+            get
+            {
+                return _isActive;
             }
         }
 
@@ -74,22 +83,39 @@ namespace WeepingSnake.Game
 
             _players.Add(player);
 
+            if (player.IsHuman)
+            {
+                _isActive = true;
+            }
+
             return _board.CalculateRandomStartOrientation();
         }
 
-        internal void Leave(Player.Player player)
+        public void Leave(Player.Player player)
         {
             if (_players.Contains(player))
             {
                 _players.Remove(player);
 
                 player.ApplyPointsToPerson();
+            }
 
-            }
-            else
+            foreach(var remainingPlayer in _players)
             {
-                throw new ArgumentException("A player can leave only the game he is participating.", nameof(player));
+                if (remainingPlayer.IsAlive && remainingPlayer.IsHuman)
+                {
+                    if (!player.IsHuman)
+                    {
+                        var bot = new Player.Player(ComputerPlayer.GetAnyComputerPlayer());
+                        bot.Join(this);
+                    }
+
+                    return;
+                }
             }
+
+            // no more humans
+            _isActive = false;
         }
 
         internal void ApplyOneActionPerPlayer()
