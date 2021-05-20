@@ -74,6 +74,8 @@ namespace WeepingSnake.Game
             if (_players.Contains(player))
             {
                 _players.Remove(player);
+
+                player.ApplyPointsToPerson();
             }
             else
             {

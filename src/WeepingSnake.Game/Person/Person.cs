@@ -8,6 +8,7 @@ namespace WeepingSnake.Game.Person
     public class Person
     {
         private readonly Guid _personId;
+        private readonly string _username;
         private MailAddress _mailAddress;
 
         private string _password;
@@ -16,9 +17,10 @@ namespace WeepingSnake.Game.Person
         private int _totalPoints;
 
 
-        private Person(Guid? personId, MailAddress mailAddress, string password, int playedGames, int maximumPointsInGame, int totalPoints)
+        private Person(Guid? personId, string username, MailAddress mailAddress, string password, int playedGames, int maximumPointsInGame, int totalPoints)
         {
             _personId = personId ?? Guid.NewGuid();
+            _username = username;
             _mailAddress = mailAddress;
             _password = password;
             _playedGames = playedGames;
@@ -26,7 +28,7 @@ namespace WeepingSnake.Game.Person
             _totalPoints = totalPoints;
         }
 
-        public static void Register(string emailAddress, string password, string passwordRetyped)
+        public static void Register(string emailAddress, string username, string password, string passwordRetyped)
         {
             if (PersonDatabase.Exists(emailAddress))
                 return;
@@ -37,7 +39,7 @@ namespace WeepingSnake.Game.Person
             if (!MailAddress.TryCreate(emailAddress, out var emailAdressObject))
                 return;
 
-            var newPerson = new Person(null, emailAdressObject, password, 0, 0, 0);
+            var newPerson = new Person(null, username, emailAdressObject, password, 0, 0, 0);
 
             PersonDatabase.Register(newPerson);
         }
@@ -89,6 +91,36 @@ namespace WeepingSnake.Game.Person
             }
         }
 
+        public string Username
+        {
+            get
+            {
+                return _username;
+            }
+        }
+
+        public int PlayedGames
+        {
+            get
+            {
+                return _playedGames;
+            }
+        }
+        public int MaximumPointsInGame
+        {
+            get
+            {
+                return _maximumPointsInGame;
+            }
+        }
+        public int TotalPoints
+        {
+            get
+            {
+                return _totalPoints;
+            }
+        }
+
         public bool ChangeEmail(string newEmailAdress)
         {
             if(MailAddress.TryCreate(newEmailAdress, out _mailAddress))
@@ -112,9 +144,18 @@ namespace WeepingSnake.Game.Person
             return false;
         }
 
+        internal void AddPointsFromGame(int points)
+        {
+            _playedGames++;
+            _maximumPointsInGame = Math.Max(_maximumPointsInGame, points);
+            _totalPoints += points;
+
+            PersonDatabase.Update(this);
+        }
+
         internal Person Copy()
         {
-            return new Person(_personId, _mailAddress, _password, _playedGames, _maximumPointsInGame, _totalPoints);
+            return new Person(_personId, _username, _mailAddress, _password, _playedGames, _maximumPointsInGame, _totalPoints);
         }
 
         public override int GetHashCode()

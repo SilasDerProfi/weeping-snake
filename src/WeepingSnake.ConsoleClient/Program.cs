@@ -12,17 +12,18 @@ namespace WeepingSnake.ConsoleClient
 
         static void Main(string[] args)
         {
-            var gctrl = new Game.GameController(2, new Game.Structs.BoardDimensions(20, 20, false));
+            var gctrl = new Game.GameController(6, new Game.Structs.BoardDimensions(20, 20, false));
 
             var playerA = gctrl.JoinGame();
             gctrl.DoAction(playerA, Game.Player.PlayerAction.Action.JUMP);
             //gctrl.DoAction(playerA, Game.Player.PlayerAction.Action.TURN_RIGHT);
             //gctrl.DoAction(playerA, Game.Player.PlayerAction.Action.TURN_RIGHT);
             //gctrl.DoAction(playerA, Game.Player.PlayerAction.Action.TURN_RIGHT);
-            playerA.AssignedGame.OnLoopTick += PrintGameState;
+            var assignedGame = playerA.AssignedGame;
+            assignedGame.OnLoopTick += PrintGameState;
 
             ConsoleKeyInfo pressedKey;
-            while ((pressedKey = Console.ReadKey()).Key != ConsoleKey.Escape)
+            while (playerA.IsAlive && (pressedKey = Console.ReadKey()).Key != ConsoleKey.Escape)
             {
                 gctrl.DoAction(playerA, pressedKey.Key switch
                 {
@@ -34,6 +35,10 @@ namespace WeepingSnake.ConsoleClient
                     _ => Game.Player.PlayerAction.Action.CHANGE_NOTHING
                 });
             }
+
+            assignedGame.OnLoopTick -= PrintGameState;
+            Console.WriteLine("Game Over");
+            Console.Read();
         }
 
         [MethodImpl(MethodImplOptions.Synchronized)]

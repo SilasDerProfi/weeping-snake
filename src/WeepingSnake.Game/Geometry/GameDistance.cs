@@ -32,66 +32,69 @@ namespace WeepingSnake.Game.Geometry
 
             _player = player;
 
+            if (player.IsAlive)
+            {
+                if ((int)_endX < 0)
+                {
+                    if (_player.AssignedGame.GameBoard.IsInfinite)
+                    {
+                        // start at other site, but dont connect on the field
+                        throw new NotImplementedException();
+                    }
+                    else
+                    {
+                        _endX = 0;
+                        _player.Die();
+                        return;
+                    }
+                }
+
+                if ((int)_endX >= _player.AssignedGame.GameBoard.Width)
+                {
+                    if (_player.AssignedGame.GameBoard.IsInfinite)
+                    {
+                        // start at other site, but dont connect on the field
+                        throw new NotImplementedException();
+                    }
+                    else
+                    {
+                        _endX = _player.AssignedGame.GameBoard.Width - 1;
+                        _player.Die();
+                        return;
+                    }
+                }
+
+                if ((int)_endY < 0)
+                {
+                    if (_player.AssignedGame.GameBoard.IsInfinite)
+                    {
+                        // start at other site, but dont connect on the field
+                        throw new NotImplementedException();
+                    }
+                    else
+                    {
+                        _endY = 0;
+                        _player.Die();
+                        return;
+                    }
+                }
+
+                if ((int)_endY >= _player.AssignedGame.GameBoard.Height)
+                {
+                    if (_player.AssignedGame.GameBoard.IsInfinite)
+                    {
+                        // start at other site, but dont connect on the field
+                        throw new NotImplementedException();
+                    }
+                    else
+                    {
+                        _endY = _player.AssignedGame.GameBoard.Height - 1;
+                        _player.Die();
+                        return;
+                    }
+                }
+            }
             
-            if ((int)_endX < 0)
-            {
-                if(_player.AssignedGame.GameBoard.IsInfinite)
-                {
-                    // start at other site, but dont connect on the field
-                    throw new NotImplementedException();
-                }
-                else
-                {
-                    _endX = 0;
-                    _player.Die();
-                    return;
-                }
-            }
-
-            if ((int)_endX >= _player.AssignedGame.GameBoard.Width)
-            {
-                if (_player.AssignedGame.GameBoard.IsInfinite)
-                {
-                    // start at other site, but dont connect on the field
-                    throw new NotImplementedException();
-                }
-                else
-                {
-                    _endX = _player.AssignedGame.GameBoard.Width - 1;
-                    _player.Die();
-                    return;
-                }
-            }
-
-            if ((int)_endY < 0)
-            {
-                if (_player.AssignedGame.GameBoard.IsInfinite)
-                {
-                    // start at other site, but dont connect on the field
-                    throw new NotImplementedException();
-                }
-                else
-                {
-                    _endY = 0;
-                    _player.Die();
-                    return;
-                }
-            }
-
-            if ((int)_endY >= _player.AssignedGame.GameBoard.Height)
-            {
-                if (_player.AssignedGame.GameBoard.IsInfinite)
-                {
-                    // start at other site, but dont connect on the field
-                    throw new NotImplementedException();
-                }
-                else
-                {
-                    _endY = _player.AssignedGame.GameBoard.Height - 1;
-                    _player.Die();
-                    return;
-                }
-            }
         }
 
         public float StartX => _locationVector.X;

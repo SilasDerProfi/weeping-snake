@@ -77,5 +77,34 @@ namespace WeepingSnake.Game.Person
                 }
             }
         }
+
+        internal static void Update(Person person)
+        {
+            Person equilvalentInDatabase = null;
+            
+            foreach (var databasePerson in _registeredPersons)
+            {
+                if (databasePerson.PersonId == person.PersonId)
+                {
+                    equilvalentInDatabase = databasePerson;
+                    break;
+                }
+            }
+
+            _registeredPersons.Remove(equilvalentInDatabase);
+            _registeredPersons.Add(person.Copy());
+        }
+
+
+        internal static IEnumerable<HighscoreEntry> Highscores()
+        {
+            var ordererdByHighscore = _registeredPersons.OrderByDescending(p => p.MaximumPointsInGame);
+
+            foreach(var person in ordererdByHighscore)
+            {
+                var highScoreEntry = new HighscoreEntry(person.Username, person.PlayedGames, person.MaximumPointsInGame, person.TotalPoints);
+                yield return highScoreEntry;
+            }
+        }
     }
 }

@@ -15,8 +15,8 @@ namespace WeepingSnake.Game.Player
         private PlayerOrientation _orientation;
         private Game _game;
         private int _points;
-        private bool _isHuman;
-        private bool _isAlive = true;
+        private readonly bool _isHuman;
+        private bool _isAlive;
 
         public Player(Person.Person person)
         {
@@ -58,7 +58,10 @@ namespace WeepingSnake.Game.Player
 
         internal void Join(Game game)
         {
+            Die();
+
             _game = game;
+            _isAlive = true;
             _orientation = _game.Join(this);
             _points = 0;
             
@@ -78,12 +81,7 @@ namespace WeepingSnake.Game.Player
         internal void Die()
         {
             _isAlive = false;
-            _game.Leave(this);
-
-            if(_person != null)
-            {
-#warning todo apply points
-            }
+            _game?.Leave(this);
 
             _game = null;
         }
@@ -101,6 +99,16 @@ namespace WeepingSnake.Game.Player
             }
 
             return null;
+        }
+
+        internal void ApplyPointsToPerson()
+        {
+            if(_person != null)
+            {
+                _person.AddPointsFromGame(_points);
+            }
+
+            _points = 0;
         }
     }
 }
