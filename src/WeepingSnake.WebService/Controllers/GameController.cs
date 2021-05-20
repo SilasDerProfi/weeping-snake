@@ -82,7 +82,7 @@ namespace WeepingSnake.WebService.Controllers
             var playerLinesStartingRoundIndex = Math.Max(0, currentRoundNumber - 6);
             var roundsWithPlayerLines = currentRoundNumber - playerLinesStartingRoundIndex;
 
-            var validPaths = allPaths.GetRange(playerLinesStartingRoundIndex, roundsWithPlayerLines).SelectMany(paths => paths).ToList());
+            var validPaths = allPaths.GetRange(playerLinesStartingRoundIndex, roundsWithPlayerLines).SelectMany(paths => paths).ToList();
 
             var validGameDistances = player.AssignedGame.BoardPaths.SelectMany(paths => paths);
 
