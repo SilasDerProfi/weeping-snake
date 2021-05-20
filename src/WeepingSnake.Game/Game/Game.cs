@@ -27,7 +27,7 @@ namespace WeepingSnake.Game
 
             for(int playerNo = 0; playerNo < allowedPlayerCount.Max; playerNo++)
             {
-                var bot = new Player.Player(new RandomPlayer());
+                var bot = new Player.Player(new RandomNotKillingItselfPlayer());
                 bot.Join(this);
             }
 

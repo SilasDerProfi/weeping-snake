@@ -81,6 +81,14 @@ namespace WeepingSnake.Game.Player
             }
         }
 
+        public PlayerOrientation Orientation
+        {
+            get
+            {
+                return _orientation;
+            }
+        }
+
         internal void Join(Game game)
         {
             if(!_isAlive || _game != null)

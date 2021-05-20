@@ -99,6 +99,8 @@ namespace WeepingSnake.WebService.Controllers
             var gameState = new 
             {
                 Player = playerData,
+                BoardHeight = player.AssignedGame.GameBoard.Height,
+                BoardWidth = player.AssignedGame.GameBoard.Width,
                 Board = boardData
             };
 

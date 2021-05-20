@@ -147,8 +147,12 @@ namespace WeepingSnake.ConsoleClient.Navigation
             int yTo = Math.Max(aY, bY);
 
             for (int xPosition = xFrom; xPosition <= xTo; xPosition++)
+            {
                 for (int yPosition = yFrom; yPosition <= yTo; yPosition++)
+                {
                     yield return (xPosition, yPosition);
+                }
+            }
         }
     }
 }

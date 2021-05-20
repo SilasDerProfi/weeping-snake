@@ -7,7 +7,7 @@ namespace WeepingSnake.ConsoleClient
     {
         static void Main(string[] args)
         {
-            var playerRange = new PlayerRange(4, 6);
+            var playerRange = new PlayerRange(2, 2);
             var boardDimensions = new BoardDimensions(20, 20);
             var gameController = new Game.GameController(playerRange, boardDimensions);
 

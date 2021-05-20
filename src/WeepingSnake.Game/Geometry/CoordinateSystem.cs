@@ -13,8 +13,8 @@ namespace WeepingSnake.Game.Geometry
             _dimensions = dimensions;
         }
 
-        internal uint Height => _dimensions.Height;
-        internal uint Width => _dimensions.Width;
+        public uint Height => _dimensions.Height;
+        public uint Width => _dimensions.Width;
 
         /// <summary>
         /// Rasterisation via Bresenham's line algorithm
