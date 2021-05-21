@@ -20,8 +20,21 @@ namespace WeepingSnake.Game.Structs
             _height = height;
         }
 
-        public uint Width => _width;
-        public uint Height => _height;
+        public uint Width
+        {
+            get
+            {
+                return _width;
+            }
+        }
+
+        public uint Height
+        {
+            get
+            {
+                return _height;
+            }
+        }
 
         public override bool Equals(object obj)
         {
@@ -30,12 +43,24 @@ namespace WeepingSnake.Game.Structs
                    _height == dimensions._height;
         }
 
-        public override int GetHashCode() => HashCode.Combine(_width, _height);
+        public override int GetHashCode()
+        {
+            return HashCode.Combine(_width, _height);
+        }
 
-        public static bool operator ==(BoardDimensions left, BoardDimensions right) => left.Equals(right);
+        public static bool operator ==(BoardDimensions left, BoardDimensions right)
+        {
+            return left.Equals(right);
+        }
 
-        public static bool operator !=(BoardDimensions left, BoardDimensions right) => !(left == right);
+        public static bool operator !=(BoardDimensions left, BoardDimensions right)
+        {
+            return !(left == right);
+        }
 
-        public static implicit operator BoardDimensions(uint dimensions) => new(dimensions, dimensions);
+        public static implicit operator BoardDimensions(uint dimensions)
+        {
+            return new(dimensions, dimensions);
+        }
     }
 }

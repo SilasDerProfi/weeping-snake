@@ -37,11 +37,29 @@ namespace WeepingSnake.Game
             _logger = new GameInformationLogger(this);
         }
 
-        public Guid GameId => _gameId;
+        public Guid GameId
+        {
+            get
+            {
+                return _gameId;
+            }
+        }
 
-        public Board GameBoard => _board;
+        public Board GameBoard
+        {
+            get
+            {
+                return _board;
+            }
+        }
 
-        public List<List<GameDistance>> BoardPaths => _board.Paths;
+        public List<List<GameDistance>> BoardPaths
+        {
+            get
+            {
+                return _board.Paths;
+            }
+        }
 
         public List<Player.Player> Players
         {
@@ -142,8 +160,14 @@ namespace WeepingSnake.Game
         public delegate void LoopTickHandler(List<GameDistance> playerPaths);
         public event LoopTickHandler OnLoopTick;
 
-        public override bool Equals(object obj) => obj is Game game && _gameId.Equals(game._gameId);
+        public override bool Equals(object obj)
+        {
+            return obj is Game game && _gameId.Equals(game._gameId);
+        }
 
-        public override int GetHashCode() => HashCode.Combine(_gameId);
+        public override int GetHashCode()
+        {
+            return HashCode.Combine(_gameId);
+        }
     }
 }

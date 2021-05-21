@@ -240,7 +240,5 @@ namespace WeepingSnake.WebService.Controllers
 
             return person.ChangePassword(newPassword, retypedNewPassword);
         }
-
-
     }
 }

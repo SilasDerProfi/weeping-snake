@@ -26,7 +26,9 @@ namespace WeepingSnake.Game
                 var resultingPath = action.Apply();
                 
                 if (!resultingPath.HasValue)
+                {
                     return;
+                }
 
                 var newPath = resultingPath.Value;
 

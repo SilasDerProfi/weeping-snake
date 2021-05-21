@@ -16,8 +16,21 @@ namespace WeepingSnake.Game.Player
             _length = _direction.Length();
         }
 
-        public float X => _direction.X;
-        public float Y => _direction.Y;
+        public float X
+        {
+            get
+            {
+                return _direction.X;
+            }
+        }
+
+        public float Y
+        {
+            get
+            {
+                return _direction.Y;
+            }
+        }
 
         public Vector2 DirectionVector
         {
@@ -27,7 +40,13 @@ namespace WeepingSnake.Game.Player
             }
         }
 
-        public float Length => _length;
+        public float Length
+        {
+            get
+            {
+                return _length;
+            }
+        }
 
         /// <summary>
         /// Calculates a random direction vector with Length = 1.
@@ -59,12 +78,24 @@ namespace WeepingSnake.Game.Player
                    _direction.Equals(direction._direction);
         }
 
-        public override int GetHashCode() => HashCode.Combine(_direction, Length);
+        public override int GetHashCode()
+        {
+            return HashCode.Combine(_direction, Length);
+        }
 
-        public static bool operator ==(PlayerDirection left, PlayerDirection right) => left.Equals(right);
+        public static bool operator ==(PlayerDirection left, PlayerDirection right)
+        {
+            return left.Equals(right);
+        }
 
-        public static bool operator !=(PlayerDirection left, PlayerDirection right) => !(left == right);
+        public static bool operator !=(PlayerDirection left, PlayerDirection right)
+        {
+            return !(left == right);
+        }
 
-        public static implicit operator PlayerDirection(Vector2 direction) => new(direction.X, direction.Y);
+        public static implicit operator PlayerDirection(Vector2 direction)
+        {
+            return new(direction.X, direction.Y);
+        }
     }
 }

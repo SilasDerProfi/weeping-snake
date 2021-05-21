@@ -13,15 +13,30 @@ namespace WeepingSnake.Game.Structs
         public PlayerRange(ushort min, ushort max)
         {
             if (min > max || min < 1)
+            {
                 throw new ArgumentException("At least 1 player must be allowed.");
+            }
 
             _min = min;
             _max = max;
         }
 
 
-        public int Min => _min;
-        public int Max => _max;
+        public int Min
+        {
+            get
+            {
+                return _min;
+            }
+        }
+
+        public int Max
+        {
+            get
+            {
+                return _max;
+            }
+        }
 
         public override bool Equals(object obj)
         {
@@ -30,14 +45,29 @@ namespace WeepingSnake.Game.Structs
                    _max == range._max;
         }
 
-        public override int GetHashCode() => HashCode.Combine(_min, _max);
+        public override int GetHashCode()
+        {
+            return HashCode.Combine(_min, _max);
+        }
 
-        public override string ToString() => $"[{_min}; {_max}]";
+        public override string ToString()
+        {
+            return $"[{_min}; {_max}]";
+        }
 
-        public static bool operator ==(PlayerRange left, PlayerRange right) => left.Equals(right);
+        public static bool operator ==(PlayerRange left, PlayerRange right)
+        {
+            return left.Equals(right);
+        }
 
-        public static bool operator !=(PlayerRange left, PlayerRange right) => !(left == right);
+        public static bool operator !=(PlayerRange left, PlayerRange right)
+        {
+            return !(left == right);
+        }
 
-        public static implicit operator PlayerRange(ushort playerCount) => new(playerCount, playerCount);
+        public static implicit operator PlayerRange(ushort playerCount)
+        {
+            return new(playerCount, playerCount);
+        }
     }
 }

@@ -21,7 +21,13 @@ namespace WeepingSnake.Game.Player
             _newOrientation = orientation.ApplyAndMove(action);
         }
 
-        public PlayerOrientation NewOrientation => _newOrientation;
+        public PlayerOrientation NewOrientation
+        {
+            get
+            {
+                return _newOrientation;
+            }
+        }
 
         public enum Action
         {
@@ -38,12 +44,18 @@ namespace WeepingSnake.Game.Player
             var path = _player.ApplyOrientationAndMove(_newOrientation);
 
             if (path == null)
+            {
                 return null;
+            }
 
             if (_action == Action.JUMP && path.HasValue)
+            {
                 return new GameDistance(path.Value.EndX, path.Value.EndY, new PlayerDirection(0, 0), _player);
+            }
             else
+            {
                 return path.Value;
+            }
         }
     }
 }

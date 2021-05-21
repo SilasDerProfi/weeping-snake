@@ -23,7 +23,9 @@ namespace WeepingSnake.Game.Utility.Extensions
         public static T GetOrCreate<T>(this List<T> source, int index, Func<T> createFunction)
         {
             while (source.Count <= index)
+            {
                 source.Add(createFunction());
+            }
 
             return source[index];
         }

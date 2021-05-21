@@ -31,15 +31,40 @@ namespace WeepingSnake.Game.Player
         }
 
 
-        public GameCoordinate Position => _position;
-        public PlayerDirection Direction => _direction;
+        public GameCoordinate Position
+        {
+            get
+            {
+                return _position;
+            }
+        }
 
-        public override int GetHashCode() => HashCode.Combine(_position, _direction);
+        public PlayerDirection Direction
+        {
+            get
+            {
+                return _direction;
+            }
+        }
 
-        public static bool operator ==(PlayerOrientation left, PlayerOrientation right) => left.Equals(right);
+        public override int GetHashCode()
+        {
+            return HashCode.Combine(_position, _direction);
+        }
 
-        public static bool operator !=(PlayerOrientation left, PlayerOrientation right) => !(left == right);
+        public static bool operator ==(PlayerOrientation left, PlayerOrientation right)
+        {
+            return left.Equals(right);
+        }
 
-        public override string ToString() => $"{_position} | {_direction}";
+        public static bool operator !=(PlayerOrientation left, PlayerOrientation right)
+        {
+            return !(left == right);
+        }
+
+        public override string ToString()
+        {
+            return $"{_position} | {_direction}";
+        }
     }
 }

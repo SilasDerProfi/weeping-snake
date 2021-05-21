@@ -13,10 +13,12 @@ namespace WeepingSnake.Game.Person
 
         internal static bool Exists(string emailAddress)
         {
-            foreach(var person in _registeredPersons)
+            foreach (var person in _registeredPersons)
             {
                 if (person.MailAddress.Address == emailAddress)
+                {
                     return true;
+                }
             }
 
             return false;
@@ -27,7 +29,9 @@ namespace WeepingSnake.Game.Person
             foreach (var person in _registeredPersons)
             {
                 if (person.PersonId == personId)
+                {
                     return true;
+                }
             }
 
             return false;
@@ -35,7 +39,7 @@ namespace WeepingSnake.Game.Person
 
         internal static void Register(Person person)
         {
-            if(Exists(person.MailAddress.Address))
+            if (Exists(person.MailAddress.Address))
             {
                 return;
             }
@@ -48,7 +52,9 @@ namespace WeepingSnake.Game.Person
             foreach (var person in _registeredPersons)
             {
                 if (person.MailAddress.Address == emailAddress)
+                {
                     return person.Copy();
+                }
             }
 
             return null;
@@ -59,7 +65,9 @@ namespace WeepingSnake.Game.Person
             foreach (var person in _registeredPersons)
             {
                 if (person.PersonId == personId)
+                {
                     return person.Copy();
+                }
             }
 
             return null;
@@ -92,7 +100,7 @@ namespace WeepingSnake.Game.Person
         internal static void Update(Person person)
         {
             Person equilvalentInDatabase = null;
-            
+
             foreach (var databasePerson in _registeredPersons)
             {
                 if (databasePerson.PersonId == person.PersonId)
@@ -111,7 +119,7 @@ namespace WeepingSnake.Game.Person
         {
             var ordererdByHighscore = _registeredPersons.OrderByDescending(p => p.MaximumPointsInGame);
 
-            foreach(var person in ordererdByHighscore)
+            foreach (var person in ordererdByHighscore)
             {
                 var highScoreEntry = new HighscoreEntry(person.Username, person.PlayedGames, person.MaximumPointsInGame, person.TotalPoints);
                 yield return highScoreEntry;

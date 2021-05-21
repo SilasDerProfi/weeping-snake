@@ -16,9 +16,15 @@ namespace WeepingSnake.Game.Player.ComputerPlayer
         }
 
         public Player ControlledPlayer
-        { 
-            get => _controlledPlayer; 
-            set => _controlledPlayer = value; 
+        {
+            get
+            {
+                return _controlledPlayer;
+            }
+            set
+            {
+                _controlledPlayer = value;
+            }
         }
     }
 }

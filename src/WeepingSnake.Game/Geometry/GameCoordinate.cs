@@ -20,12 +20,31 @@ namespace WeepingSnake.Game.Geometry
             _z = z;
         }
 
-        public double X => _x;
-        public double Y => _y;
+        public double X
+        {
+            get
+            {
+                return _x;
+            }
+        }
+
+        public double Y
+        {
+            get
+            {
+                return _y;
+            }
+        }
 
         internal GameCoordinate Translate(PlayerDirection direction) => new(X + direction.X, Y + direction.Y, (ushort)(Z + 1));
 
-        public ushort Z => _z;
+        public ushort Z
+        {
+            get
+            {
+                return _z;
+            }
+        }
 
         /// <summary>
         /// Calculates the von Neumann neighborhood (4-neighborhood).
@@ -37,6 +56,7 @@ namespace WeepingSnake.Game.Geometry
             var north = (X, Y - GameConfiguration.DefaultDistance);
             var east = (X + GameConfiguration.DefaultDistance, Y);
             var south = (X, Y + GameConfiguration.DefaultDistance);
+
             return new List<(double, double)>() { west, north, east, south };
         }
 
@@ -54,6 +74,7 @@ namespace WeepingSnake.Game.Geometry
             var southEast = (X + GameConfiguration.DefaultDistance, Y + GameConfiguration.DefaultDistance);
             var south = (X, Y + GameConfiguration.DefaultDistance);
             var southWest = (X - GameConfiguration.DefaultDistance, Y + GameConfiguration.DefaultDistance);
+
             return new List<(double, double)>() { west, northWest, north, northEast, east, southEast, south, southWest };
         }
 
@@ -65,12 +86,24 @@ namespace WeepingSnake.Game.Geometry
                    _z == point._z;
         }
 
-        public override int GetHashCode() => HashCode.Combine(_x, _y, _z);
+        public override int GetHashCode()
+        {
+            return HashCode.Combine(_x, _y, _z);
+        }
 
-        public override string ToString() => $"({_x:F2}|{_y:F2}|{_z:F2})";
+        public override string ToString()
+        {
+            return $"({_x:F2}|{_y:F2}|{_z:F2})";
+        }
 
-        public static bool operator ==(GameCoordinate left, GameCoordinate right) => left.Equals(right);
+        public static bool operator ==(GameCoordinate left, GameCoordinate right)
+        {
+            return left.Equals(right);
+        }
 
-        public static bool operator !=(GameCoordinate left, GameCoordinate right) => !(left == right);
+        public static bool operator !=(GameCoordinate left, GameCoordinate right)
+        {
+            return !(left == right);
+        }
     }
 }

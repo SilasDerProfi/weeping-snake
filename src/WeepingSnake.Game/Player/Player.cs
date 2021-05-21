@@ -33,13 +33,26 @@ namespace WeepingSnake.Game.Player
             _isHuman = false;
         }
 
-        public Game AssignedGame => _game;
+        public Game AssignedGame
+        {
+            get
+            {
+                return _game;
+            }
+        }
 
         public int Points
         {
-            get => _points;
-            set => _points = value;
+            get
+            {
+                return _points;
+            }
+            set
+            {
+                _points = value;
+            }
         }
+
         public bool IsHuman
         {
             get
@@ -63,7 +76,6 @@ namespace WeepingSnake.Game.Player
                 return _playerId;
             }
         }
-
 
         public bool IsGuest
         {
@@ -99,9 +111,11 @@ namespace WeepingSnake.Game.Player
             _game = game;
             _orientation = _game.Join(this);
             _points = 0;
-            
-            if(!IsHuman)
+
+            if (!IsHuman)
+            {
                 _computerPlayer.ControlledPlayer = this;
+            }
         }
 
         internal void AddAction(PlayerAction.Action action) => _undoneActions.Enqueue(action);
@@ -116,7 +130,11 @@ namespace WeepingSnake.Game.Player
         internal void Die()
         {
             _isAlive = false;
-            _game?.Leave(this);
+
+            if (_game != null)
+            {
+                _game.Leave(this);
+            }
 
             _game = null;
         }

@@ -28,7 +28,9 @@ namespace WeepingSnake.Game.Geometry
             _endY = (int)(_locationVector.Y + _directionVector.Y);
 
             if (_directionVector.Length != 0)
+            {
                 _locationVector += _directionVector.DirectionVector.DefaultDistanceVector();
+            }
 
             _player = player;
 
@@ -65,24 +67,70 @@ namespace WeepingSnake.Game.Geometry
 
         }
 
-        public float StartX => _locationVector.X;
-        public float StartY => _locationVector.Y;
-        public float EndX => _endX;
-        public float EndY => _endY;
+        public float StartX
+        {
+            get
+            {
+                return _locationVector.X;
+            }
+        }
+
+        public float StartY
+        {
+            get
+            {
+                return _locationVector.Y;
+            }
+        }
+
+        public float EndX
+        {
+            get
+            {
+                return _endX;
+            }
+        }
+
+        public float EndY
+        {
+            get
+            {
+                return _endY;
+            }
+        }
 
 
-        public Player.Player Player => _player;
-        public override int GetHashCode() => HashCode.Combine(_locationVector, _directionVector);
+        public Player.Player Player
+        {
+            get
+            {
+                return _player;
+            }
+        }
 
-        public override bool Equals(object obj) => Equals(obj as GameDistance?);
+        public override int GetHashCode()
+        {
+            return HashCode.Combine(_locationVector, _directionVector);
+        }
+
+        public override bool Equals(object obj)
+        {
+            return Equals(obj as GameDistance?);
+        }
 
         public bool Equals(GameDistance? other)
         {
             return _locationVector.Equals(other?._locationVector) && _directionVector.Equals(other?._directionVector);
         }
 
-        public static bool operator ==(GameDistance left, GameDistance right) => left.Equals(right);
+        public static bool operator ==(GameDistance left, GameDistance right)
+        {
+            return left.Equals(right);
+        }
 
-        public static bool operator !=(GameDistance left, GameDistance right) => !(left == right);
+        public static bool operator !=(GameDistance left, GameDistance right)
+        {
+            return !(left == right);
+        }
     }
 }

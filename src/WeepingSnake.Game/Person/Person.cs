@@ -31,13 +31,19 @@ namespace WeepingSnake.Game.Person
         public static void Register(string emailAddress, string username, string password, string passwordRetyped)
         {
             if (PersonDatabase.Exists(emailAddress))
+            {
                 return;
+            }
 
             if (password != passwordRetyped)
+            {
                 return;
+            }
 
             if (!MailAddress.TryCreate(emailAddress, out var emailAdressObject))
+            {
                 return;
+            }
 
             var newPerson = new Person(null, username, emailAdressObject, password, 0, 0, 0);
 
@@ -48,14 +54,20 @@ namespace WeepingSnake.Game.Person
         public static Person Login(string emailAddress, string password)
         {
             if (!PersonDatabase.Exists(emailAddress))
+            {
                 return null;
+            }
 
             var person = PersonDatabase.GetPerson(emailAddress);
 
             if (person._password == password)
+            {
                 return person;
+            }
             else
+            {
                 return null;
+            }
         }
 
         public static Person GetById(Guid personId)

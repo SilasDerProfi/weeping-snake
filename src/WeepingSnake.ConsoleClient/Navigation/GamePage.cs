@@ -80,7 +80,9 @@ namespace WeepingSnake.ConsoleClient.Navigation
             foreach (var path in allPlayerPaths)
             {
                 if (!path.Player.IsAlive)
+                {
                     continue;
+                }
 
                 var playerNumber = _knownPlayers.IndexOf(path.Player);
 
@@ -114,6 +116,7 @@ namespace WeepingSnake.ConsoleClient.Navigation
                 {
                     stringField += gameField[row, line] == null ? "- " : gameField[row, line];
                 }
+
                 stringField += "\b\r\n";
             }
 
