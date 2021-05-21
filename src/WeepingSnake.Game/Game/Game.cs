@@ -5,6 +5,7 @@ using WeepingSnake.Game.Geometry;
 using WeepingSnake.Game.Player;
 using WeepingSnake.Game.Player.ComputerPlayer;
 using WeepingSnake.Game.Structs;
+using WeepingSnake.Game.Utility.Logging;
 
 namespace WeepingSnake.Game
 {
@@ -18,6 +19,7 @@ namespace WeepingSnake.Game
         private readonly PlayerRange _allowedPlayerCount;
         private readonly Game.Board _board;
         private bool _isActive = true;
+        private GameInformationLogger _logger;
 
         public Game(PlayerRange allowedPlayerCount, BoardDimensions boardDimensions)
         {
@@ -32,6 +34,7 @@ namespace WeepingSnake.Game
                 bot.Join(this);
             }
 
+            _logger = new GameInformationLogger(this);
         }
 
         public Guid GameId => _gameId;

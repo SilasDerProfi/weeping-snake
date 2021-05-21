@@ -39,5 +39,28 @@ namespace WeepingSnake.Game
             }
         }
 
+        public static string DefaultLoggingDirection
+        {
+            get
+            {
+                return "";
+            }
+        }
+
+        public static string DefaultLoggingPathExtension
+        {
+            get
+            {
+                return ".weepingsnake.log";
+            }
+        }
+
+        public static bool IsLoggingEnabled
+        {
+            get
+            {
+                return false;
+            }
+        }
     }
 }

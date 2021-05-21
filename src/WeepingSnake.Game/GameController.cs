@@ -3,6 +3,7 @@ using System.Linq;
 using System.Collections.Generic;
 using WeepingSnake.Game.Utility.Extensions;
 using WeepingSnake.Game.Structs;
+using WeepingSnake.Game.Utility.Logging;
 
 namespace WeepingSnake.Game
 {
@@ -15,6 +16,7 @@ namespace WeepingSnake.Game
         private readonly BoardDimensions _boardDimensions;
         private readonly List<Game> _games;
         private readonly GameLoop _gameLoop;
+        private readonly GameControllerLogger _logger;
 
         public GameController(PlayerRange allowedPlayerCount, BoardDimensions boardDimensions)
         {
@@ -23,6 +25,7 @@ namespace WeepingSnake.Game
 
             _games = new List<Game>();
             _gameLoop = new GameLoop(ref _games);
+            _logger = new GameControllerLogger(this);
         }
 
         public void Dispose() => _gameLoop.Dispose();
@@ -30,10 +33,13 @@ namespace WeepingSnake.Game
         private Game InitializeGame()
         {
             var newGame = _games.AddAndReturn(new Game(_allowedPlayerCount, _boardDimensions));
+            
+            _logger.InitializedGame(newGame);
 
-            if(_games.Count == 1)
+            if (_games.Count == 1)
             {
                 _gameLoop.RunAsync();
+                _logger.StartedGameLoop();
             }
 
             return newGame;
@@ -67,6 +73,8 @@ namespace WeepingSnake.Game
 
             var player = new Player.Player(person);
             player.Join(game);
+
+            _logger.JoinedGame(player);
 
             return player;
         }
