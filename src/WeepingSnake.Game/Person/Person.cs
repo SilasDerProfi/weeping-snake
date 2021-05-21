@@ -83,7 +83,7 @@ namespace WeepingSnake.Game.Person
             }
         }
 
-        internal Guid PersonId
+        public Guid PersonId
         {
             get
             {

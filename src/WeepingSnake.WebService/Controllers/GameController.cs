@@ -3,6 +3,7 @@ using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using WeepingSnake.Game.Person;
 using WeepingSnake.Game.Player;
 using WeepingSnake.Game.Structs;
 
@@ -150,7 +151,18 @@ namespace WeepingSnake.WebService.Controllers
         [HttpPut]
         public Guid Register(string email, string username, string password, string retypePassword)
         {
-            throw new NotImplementedException();
+            Person.Register(email, username, password, retypePassword);
+
+            var person = Person.Login(email, password);
+
+            if(person == null)
+            {
+                return Guid.Empty;
+            }
+            else
+            {
+                return person.PersonId;
+            }
         }
 
         /// <summary>
@@ -162,7 +174,16 @@ namespace WeepingSnake.WebService.Controllers
         [HttpGet]
         public Guid Login(string email, string password)
         {
-            throw new NotImplementedException();
+            var person = Person.Login(email, password);
+
+            if (person == null)
+            {
+                return Guid.Empty;
+            }
+            else
+            {
+                return person.PersonId;
+            }
         }
 
         /// <summary>
@@ -170,9 +191,9 @@ namespace WeepingSnake.WebService.Controllers
         /// </summary>
         /// <returns>List of Highscore entries</returns>
         [HttpGet]
-        public List<object> GetHighscores()
+        public List<HighscoreEntry> GetHighscores()
         {
-            throw new NotImplementedException();
+            return HighscoreEntry.GetHighscoreEntries();
         }
 
         /// <summary>
@@ -184,7 +205,14 @@ namespace WeepingSnake.WebService.Controllers
         [HttpPost]
         public bool ChangeEmail(Guid personId, string email)
         {
-            throw new NotImplementedException();
+            var person = Person.GetById(personId);
+
+            if (person == null)
+            {
+                return false;
+            }
+
+            return person.ChangeEmail(email);
         }
 
         /// <summary>
@@ -198,7 +226,19 @@ namespace WeepingSnake.WebService.Controllers
         [HttpPost]
         public bool ChangePassword(Guid personId, string oldPassword, string newPassword, string retypedNewPassword)
         {
-            throw new NotImplementedException();
+            var person = Person.GetById(personId);
+
+            if (person == null)
+            {
+                return false;
+            }
+
+            if (Person.Login(person.MailAddress.Address, oldPassword) == null)
+            {
+                return false;
+            }
+
+            return person.ChangePassword(newPassword, retypedNewPassword);
         }
 
 
