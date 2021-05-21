@@ -9,7 +9,6 @@ namespace WeepingSnake.Game.Utility.Logging
     {
         private List<Geometry.GameDistance> _loggedPaths;
         private string _logPath;
-        private readonly StreamWriter _outputFile;
         private readonly Game _game;
 
         internal GameInformationLogger(Game game)
@@ -17,8 +16,8 @@ namespace WeepingSnake.Game.Utility.Logging
             if (GameConfiguration.IsLoggingEnabled)
             {
                 _loggedPaths = new List<Geometry.GameDistance>();
-                _logPath = Path.Combine(GameConfiguration.DefaultLoggingDirection, game.GameId.ToString(), GameConfiguration.DefaultLoggingPathExtension);
-                _outputFile = new StreamWriter(_logPath);
+                _logPath = Path.Combine(GameConfiguration.DefaultLoggingDirectory, game.GameId.ToString() + GameConfiguration.DefaultLoggingPathExtension);
+                new StreamWriter(_logPath).Close();
                 _game = game;
 
                 LogGameInformation();
@@ -35,13 +34,16 @@ namespace WeepingSnake.Game.Utility.Logging
 
         private void LogGameInformation()
         {
-            _outputFile.Write(DateTime.UtcNow.ToLongTimeString());
-            _outputFile.Write(" | LOGGING FOR GAME: ");
-            _outputFile.WriteLine(_game.GameId);
-            _outputFile.WriteLine();
-            var boardInformation = String.Format("HEIGHT = {0}; WIDTH = {1}", _game.GameBoard.Height, _game.GameBoard.Width);
-            _outputFile.Write("BOARD DIMENSIONS: ");
-            _outputFile.WriteLine(boardInformation);
+            using (var outputFile = new StreamWriter(_logPath, true))
+            {
+                outputFile.Write(DateTime.UtcNow.ToLongTimeString());
+                outputFile.Write(" | LOGGING FOR GAME: ");
+                outputFile.WriteLine(_game.GameId);
+                outputFile.WriteLine();
+                var boardInformation = String.Format("HEIGHT = {0}; WIDTH = {1}", _game.GameBoard.Height, _game.GameBoard.Width);
+                outputFile.Write("BOARD DIMENSIONS: ");
+                outputFile.WriteLine(boardInformation);
+            }
         }
 
 
@@ -76,13 +78,19 @@ namespace WeepingSnake.Game.Utility.Logging
                 playerPath.EndY);
 
             var logString = logText.ToString();
-
-            _outputFile.WriteLine(logString);
+            using (var outputFile = new StreamWriter(_logPath, true))
+            {
+                outputFile.WriteLine(logString);
+            }
         }
 
         public void Dispose()
         {
-            _outputFile?.Dispose();
+            using (var outputFile = new StreamWriter(_logPath, true))
+            {
+                outputFile.WriteLine("disposed");
+            }
+
             GC.SuppressFinalize(this);
         }
     }

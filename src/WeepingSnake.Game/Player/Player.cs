@@ -28,6 +28,7 @@ namespace WeepingSnake.Game.Player
 
         public Player(IComputerPlayer computerPlayer)
         {
+            _playerId = Guid.NewGuid();
             _computerPlayer = computerPlayer;
             _undoneActions = computerPlayer.GenerateInitialActions();
             _isHuman = false;

@@ -13,6 +13,8 @@ namespace WeepingSnake.ConsoleClient
 
             var startPage = new StartPage();
             startPage.Open(gameController);
+
+            gameController.Dispose();
         }
     }
 }

@@ -12,7 +12,7 @@ namespace WeepingSnake.Game
     /// <summary>
     /// Represents a single running game
     /// </summary>
-    public sealed partial class Game
+    public sealed partial class Game : IDisposable
     {
         private readonly Guid _gameId;
         private readonly List<Player.Player> _players;
@@ -168,6 +168,11 @@ namespace WeepingSnake.Game
         public override int GetHashCode()
         {
             return HashCode.Combine(_gameId);
+        }
+
+        public void Dispose()
+        {
+            _logger.Dispose();
         }
     }
 }

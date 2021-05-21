@@ -28,8 +28,16 @@ namespace WeepingSnake.Game
             _logger = new GameControllerLogger(this);
         }
 
-        public void Dispose() => _gameLoop.Dispose();
-
+        public void Dispose()
+        {
+            _gameLoop.Dispose();
+            _logger.Dispose();
+            
+            foreach(var game in _games)
+            {
+                game.Dispose();
+            }
+        }
         private Game InitializeGame()
         {
             var newGame = _games.AddAndReturn(new Game(_allowedPlayerCount, _boardDimensions));
