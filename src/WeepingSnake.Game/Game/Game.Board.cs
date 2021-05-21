@@ -12,16 +12,12 @@ namespace WeepingSnake.Game
     {
         public sealed class Board : CoordinateSystem
         {
-            private readonly bool _isInfinite;
             private readonly List<List<GameDistance>> _paths;
 
             internal Board(BoardDimensions dimensions) : base(dimensions)
             {
-                _isInfinite = dimensions.IsInfinite;
                 _paths = new List<List<GameDistance>>();
             }
-
-            internal bool IsInfinite => _isInfinite;
 
             internal void ApplyAction(PlayerAction action)
             {
