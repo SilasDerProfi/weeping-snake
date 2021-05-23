@@ -28,10 +28,9 @@ namespace WeepingSnake.Game
             _allowedPlayerCount = allowedPlayerCount;
             _board = new Board(boardDimensions);
 
-            for(int playerNo = 0; playerNo < allowedPlayerCount.Max; playerNo++)
+            for (int playerNo = 0; playerNo < allowedPlayerCount.Max; playerNo++)
             {
-                var bot = new Player.Player(ComputerPlayer.GetAnyComputerPlayer());
-                bot.Join(this);
+                CreateComputerPlayer.CreateForGame(this);
             }
 
             _logger = new GameInformationLogger(this);
@@ -92,7 +91,7 @@ namespace WeepingSnake.Game
             if (IsFullForHumans() && player.IsHuman || IsFullForHumansOrBots() && !player.IsHuman)
                 throw new ArgumentOutOfRangeException(nameof(player), "A player cannot join a full game.");
 
-            if(!Equals(player.AssignedGame))
+            if (!Equals(player.AssignedGame))
                 throw new ArgumentException("A player can join only the game assigned to him.", nameof(player));
 
             if (player.IsHuman && IsFullForHumansOrBots())
@@ -121,14 +120,13 @@ namespace WeepingSnake.Game
                 player.ApplyPointsToPerson();
             }
 
-            foreach(var remainingPlayer in _players)
+            foreach (var remainingPlayer in _players)
             {
                 if (remainingPlayer.IsAlive && remainingPlayer.IsHuman)
                 {
                     if (!player.IsHuman)
                     {
-                        var bot = new Player.Player(ComputerPlayer.GetAnyComputerPlayer());
-                        bot.Join(this);
+                        CreateComputerPlayer.CreateForGame(this);
                     }
 
                     return;
@@ -141,7 +139,7 @@ namespace WeepingSnake.Game
 
         internal void ApplyOneActionPerPlayer()
         {
-            for(int playerIndex = _players.Count - 1; playerIndex >= 0; playerIndex--)
+            for (int playerIndex = _players.Count - 1; playerIndex >= 0; playerIndex--)
             {
                 var player = _players[playerIndex];
 

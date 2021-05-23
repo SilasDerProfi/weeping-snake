@@ -112,11 +112,6 @@ namespace WeepingSnake.Game.Player
             _game = game;
             _orientation = _game.Join(this);
             _points = 0;
-
-            if (!IsHuman)
-            {
-                _computerPlayer.ControlledPlayer = this;
-            }
         }
 
         internal void AddAction(PlayerAction.Action action) => _undoneActions.Enqueue(action);
