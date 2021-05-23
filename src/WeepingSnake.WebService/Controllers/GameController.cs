@@ -191,9 +191,26 @@ namespace WeepingSnake.WebService.Controllers
         /// </summary>
         /// <returns>List of Highscore entries</returns>
         [HttpGet]
-        public List<HighscoreEntry> GetHighscores()
+        public IEnumerable<object> GetHighscores()
         {
-            return HighscoreEntry.GetHighscoreEntries();
+            var highscores = HighscoreEntry.GetHighscoreEntries();
+            highscores = highscores.OrderByDescending(h => h.MaximumPointsInGame).ToList();
+
+            for(int placement = 1; placement <= highscores.Count; placement++)
+            {
+                var highscoreEntry = highscores[placement];
+
+                var mappedHighscore = new
+                {
+                    Placement = $"#{placement}",
+                    UserName = highscoreEntry.Username,
+                    Highscore = highscoreEntry.MaximumPointsInGame,
+                    NumerOfPlayedGames = highscoreEntry.PlayedGames,
+                    HighScoreSum = highscoreEntry.TotalPoints
+                };
+
+                yield return mappedHighscore;
+            }
         }
 
         /// <summary>
