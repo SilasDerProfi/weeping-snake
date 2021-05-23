@@ -13,8 +13,8 @@ namespace WeepingSnake.Game.Structs
 
         public BoardDimensions(uint width, uint height)
         {
-            if (height == 0 || width == 0)
-                throw new ArgumentException("The width and height of the game board must be greater than 0.");
+            if (height < 5 || width < 5)
+                throw new ArgumentException("The width and height of the game board must be greater than 5.");
 
             _width = width;
             _height = height;
