@@ -182,10 +182,14 @@ namespace WeepingSnake.Game.Person
             return new Person(_personId, _username, _mailAddress, _password, _playedGames, _maximumPointsInGame, _totalPoints);
         }
 
+        public override bool Equals(object obj)
+        {
+            return obj is Person person && _personId.Equals(person._personId) && _mailAddress.Equals(person.MailAddress);
+        }
+
         public override int GetHashCode()
         {
             return HashCode.Combine(_mailAddress, _personId);
         }
-
     }
 }

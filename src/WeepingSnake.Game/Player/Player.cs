@@ -165,5 +165,15 @@ namespace WeepingSnake.Game.Player
             _points = 0;
             _isAlive = false;
         }
+
+        public override bool Equals(object obj)
+        {
+            return obj is Player player && _playerId.Equals(player._playerId);
+        }
+
+        public override int GetHashCode()
+        {
+            return HashCode.Combine(_playerId);
+        }
     }
 }
