@@ -10,7 +10,6 @@ namespace WeepingSnake.Game.Player
     {
         private readonly Guid _playerId;
         private readonly Person.Person _person;
-        private readonly IComputerPlayer _computerPlayer;
         private readonly Queue<PlayerAction.Action> _undoneActions;
         private PlayerOrientation _orientation;
         private Game _game;
@@ -29,7 +28,6 @@ namespace WeepingSnake.Game.Player
         public Player(IComputerPlayer computerPlayer)
         {
             _playerId = Guid.NewGuid();
-            _computerPlayer = computerPlayer;
             _undoneActions = computerPlayer.GenerateInitialActions();
             _isHuman = false;
         }
