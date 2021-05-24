@@ -19,4 +19,8 @@
     </PackageReference>
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\..\WeepingSnake.ConsoleClient\WeepingSnake.ConsoleClient.csproj" />
+  </ItemGroup>
+
 </Project>

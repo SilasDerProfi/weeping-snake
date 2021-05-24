@@ -155,7 +155,7 @@ namespace WeepingSnake.ConsoleClient.Navigation
             _gamefieldStartCursorPosition = Console.GetCursorPosition();
         }
 
-        private static IEnumerable<(int, int)> PointsInRectangle(int aX, int aY, int bX, int bY)
+        public static IEnumerable<(int, int)> PointsInRectangle(int aX, int aY, int bX, int bY)
         {
             int xFrom = Math.Min(aX, bX);
             int xTo = Math.Max(aX, bX);
