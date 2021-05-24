@@ -9,6 +9,8 @@ namespace WeepingSnake.Game
 {
     public static class GameConfiguration
     {
+        // If you Change the deafult-Values, you should mention the Tests!
+        
         private static int _defaultDistance = 1;
         private static int _minSpeedIncrement = 1;
         private static int _minimumRotationAngle = 90;

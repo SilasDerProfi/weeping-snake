@@ -36,7 +36,10 @@ namespace WeepingSnake.Game.Geometry
             }
         }
 
-        internal GameCoordinate Translate(PlayerDirection direction) => new(X + direction.X, Y + direction.Y, (ushort)(Z + 1));
+        public GameCoordinate Translate(PlayerDirection direction)
+        {
+            return new(X + direction.X, Y + direction.Y, (ushort)(Z + 1));
+        }
 
         public ushort Z
         {

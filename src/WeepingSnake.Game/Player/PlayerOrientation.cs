@@ -9,13 +9,13 @@ namespace WeepingSnake.Game.Player
         private readonly GameCoordinate _position;
         private readonly PlayerDirection _direction;
 
-        internal PlayerOrientation(GameCoordinate position, PlayerDirection direction)
+        public PlayerOrientation(GameCoordinate position, PlayerDirection direction)
         {
             _position = position;
             _direction = direction;
         }
 
-        internal PlayerOrientation ApplyAndMove(PlayerAction.Action action)
+        public PlayerOrientation ApplyAndMove(PlayerAction.Action action)
         {
             var newDirection = _direction.Apply(action);
             var newPostion = _position.Translate(newDirection);

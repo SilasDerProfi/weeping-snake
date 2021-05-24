@@ -57,11 +57,11 @@ namespace WeepingSnake.Game.Player
             var random = new Random();
 
             var rotations = random.Next(0, 360 / GameConfiguration.MinimumRotationAngle);
-            var rotatedDirection = defaultDirection.RotateRight(90 * rotations);
+            var rotatedDirection = defaultDirection.RotateRight(GameConfiguration.MinimumRotationAngle * rotations);
             return new PlayerDirection(rotatedDirection.X, rotatedDirection.Y);
         }
 
-        internal PlayerDirection Apply(PlayerAction.Action action) => action switch
+        public PlayerDirection Apply(PlayerAction.Action action) => action switch
         {
             PlayerAction.Action.CHANGE_NOTHING => new(X, Y),
             PlayerAction.Action.TURN_LEFT => _direction.RotateLeft(GameConfiguration.MinimumRotationAngle),
