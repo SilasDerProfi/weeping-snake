@@ -27,7 +27,11 @@ namespace WeepingSnake.Game.Player.ComputerPlayer
                 computerType = new RandomNotKillingItselfPlayer();
             }
 
-            var computerPlayer = new Player(computerType);
+            var computerPlayer = new Player(null, false);
+
+            var initialComputerActions = computerType.GenerateInitialActions();
+
+            computerPlayer.AddActions(initialComputerActions);
 
             computerPlayer.Join(gameToParticipate);
             

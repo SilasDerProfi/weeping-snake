@@ -17,19 +17,12 @@ namespace WeepingSnake.Game.Player
         private readonly bool _isHuman;
         private bool _isAlive = true;
 
-        public Player(Person.Person person)
+        public Player(Person.Person person, bool isHuman = true)
         {
             _playerId = Guid.NewGuid();
             _person = person;
             _undoneActions = new Queue<PlayerAction.Action>();
-            _isHuman = true;
-        }
-
-        public Player(IComputerPlayer computerPlayer)
-        {
-            _playerId = Guid.NewGuid();
-            _undoneActions = computerPlayer.GenerateInitialActions();
-            _isHuman = false;
+            _isHuman = isHuman;
         }
 
         public Game AssignedGame
@@ -102,17 +95,28 @@ namespace WeepingSnake.Game.Player
 
         internal void Join(Game game)
         {
-            if(!_isAlive || _game != null)
+            if (!_isAlive || _game != null)
             {
                 throw new InvalidOperationException("A player can only join a game if he has never participated in a game before.");
-            } 
+            }
 
             _game = game;
             _orientation = _game.Join(this);
             _points = 0;
         }
 
-        internal void AddAction(PlayerAction.Action action) => _undoneActions.Enqueue(action);
+        internal void AddAction(PlayerAction.Action action)
+        {
+            _undoneActions.Enqueue(action);
+        }
+
+        internal void AddActions(Queue<PlayerAction.Action> actions)
+        {
+            while(actions.TryDequeue(out var action))
+            {
+                _undoneActions.Enqueue(action);
+            }
+        }
 
         internal PlayerAction PopNextAction()
         {
