@@ -116,5 +116,19 @@ namespace WeepingSnake.Game.Tests.Geometry
             Assert.Equal(5, gameDistance.EndX);
             Assert.Equal(0, gameDistance.EndY);
         }
+
+        [Fact]
+        public void TestOperators()
+        {
+            // Arrange & Act
+            var player = CreateMockPlayer();
+            var distanceA = new GameDistance();
+            var distanceB = new GameDistance();
+            var distanceC = new GameDistance(4, 4, new PlayerDirection(1,0), player);
+
+            // Assert
+            Assert.True(distanceA == distanceB);
+            Assert.True(distanceA != distanceC);
+        }
     }
 }

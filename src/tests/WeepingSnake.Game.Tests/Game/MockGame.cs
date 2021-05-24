@@ -38,12 +38,15 @@ namespace WeepingSnake.Game.Tests.Game
 
         public PlayerOrientation Join(WeepingSnake.Game.Player.Player player)
         {
-            throw new NotImplementedException();
+            return JoinFunc?.Invoke(player) ?? new PlayerOrientation();
         }
 
         public void Leave(WeepingSnake.Game.Player.Player player)
         {
             throw new NotImplementedException();
         }
+
+
+        public Func<WeepingSnake.Game.Player.Player, PlayerOrientation> JoinFunc { get; set; }
     }
 }

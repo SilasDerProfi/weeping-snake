@@ -8,7 +8,7 @@ namespace WeepingSnake.Game.Player.ComputerPlayer
 {
     public static class CreateComputerPlayer
     {
-        public static void CreateForGame(Game gameToParticipate)
+        public static void CreateForGame(IGame gameToParticipate)
         {
             var randomNumber = new Random(Guid.NewGuid().GetHashCode()).Next(0, 100);
 

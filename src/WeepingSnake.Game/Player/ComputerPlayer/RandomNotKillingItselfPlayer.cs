@@ -4,18 +4,17 @@ using WeepingSnake.Game.Utility.Extensions;
 
 namespace WeepingSnake.Game.Player.ComputerPlayer
 {
-    internal class RandomNotKillingItselfPlayer : IComputerPlayer
+    public class RandomNotKillingItselfPlayer : IComputerPlayer
     {
-        private Player _controlledPlayer;
+        private IPlayer _controlledPlayer;
 
         public Queue<PlayerAction.Action> GenerateInitialActions()
         {
             var queue = new Queue<PlayerAction.Action>();
-            queue.Enqueue(Enum.GetValues<PlayerAction.Action>().Random());
             return queue;
         }
 
-        public Player ControlledPlayer
+        public IPlayer ControlledPlayer
         {
             get
             {
@@ -37,7 +36,7 @@ namespace WeepingSnake.Game.Player.ComputerPlayer
             }
         }
 
-        private void AssignedGame_OnLoopTick(List<Geometry.GameDistance> newPaths)
+        public void AssignedGame_OnLoopTick(List<Geometry.GameDistance> newPaths)
         {
             var board = _controlledPlayer?.AssignedGame?.GameBoard;
 

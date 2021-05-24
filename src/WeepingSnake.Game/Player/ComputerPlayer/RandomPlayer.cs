@@ -7,9 +7,9 @@ using WeepingSnake.Game.Utility.Extensions;
 
 namespace WeepingSnake.Game.Player.ComputerPlayer
 {
-    internal class RandomPlayer : IComputerPlayer
+    public class RandomPlayer : IComputerPlayer
     {
-        private Player _controlledPlayer;
+        private IPlayer _controlledPlayer;
 
         public Queue<PlayerAction.Action> GenerateInitialActions()
         {
@@ -18,7 +18,7 @@ namespace WeepingSnake.Game.Player.ComputerPlayer
             return queue;
         }
 
-        public Player ControlledPlayer
+        public IPlayer ControlledPlayer
         {
             get
             {
@@ -40,7 +40,7 @@ namespace WeepingSnake.Game.Player.ComputerPlayer
             }
         }
 
-        private void AssignedGame_OnLoopTick(List<Geometry.GameDistance> newPaths)
+        public void AssignedGame_OnLoopTick(List<Geometry.GameDistance> newPaths)
         {
             var randomAction = Enum.GetValues<PlayerAction.Action>().Random();
 

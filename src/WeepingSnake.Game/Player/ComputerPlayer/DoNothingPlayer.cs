@@ -6,16 +6,16 @@ using System.Threading.Tasks;
 
 namespace WeepingSnake.Game.Player.ComputerPlayer
 {
-    internal class DoNothingPlayer : IComputerPlayer
+    public class DoNothingPlayer : IComputerPlayer
     {
-        private Player _controlledPlayer;
+        private IPlayer _controlledPlayer;
 
         public Queue<PlayerAction.Action> GenerateInitialActions()
         {
             return new Queue<PlayerAction.Action>();
         }
 
-        public Player ControlledPlayer
+        public IPlayer ControlledPlayer
         {
             get
             {

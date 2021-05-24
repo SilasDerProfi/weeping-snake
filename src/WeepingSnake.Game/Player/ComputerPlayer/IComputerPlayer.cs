@@ -11,6 +11,6 @@ namespace WeepingSnake.Game.Player.ComputerPlayer
         Queue<PlayerAction.Action> GenerateInitialActions();
 
 
-        Player ControlledPlayer { get; set; }
+        IPlayer ControlledPlayer { get; set; }
     }
 }

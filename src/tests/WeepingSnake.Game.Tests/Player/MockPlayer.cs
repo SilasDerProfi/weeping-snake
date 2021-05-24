@@ -29,10 +29,7 @@ namespace WeepingSnake.Game.Tests.Player
 
         public void AddAction(PlayerAction.Action action)
         {
-            if (Actions.TryGetValue("AddAction", out var func))
-            {
-                func();
-            }
+            AddActionAction?.Invoke(action);
         }
 
         public void AddActions(Queue<PlayerAction.Action> actions)
@@ -82,5 +79,7 @@ namespace WeepingSnake.Game.Tests.Player
         public Dictionary<string, Action> Actions { get; set; }
 
         public Func<PlayerOrientation, GameDistance?> ApplyOrientationAndMoveFunc { get; set; }
+        
+        public Action<PlayerAction.Action> AddActionAction { get; set; }
     }
 }
