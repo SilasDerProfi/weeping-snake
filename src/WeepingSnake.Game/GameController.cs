@@ -99,7 +99,7 @@ namespace WeepingSnake.Game
                 {
                     if(player.PlayerId == playerId)
                     {
-                        foundPlayer = player;
+                        foundPlayer = player as Player.Player;
                         break;
                     }
                 }

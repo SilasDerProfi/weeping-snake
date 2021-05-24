@@ -19,7 +19,7 @@ namespace WeepingSnake.Game.Tests.Game
 
         public bool IsActive { get; set; }
 
-        public List<WeepingSnake.Game.Player.Player> Players { get; set; }
+        public List<IPlayer> Players { get; set; }
 
         public void ApplyOneActionPerPlayer()
         {
@@ -36,17 +36,17 @@ namespace WeepingSnake.Game.Tests.Game
             throw new NotImplementedException();
         }
 
-        public PlayerOrientation Join(WeepingSnake.Game.Player.Player player)
+        public PlayerOrientation Join(IPlayer player)
         {
             return JoinFunc?.Invoke(player) ?? new PlayerOrientation();
         }
 
-        public void Leave(WeepingSnake.Game.Player.Player player)
+        public void Leave(IPlayer player)
         {
             throw new NotImplementedException();
         }
 
 
-        public Func<WeepingSnake.Game.Player.Player, PlayerOrientation> JoinFunc { get; set; }
+        public Func<IPlayer, PlayerOrientation> JoinFunc { get; set; }
     }
 }

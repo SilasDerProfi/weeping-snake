@@ -19,7 +19,7 @@ namespace WeepingSnake.Game.Tests.Player.ComputerPlayer
             // Arrange
             var game = new MockGame()
             {
-                Players = new List<WeepingSnake.Game.Player.Player>()
+                Players = new List<IPlayer>()
             };
 
             game.JoinFunc = player =>

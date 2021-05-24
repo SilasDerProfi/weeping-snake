@@ -15,7 +15,7 @@ namespace WeepingSnake.Game
     public sealed partial class Game : IDisposable, IGame
     {
         private readonly Guid _gameId;
-        private readonly List<Player.Player> _players;
+        private readonly List<IPlayer> _players;
         private readonly PlayerRange _allowedPlayerCount;
         private readonly Game.Board _board;
         private bool _isActive = true;
@@ -24,7 +24,7 @@ namespace WeepingSnake.Game
         public Game(PlayerRange allowedPlayerCount, BoardDimensions boardDimensions)
         {
             _gameId = Guid.NewGuid();
-            _players = new List<Player.Player>();
+            _players = new List<IPlayer>();
             _allowedPlayerCount = allowedPlayerCount;
             _board = new Board(boardDimensions);
 
@@ -60,7 +60,7 @@ namespace WeepingSnake.Game
             }
         }
 
-        public List<Player.Player> Players
+        public List<IPlayer> Players
         {
             get
             {
@@ -86,7 +86,7 @@ namespace WeepingSnake.Game
             return _allowedPlayerCount.Max == _players.Count();
         }
 
-        public PlayerOrientation Join(Player.Player player)
+        public PlayerOrientation Join(IPlayer player)
         {
             if (IsFullForHumans() && player.IsHuman || IsFullForHumansOrBots() && !player.IsHuman)
                 throw new ArgumentOutOfRangeException(nameof(player), "A player cannot join a full game.");
@@ -111,7 +111,7 @@ namespace WeepingSnake.Game
             return _board.CalculateRandomStartOrientation();
         }
 
-        public void Leave(Player.Player player)
+        public void Leave(IPlayer player)
         {
             if (_players.Contains(player))
             {
@@ -160,12 +160,12 @@ namespace WeepingSnake.Game
 
         public override bool Equals(object obj)
         {
-            return obj is Game game && _gameId.Equals(game._gameId);
+            return obj is Game game && GameId.Equals(game.GameId);
         }
 
         public override int GetHashCode()
         {
-            return HashCode.Combine(_gameId);
+            return HashCode.Combine(GameId);
         }
 
         public void Dispose()

@@ -11,13 +11,13 @@ namespace WeepingSnake.Game
         CoordinateSystem GameBoard { get; }
         Guid GameId { get; }
         bool IsActive { get; }
-        List<Player.Player> Players { get; }
+        List<IPlayer> Players { get; }
 
         void ApplyOneActionPerPlayer();
         int GetHashCode();
         bool IsFullForHumans();
         bool IsFullForHumansOrBots();
-        PlayerOrientation Join(Player.Player player);
-        void Leave(Player.Player player);
+        PlayerOrientation Join(IPlayer player);
+        void Leave(IPlayer player);
     }
 }
