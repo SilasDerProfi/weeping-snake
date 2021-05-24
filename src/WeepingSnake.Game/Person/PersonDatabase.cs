@@ -125,5 +125,10 @@ namespace WeepingSnake.Game.Person
                 yield return highScoreEntry;
             }
         }
+
+        internal static void DeleteAll()
+        {
+            _registeredPersons.Clear();
+        }
     }
 }

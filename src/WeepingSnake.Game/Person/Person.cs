@@ -147,8 +147,9 @@ namespace WeepingSnake.Game.Person
 
         public bool ChangeEmail(string newEmailAdress)
         {
-            if(MailAddress.TryCreate(newEmailAdress, out _mailAddress))
+            if(MailAddress.TryCreate(newEmailAdress, out var newMail))
             {
+                _mailAddress = newMail;
                 PersonDatabase.UpdateEmail(_personId, _mailAddress);
                 return true;
             }
@@ -168,13 +169,18 @@ namespace WeepingSnake.Game.Person
             return false;
         }
 
-        internal void AddPointsFromGame(int points)
+        public void AddPointsFromGame(int points)
         {
             _playedGames++;
             _maximumPointsInGame = Math.Max(_maximumPointsInGame, points);
             _totalPoints += points;
 
             PersonDatabase.Update(this);
+        }
+
+        public static void DeleteAll()
+        {
+            PersonDatabase.DeleteAll();
         }
 
         internal Person Copy()
