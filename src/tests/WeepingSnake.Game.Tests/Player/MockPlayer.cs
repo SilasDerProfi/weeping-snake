@@ -43,7 +43,7 @@ namespace WeepingSnake.Game.Tests.Player
             }
         }
 
-        public GameDistance? ApplyOrientationAndMove(PlayerOrientation newOrientation) => new GameDistance();
+        public GameDistance? ApplyOrientationAndMove(PlayerOrientation newOrientation) => null;
 
         public void ApplyPointsToPerson()
         {
@@ -70,7 +70,7 @@ namespace WeepingSnake.Game.Tests.Player
         {
             throw new NotImplementedException();
         }
-
+        
         public Dictionary<string, Action> Actions { get; set; }
     }
 }
