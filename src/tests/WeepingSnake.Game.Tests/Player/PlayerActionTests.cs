@@ -16,6 +16,7 @@ namespace WeepingSnake.Game.Tests.Player
         {
             // Arrange
             var mockPlayer = new MockPlayer();
+            mockPlayer.ApplyOrientationAndMoveFunc = (_) => new GameDistance(4, 0, new PlayerDirection(), mockPlayer);
 
             var position = new GameCoordinate(0, 0, 1);
             var direction = new PlayerDirection(4, 0);
@@ -29,7 +30,11 @@ namespace WeepingSnake.Game.Tests.Player
             Assert.Equal(4, playerAction.NewOrientation.Position.X);
             Assert.Equal(0, playerAction.NewOrientation.Position.Y);
 
-            Assert.Null(result);
+            Assert.True(result.HasValue);
+            Assert.Equal(4, result.Value.StartX);
+            Assert.Equal(0, result.Value.StartY);
+            Assert.Equal(4, result.Value.EndX);
+            Assert.Equal(0, result.Value.EndY);
         }
     }
 }
