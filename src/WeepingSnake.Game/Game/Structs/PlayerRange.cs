@@ -52,7 +52,7 @@ namespace WeepingSnake.Game.Structs
 
         public override string ToString()
         {
-            return $"[{_min}; {_max}]";
+            return $"[{Min} ; {Max}]";
         }
 
         public static bool operator ==(PlayerRange left, PlayerRange right)

@@ -48,5 +48,15 @@ namespace WeepingSnake.Game.Tests.Game.Structs
             Assert.True(rangeA != rangeB);
             Assert.Equal(rangeD.GetHashCode(), rangeE.GetHashCode());
         }
+
+        [Fact]
+        public void TestToString()
+        {
+            // Arrange & Act
+            var range = new PlayerRange(1, 4);
+
+            // Assert
+            Assert.Equal("[1 ; 4]", $"{range}");
+        }
     }
 }

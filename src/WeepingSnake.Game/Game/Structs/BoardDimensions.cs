@@ -45,7 +45,7 @@ namespace WeepingSnake.Game.Structs
 
         public override int GetHashCode()
         {
-            return HashCode.Combine(_width, _height);
+            return HashCode.Combine(Width, Height);
         }
 
         public static bool operator ==(BoardDimensions left, BoardDimensions right)
