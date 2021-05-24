@@ -12,7 +12,7 @@ namespace WeepingSnake.Game.Player
         private readonly Person.Person _person;
         private readonly Queue<PlayerAction.Action> _undoneActions;
         private PlayerOrientation _orientation;
-        private Game _game;
+        private IGame _game;
         private int _points;
         private readonly bool _isHuman;
         private bool _isAlive = true;
@@ -25,7 +25,7 @@ namespace WeepingSnake.Game.Player
             _isHuman = isHuman;
         }
 
-        public Game AssignedGame
+        public IGame AssignedGame
         {
             get
             {
@@ -93,7 +93,7 @@ namespace WeepingSnake.Game.Player
             }
         }
 
-        public void Join(Game game)
+        public void Join(IGame game)
         {
             if (!_isAlive || _game != null)
             {

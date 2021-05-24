@@ -9,18 +9,18 @@ namespace WeepingSnake.Game.Geometry
     {
         private readonly Vector2 _locationVector;
         private readonly PlayerDirection _directionVector;
-        private readonly Player.Player _player;
+        private readonly IPlayer _player;
         private readonly float _endX;
         private readonly float _endY;
 
 
-        public GameDistance(Vector2 locationVector, Vector2 directionVector, Player.Player player)
+        public GameDistance(Vector2 locationVector, Vector2 directionVector, Player.IPlayer player)
             : this(locationVector.X, locationVector.Y, directionVector, player)
         {
 
         }
 
-        public GameDistance(float startX, float startY, PlayerDirection directionVector, Player.Player player)
+        public GameDistance(float startX, float startY, PlayerDirection directionVector, IPlayer player)
         {
             _locationVector = new Vector2((int)startX, (int)startY);
             _directionVector = directionVector;
@@ -100,7 +100,7 @@ namespace WeepingSnake.Game.Geometry
         }
 
 
-        public Player.Player Player
+        public IPlayer Player
         {
             get
             {

@@ -3,9 +3,9 @@ using WeepingSnake.Game.Geometry;
 
 namespace WeepingSnake.Game.Tests.Geometry
 {
-    public class MockCoordinateSystem :CoordinateSystem
+    public class MockCoordinateSystem : CoordinateSystem
     {
-        public MockCoordinateSystem():base(new MockCoordinateSystemDimensions())
+        public MockCoordinateSystem() : base(new MockCoordinateSystemDimensions())
         {
 
         }
@@ -14,6 +14,6 @@ namespace WeepingSnake.Game.Tests.Geometry
         {
             return base.CalculatePointsOnLine(x0, y0, x1, y1);
         }
-    
+
     }
 }

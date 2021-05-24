@@ -23,16 +23,16 @@ namespace WeepingSnake.Game.Player.ComputerPlayer
             }
             set
             {
-                if (_controlledPlayer?.AssignedGame != null)
+                if (_controlledPlayer?.AssignedGame as Game != null)
                 {
-                    _controlledPlayer.AssignedGame.OnLoopTick -= AssignedGame_OnLoopTick;
+                    (_controlledPlayer.AssignedGame as Game).OnLoopTick -= AssignedGame_OnLoopTick;
                 }
 
                 _controlledPlayer = value;
 
-                if (_controlledPlayer.AssignedGame != null)
+                if (_controlledPlayer.AssignedGame as Game != null)
                 {
-                    _controlledPlayer.AssignedGame.OnLoopTick += AssignedGame_OnLoopTick;
+                    (_controlledPlayer.AssignedGame as Game).OnLoopTick += AssignedGame_OnLoopTick;
                 }
             }
         }

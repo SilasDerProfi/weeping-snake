@@ -8,7 +8,7 @@ namespace WeepingSnake.Game
     public interface IGame
     {
         List<List<GameDistance>> BoardPaths { get; }
-        Game.Board GameBoard { get; }
+        CoordinateSystem GameBoard { get; }
         Guid GameId { get; }
         bool IsActive { get; }
         List<Player.Player> Players { get; }

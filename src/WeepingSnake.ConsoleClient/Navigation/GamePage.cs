@@ -23,7 +23,7 @@ namespace WeepingSnake.ConsoleClient.Navigation
         {
             _gameController = data.Item1;
             _player = data.Item2;
-            _currentGame = _player.AssignedGame;
+            _currentGame = _player.AssignedGame as Game.Game;
             PrintPage();
         }
 
@@ -84,7 +84,7 @@ namespace WeepingSnake.ConsoleClient.Navigation
                     continue;
                 }
 
-                var playerNumber = _knownPlayers.IndexOf(path.Player);
+                var playerNumber = _knownPlayers.IndexOf(path.Player as Player);
 
                 if (playerNumber == -1)
                 {
@@ -96,7 +96,7 @@ namespace WeepingSnake.ConsoleClient.Navigation
                     {
                         ClearConsole();
                         playerNumber = _knownPlayers.Count;
-                        _knownPlayers.Add(path.Player);
+                        _knownPlayers.Add(path.Player as Player);
                     }
                 }
 

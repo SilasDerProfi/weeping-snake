@@ -6,7 +6,7 @@ namespace WeepingSnake.Game.Player
 {
     public interface IPlayer
     {
-        Game AssignedGame { get; }
+        IGame AssignedGame { get; }
         Person.Person ControllingPerson { get; }
         bool IsAlive { get; }
         bool IsGuest { get; }
@@ -20,7 +20,7 @@ namespace WeepingSnake.Game.Player
         GameDistance? ApplyOrientationAndMove(PlayerOrientation newOrientation);
         void ApplyPointsToPerson();
         void Die();
-        void Join(Game game);
+        void Join(IGame game);
         PlayerAction PopNextAction();
     }
 }

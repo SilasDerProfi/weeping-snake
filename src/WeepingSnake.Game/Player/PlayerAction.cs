@@ -10,11 +10,11 @@ namespace WeepingSnake.Game.Player
     /// </summary>
     public sealed class PlayerAction
     {
-        private readonly Player _player;
+        private readonly IPlayer _player;
         private readonly PlayerOrientation _newOrientation;
         private readonly Action _action;
 
-        public PlayerAction(Player player, PlayerOrientation orientation, Action action)
+        public PlayerAction(IPlayer player, PlayerOrientation orientation, Action action)
         {
             _player = player;
             _action = action;
@@ -39,7 +39,7 @@ namespace WeepingSnake.Game.Player
             JUMP,
         }
 
-        internal GameDistance? Apply()
+        public GameDistance? Apply()
         {
             var path = _player.ApplyOrientationAndMove(_newOrientation);
 

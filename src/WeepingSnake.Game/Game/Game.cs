@@ -44,7 +44,7 @@ namespace WeepingSnake.Game
             }
         }
 
-        public Board GameBoard
+        public CoordinateSystem GameBoard
         {
             get
             {
