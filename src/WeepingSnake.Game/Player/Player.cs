@@ -6,7 +6,7 @@ using WeepingSnake.Game.Player.ComputerPlayer;
 
 namespace WeepingSnake.Game.Player
 {
-    public class Player
+    public class Player : IPlayer
     {
         private readonly Guid _playerId;
         private readonly Person.Person _person;
@@ -93,7 +93,7 @@ namespace WeepingSnake.Game.Player
             }
         }
 
-        internal void Join(Game game)
+        public void Join(Game game)
         {
             if (!_isAlive || _game != null)
             {
@@ -105,27 +105,27 @@ namespace WeepingSnake.Game.Player
             _points = 0;
         }
 
-        internal void AddAction(PlayerAction.Action action)
+        public void AddAction(PlayerAction.Action action)
         {
             _undoneActions.Enqueue(action);
         }
 
-        internal void AddActions(Queue<PlayerAction.Action> actions)
+        public void AddActions(Queue<PlayerAction.Action> actions)
         {
-            while(actions.TryDequeue(out var action))
+            while (actions.TryDequeue(out var action))
             {
                 _undoneActions.Enqueue(action);
             }
         }
 
-        internal PlayerAction PopNextAction()
+        public PlayerAction PopNextAction()
         {
             _undoneActions.TryDequeue(out var nextAction);
 
             return new PlayerAction(this, _orientation, nextAction);
         }
 
-        internal void Die()
+        public void Die()
         {
             _isAlive = false;
 
@@ -137,7 +137,7 @@ namespace WeepingSnake.Game.Player
             _game = null;
         }
 
-        internal GameDistance? ApplyOrientationAndMove(PlayerOrientation newOrientation)
+        public GameDistance? ApplyOrientationAndMove(PlayerOrientation newOrientation)
         {
             if (_isAlive)
             {
@@ -152,9 +152,9 @@ namespace WeepingSnake.Game.Player
             return null;
         }
 
-        internal void ApplyPointsToPerson()
+        public void ApplyPointsToPerson()
         {
-            if(_person != null)
+            if (_person != null)
             {
                 _person.AddPointsFromGame(_points);
             }
