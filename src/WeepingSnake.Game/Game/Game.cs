@@ -12,7 +12,7 @@ namespace WeepingSnake.Game
     /// <summary>
     /// Represents a single running game
     /// </summary>
-    public sealed partial class Game : IDisposable
+    public sealed partial class Game : IDisposable, IGame
     {
         private readonly Guid _gameId;
         private readonly List<Player.Player> _players;
@@ -76,17 +76,17 @@ namespace WeepingSnake.Game
             }
         }
 
-        internal bool IsFullForHumans()
+        public bool IsFullForHumans()
         {
             return _allowedPlayerCount.Max == _players.Count(player => player.IsHuman);
         }
 
-        internal bool IsFullForHumansOrBots()
+        public bool IsFullForHumansOrBots()
         {
             return _allowedPlayerCount.Max == _players.Count();
         }
 
-        internal PlayerOrientation Join(Player.Player player)
+        public PlayerOrientation Join(Player.Player player)
         {
             if (IsFullForHumans() && player.IsHuman || IsFullForHumansOrBots() && !player.IsHuman)
                 throw new ArgumentOutOfRangeException(nameof(player), "A player cannot join a full game.");
@@ -137,7 +137,7 @@ namespace WeepingSnake.Game
             _isActive = false;
         }
 
-        internal void ApplyOneActionPerPlayer()
+        public void ApplyOneActionPerPlayer()
         {
             for (int playerIndex = _players.Count - 1; playerIndex >= 0; playerIndex--)
             {
