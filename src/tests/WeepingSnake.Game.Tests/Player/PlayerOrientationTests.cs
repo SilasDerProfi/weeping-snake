@@ -41,7 +41,7 @@ namespace WeepingSnake.Game.Tests.Player
             var representation = $"{orientation}";
 
             // Assert
-            Assert.Equal("(2,00|2,00|1,00) | (0|1)", representation);
+            Assert.Equal($"({2:F2}|{2:F2}|{1:F2}) | (0|1)", representation);
         }
     }
 }
