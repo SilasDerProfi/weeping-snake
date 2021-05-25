@@ -28,5 +28,20 @@ namespace WeepingSnake.Game.Tests.Player
             Assert.Equal(2, newOrientation.Position.X);
             Assert.Equal(3, newOrientation.Position.Y);
         }
+
+        [Fact]
+        public void TestStringRepresentation()
+        {
+            // Arrange
+            var position = new GameCoordinate(2, 2, 1);
+            var direction = new PlayerDirection(0, 1);
+            var orientation = new PlayerOrientation(position, direction);
+
+            // Act
+            var representation = $"{orientation}";
+
+            // Assert
+            Assert.Equal("(2,00|2,00|1,00) | (0|1)", representation);
+        }
     }
 }

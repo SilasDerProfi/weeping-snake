@@ -15,8 +15,8 @@ namespace WeepingSnake.Game
         private readonly PlayerRange _allowedPlayerCount;
         private readonly BoardDimensions _boardDimensions;
         private readonly List<Game> _games;
-        private readonly GameLoop _gameLoop;
-        private readonly GameControllerLogger _logger;
+        private GameLoop _gameLoop;
+        private GameControllerLogger _logger;
 
         public GameController(PlayerRange allowedPlayerCount, BoardDimensions boardDimensions)
         {
@@ -30,8 +30,18 @@ namespace WeepingSnake.Game
 
         public void Dispose()
         {
-            _gameLoop.Dispose();
+            try
+            {
+                _gameLoop.Dispose();
+            }
+            catch (InvalidOperationException) { }
+            finally
+            {
+                _gameLoop = null;
+            }
+
             _logger.Dispose();
+            _logger = null;
             
             foreach(var game in _games)
             {

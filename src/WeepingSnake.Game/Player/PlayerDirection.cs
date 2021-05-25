@@ -97,5 +97,11 @@ namespace WeepingSnake.Game.Player
         {
             return new(direction.X, direction.Y);
         }
+
+        public override string ToString()
+        {
+            return $"({X}|{Y})";
+        }
+
     }
 }

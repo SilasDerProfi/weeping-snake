@@ -171,6 +171,7 @@ namespace WeepingSnake.Game
         public void Dispose()
         {
             _logger.Dispose();
+            _logger = null;
         }
     }
 }

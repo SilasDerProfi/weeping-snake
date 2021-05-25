@@ -154,7 +154,7 @@ namespace WeepingSnake.Game.Player
 
         public void ApplyPointsToPerson()
         {
-            if (_person != null)
+            if (!IsGuest)
             {
                 _person.AddPointsFromGame(_points);
             }
@@ -170,7 +170,7 @@ namespace WeepingSnake.Game.Player
 
         public override int GetHashCode()
         {
-            return HashCode.Combine(_playerId);
+            return HashCode.Combine(PlayerId);
         }
     }
 }

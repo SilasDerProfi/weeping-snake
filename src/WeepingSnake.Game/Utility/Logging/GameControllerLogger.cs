@@ -70,9 +70,12 @@ namespace WeepingSnake.Game.Utility.Logging
 
         public void Dispose()
         {
-            using (var outputFile = new StreamWriter(_logPath, true))
+            if (GameConfiguration.IsLoggingEnabled)
             {
-                outputFile.WriteLine("disposed");
+                using (var outputFile = new StreamWriter(_logPath, true))
+                {
+                    outputFile.WriteLine("disposed");
+                }
             }
 
             GC.SuppressFinalize(this);

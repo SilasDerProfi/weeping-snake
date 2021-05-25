@@ -56,6 +56,7 @@ namespace WeepingSnake.Game.Tests.Game
 
             // Assert
             Assert.Contains(player, game.Players);
+            Assert.Equal(game.Players[1].GetHashCode(), player.GetHashCode());
             Assert.Equal(game.GetHashCode(), player.AssignedGame.GetHashCode());
         }
 

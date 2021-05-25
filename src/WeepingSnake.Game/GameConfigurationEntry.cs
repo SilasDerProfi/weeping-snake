@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace WeepingSnake.Game
 {
-    internal class GameConfigurationEntry
+    public class GameConfigurationEntry
     {
         private string _property;
         private string _value;
@@ -26,7 +26,7 @@ namespace WeepingSnake.Game
             Value = configurationLineValues[1];
         }
 
-        internal string Property
+        public string Property
         {
             get
             {
@@ -38,7 +38,7 @@ namespace WeepingSnake.Game
             }
         }
 
-        internal string Value
+        public string Value
         {
             get
             {
