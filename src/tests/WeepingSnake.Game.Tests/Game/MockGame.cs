@@ -23,17 +23,17 @@ namespace WeepingSnake.Game.Tests.Game
 
         public void ApplyOneActionPerPlayer()
         {
-            throw new NotImplementedException();
+            ApplyOneActionPerPlayerAction?.Invoke();
         }
 
         public bool IsFullForHumans()
         {
-            throw new NotImplementedException();
+            return IsFullForHumansFunc?.Invoke() ?? false;
         }
 
         public bool IsFullForHumansOrBots()
         {
-            throw new NotImplementedException();
+            return IsFullForHumansOrBotsFunc?.Invoke() ?? false;
         }
 
         public PlayerOrientation Join(IPlayer player)
@@ -43,10 +43,18 @@ namespace WeepingSnake.Game.Tests.Game
 
         public void Leave(IPlayer player)
         {
-            throw new NotImplementedException();
+            LeaveAction?.Invoke(player);
         }
 
-
         public Func<IPlayer, PlayerOrientation> JoinFunc { get; set; }
+        
+        public Action ApplyOneActionPerPlayerAction { get; set; }
+
+        public Action<IPlayer> LeaveAction { get; set; }
+
+        public Func<bool> IsFullForHumansFunc { get; set; }
+        
+        public Func<bool> IsFullForHumansOrBotsFunc { get; set; }
+
     }
 }

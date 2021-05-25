@@ -68,18 +68,21 @@ namespace WeepingSnake.Game.Tests.Player
 
         public void Join(IGame game)
         {
-            throw new NotImplementedException();
+            JoinAction?.Invoke(game);
         }
 
         public PlayerAction PopNextAction()
         {
-            throw new NotImplementedException();
+            return PopNextActionFunc?.Invoke() ?? new PlayerAction(null, new PlayerOrientation(), PlayerAction.Action.CHANGE_NOTHING);
         }
         
         public Dictionary<string, Action> Actions { get; set; }
 
         public Func<PlayerOrientation, GameDistance?> ApplyOrientationAndMoveFunc { get; set; }
-        
+
         public Action<PlayerAction.Action> AddActionAction { get; set; }
+        public Action<IGame> JoinAction { get; set; }
+
+        public Func<PlayerAction> PopNextActionFunc { get; set; }
     }
 }
