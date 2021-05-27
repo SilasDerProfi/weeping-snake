@@ -9,17 +9,19 @@ using WeepingSnake.Game.Player;
 
 namespace WeepingSnake.ConsoleClient.Navigation
 {
-    public class StartPage : IUserInterface<GameController>
+    public class StartPage : UserInterface<GameController>
     {
-        private GameController _gameController;
-
-        public void Open(GameController data)
+        public StartPage(GameController data) : base(data)
         {
-            _gameController = data;
-            PrintPage();
+
         }
 
-        public void PrintPage()
+        private GameController GetGameController()
+        {
+            return Data;
+        }
+
+        internal override void OpenAndPrintPage()
         {
             Console.Clear();
             Console.WriteLine();
@@ -46,7 +48,7 @@ namespace WeepingSnake.ConsoleClient.Navigation
             nextAction();
         }
 
-        public Action ProcessInput()
+        protected override Action ProcessInput()
         {
             var userInput = Console.ReadLine().ToUpper();
 
@@ -54,8 +56,8 @@ namespace WeepingSnake.ConsoleClient.Navigation
             {
                 return () =>
                 {
-                    var player = _gameController.JoinGame();
-                    new GamePage().Open((_gameController, player));
+                    var player = GetGameController().JoinGame();
+                    new GamePage((GetGameController(), player)).OpenAndPrintPage();
                 };
             }
             else if (userInput == "L")
@@ -72,13 +74,11 @@ namespace WeepingSnake.ConsoleClient.Navigation
                     
                     if(person == null)
                     {
-                        Console.WriteLine("There was an error. Press any key.");
-                        Console.ReadKey();
-                        new StartPage().Open(_gameController);
+                        PrintErrorAndNavigateTo(new StartPage(GetGameController()));
                     }
                     else
                     {
-                        new UserPage().Open((_gameController, person));
+                        new UserPage((GetGameController(), person)).OpenAndPrintPage();
                     }
                 };
             }
@@ -103,13 +103,11 @@ namespace WeepingSnake.ConsoleClient.Navigation
 
                     if (person == null)
                     {
-                        Console.WriteLine("There was an error. Press any key.");
-                        Console.ReadKey();
-                        new StartPage().Open(_gameController);
+                        PrintErrorAndNavigateTo(new StartPage(GetGameController()));
                     }
                     else
                     {
-                        new UserPage().Open((_gameController, person));
+                        new UserPage((GetGameController(), person)).OpenAndPrintPage();
                     }
                 };
             }
@@ -117,16 +115,14 @@ namespace WeepingSnake.ConsoleClient.Navigation
             {
                 return () =>
                 {
-                    new ShowHighscoresPage().Open((_gameController, null));
+                    new ShowHighscoresPage((GetGameController(), null)).OpenAndPrintPage();
                 };
             }
             else
             {
                 return () =>
                 {
-                    Console.WriteLine("There was an error. Press any key.");
-                    Console.ReadKey();
-                    new StartPage().Open(_gameController);
+                    PrintErrorAndNavigateTo(new StartPage(GetGameController()));
                 };
             }
         }

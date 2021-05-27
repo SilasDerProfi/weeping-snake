@@ -8,20 +8,25 @@ using WeepingSnake.Game.Person;
 
 namespace WeepingSnake.ConsoleClient.Navigation
 {
-    public class ShowHighscoresPage : IUserInterface<(GameController, Person)>
+    public class ShowHighscoresPage : UserInterface<(GameController, Person)>
     {
-        private GameController _gameController;
-        private Person _person;
 
-        public void Open((GameController, Person) data)
+        public ShowHighscoresPage((GameController, Person) data) : base(data)
         {
-            _gameController = data.Item1;
-            _person = data.Item2;
 
-            PrintPage();
         }
 
-        public void PrintPage()
+        private GameController GetGameController()
+        {
+            return Data.Item1;
+        }
+
+        private Person GetPerson()
+        {
+            return Data.Item2;
+        }
+
+        internal override void OpenAndPrintPage()
         {
             Console.Clear();
             Console.WriteLine();
@@ -44,19 +49,19 @@ namespace WeepingSnake.ConsoleClient.Navigation
             nextAction();
         }
 
-        public Action ProcessInput()
+        protected override Action ProcessInput()
         {
             Console.ReadKey();
 
             return () =>
             {
-                if (_person == null)
+                if (GetPerson() == null)
                 {
-                    new StartPage().Open(_gameController);
+                    new StartPage(GetGameController()).OpenAndPrintPage();
                 }
                 else
                 {
-                    new UserPage().Open((_gameController, _person));
+                    new UserPage((GetGameController(), GetPerson())).OpenAndPrintPage();
                 }
             };
         }

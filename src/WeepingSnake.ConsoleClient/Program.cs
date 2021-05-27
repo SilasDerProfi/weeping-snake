@@ -11,8 +11,8 @@ namespace WeepingSnake.ConsoleClient
             var boardDimensions = new BoardDimensions(10, 20);
             var gameController = new Game.GameController(playerRange, boardDimensions);
 
-            var startPage = new StartPage();
-            startPage.Open(gameController);
+            var startPage = new StartPage(gameController);
+            startPage.OpenAndPrintPage();
 
             gameController.Dispose();
         }

@@ -10,24 +10,30 @@ using WeepingSnake.Game.Player;
 
 namespace WeepingSnake.ConsoleClient.Navigation
 {
-    public class GamePage : IUserInterface<(GameController, Player)>
+    public class GamePage : UserInterface<(GameController, Player)>
     {
         private readonly List<Player> _knownPlayers = new();
 
-        private GameController _gameController;
-        private Player _player;
         private Game.Game _currentGame;
         private (int Left, int Top) _gamefieldStartCursorPosition;
 
-        public void Open((GameController, Player) data)
+        public GamePage((GameController, Player) data) : base (data)
         {
-            _gameController = data.Item1;
-            _player = data.Item2;
-            _currentGame = _player.AssignedGame as Game.Game;
-            PrintPage();
+            _currentGame = GetPlayer().AssignedGame as Game.Game;
         }
 
-        public void PrintPage()
+        private GameController GetGameController()
+        {
+            return Data.Item1;
+        }
+
+        private Player GetPlayer()
+        {
+            return Data.Item2;
+        }
+
+
+        internal override void OpenAndPrintPage()
         {
             ClearConsole();
 
@@ -37,12 +43,12 @@ namespace WeepingSnake.ConsoleClient.Navigation
             nextAction();
         }
 
-        public Action ProcessInput()
+        protected override Action ProcessInput()
         {
             ConsoleKeyInfo pressedKey;
-            while (_player.IsAlive && (pressedKey = Console.ReadKey()).Key != ConsoleKey.Escape)
+            while (GetPlayer().IsAlive && (pressedKey = Console.ReadKey()).Key != ConsoleKey.Escape)
             {
-                _gameController.DoAction(_player, pressedKey.Key switch
+                GetGameController().DoAction(GetPlayer(), pressedKey.Key switch
                 {
                     ConsoleKey.DownArrow => PlayerAction.Action.SLOW_DOWN,
                     ConsoleKey.UpArrow => PlayerAction.Action.SPEED_UP,
@@ -54,20 +60,20 @@ namespace WeepingSnake.ConsoleClient.Navigation
             }
 
             _currentGame.OnLoopTick -= PrintGameState;
-            _currentGame.Leave(_player);
+            _currentGame.Leave(GetPlayer());
             Console.WriteLine();
             Console.WriteLine("Game Over. Press any key.");
             Console.ReadKey();
 
             return () =>
             {
-                if (_player.IsGuest)
+                if (GetPlayer().IsGuest)
                 {
-                    new StartPage().Open(_gameController);
+                    new StartPage(GetGameController()).OpenAndPrintPage();
                 }
                 else
                 {
-                    new UserPage().Open((_gameController, _player.ControllingPerson));
+                    new UserPage((GetGameController(), GetPlayer().ControllingPerson)).OpenAndPrintPage();
                 }
             };
         }
@@ -90,7 +96,7 @@ namespace WeepingSnake.ConsoleClient.Navigation
                 {
                     if (_knownPlayers.Count == 10)
                     {
-                        _currentGame.Leave(_player);
+                        _currentGame.Leave(GetPlayer());
                     }
                     else
                     {
@@ -137,7 +143,7 @@ namespace WeepingSnake.ConsoleClient.Navigation
                     playerPointString += $"{"DEAD",15}";
                 }
 
-                var name = player.PlayerId == _player.PlayerId ? "(you)" : "";
+                var name = player.PlayerId == GetPlayer().PlayerId ? "(you)" : "";
                 playerPointString += $"{name,10}";
 
                 Console.WriteLine(playerPointString);
