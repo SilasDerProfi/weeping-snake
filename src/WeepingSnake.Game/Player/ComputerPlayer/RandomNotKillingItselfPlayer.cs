@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
+using System.Linq;
 using WeepingSnake.Game.Utility.Extensions;
 
 namespace WeepingSnake.Game.Player.ComputerPlayer
@@ -38,29 +40,27 @@ namespace WeepingSnake.Game.Player.ComputerPlayer
 
         public void AssignedGame_OnLoopTick(List<Geometry.GameDistance> newPaths)
         {
-            var board = _controlledPlayer?.AssignedGame?.GameBoard;
+            var actions = GetActionsInRandomOrder();
+            var action = actions.FirstOrDefault(IsActionValidForBoardDimensions);
 
-            if (board != null)
-            {
-                var randomAction = Enum.GetValues<PlayerAction.Action>().Random();
+            _controlledPlayer.AddAction(action);
+        }
 
-                int retries;
-                for (retries = 0; retries < 100; retries++)
-                {
-                    var newOrientation = _controlledPlayer.Orientation.ApplyAndMove(randomAction);
+        private PlayerAction.Action[] GetActionsInRandomOrder()
+        {
+            var actions = Enum.GetValues<PlayerAction.Action>();
+            var random = new Random();
 
-                    if (newOrientation.Position.X >= 0 && newOrientation.Position.Y >= 0 && newOrientation.Position.X < board.Width && newOrientation.Position.Y < board.Height)
-                    {
-                        break;
-                    }
-                    else
-                    {
-                        randomAction = Enum.GetValues<PlayerAction.Action>().Random();
-                    }
-                }
+            return actions.OrderBy(a => random.Next()).ToArray();
+        }
 
-                _controlledPlayer.AddAction(randomAction);
-            }
+        private bool IsActionValidForBoardDimensions(PlayerAction.Action action)
+        {
+            var board = _controlledPlayer.AssignedGame?.GameBoard;
+            var position = _controlledPlayer.Orientation.ApplyAndMove(action).Position;
+
+            return board != null && position.X >= 0 && position.Y >= 0 && position.X < board.Width &&
+                   position.Y < board.Height;
         }
     }
 }
