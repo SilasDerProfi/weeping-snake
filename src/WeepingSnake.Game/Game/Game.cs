@@ -137,7 +137,7 @@ namespace WeepingSnake.Game
             _isActive = false;
         }
 
-        public void ApplyOneActionPerPlayer()
+        public void ApplyOneActionPerPlayerAndNotify()
         {
             for (int playerIndex = _players.Count - 1; playerIndex >= 0; playerIndex--)
             {

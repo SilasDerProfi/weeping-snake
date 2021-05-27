@@ -118,7 +118,7 @@ namespace WeepingSnake.Game.Tests.Game
             var game = new WeepingSnake.Game.Game(2, 40);
 
             // Act
-            game.ApplyOneActionPerPlayer();
+            game.ApplyOneActionPerPlayerAndNotify();
 
             // Assert
             Assert.Equal(1, game.Players[0].Orientation.Position.Z);

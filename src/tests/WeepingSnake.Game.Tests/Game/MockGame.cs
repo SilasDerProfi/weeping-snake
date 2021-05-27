@@ -21,9 +21,9 @@ namespace WeepingSnake.Game.Tests.Game
 
         public List<IPlayer> Players { get; set; }
 
-        public void ApplyOneActionPerPlayer()
+        public void ApplyOneActionPerPlayerAndNotify()
         {
-            ApplyOneActionPerPlayerAction?.Invoke();
+            ApplyOneActionPerPlayerActionAndNotify?.Invoke();
         }
 
         public bool IsFullForHumans()
@@ -48,7 +48,7 @@ namespace WeepingSnake.Game.Tests.Game
 
         public Func<IPlayer, PlayerOrientation> JoinFunc { get; set; }
         
-        public Action ApplyOneActionPerPlayerAction { get; set; }
+        public Action ApplyOneActionPerPlayerActionAndNotify { get; set; }
 
         public Action<IPlayer> LeaveAction { get; set; }
 

@@ -13,7 +13,7 @@ namespace WeepingSnake.Game
         bool IsActive { get; }
         List<IPlayer> Players { get; }
 
-        void ApplyOneActionPerPlayer();
+        void ApplyOneActionPerPlayerAndNotify();
         int GetHashCode();
         bool IsFullForHumans();
         bool IsFullForHumansOrBots();

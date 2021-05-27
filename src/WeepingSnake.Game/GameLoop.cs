@@ -29,7 +29,7 @@ namespace WeepingSnake.Game
                 {
                     if (game.IsActive)
                     {
-                        game.ApplyOneActionPerPlayer();
+                        game.ApplyOneActionPerPlayerAndNotify();
                     }
 
                     Thread.Sleep(GameConfiguration.RoundDuration);
