@@ -90,6 +90,7 @@ namespace WeepingSnake.Game.Utility.Logging
             {
                 using (var outputFile = new StreamWriter(_logPath, true))
                 {
+                    outputFile.Write(DateTime.UtcNow.ToLongTimeString());
                     outputFile.WriteLine("disposed");
                 }
             }
