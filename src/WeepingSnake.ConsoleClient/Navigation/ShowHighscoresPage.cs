@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using WeepingSnake.ConsoleClient.IO;
 using WeepingSnake.Game;
 using WeepingSnake.Game.Person;
 
@@ -11,7 +12,7 @@ namespace WeepingSnake.ConsoleClient.Navigation
     public class ShowHighscoresPage : UserInterface<(GameController, Person)>
     {
 
-        public ShowHighscoresPage((GameController, Person) data) : base(data)
+        public ShowHighscoresPage((GameController, Person) data, IOHandler ioHandler) : base(data, ioHandler)
         {
 
         }
@@ -28,22 +29,22 @@ namespace WeepingSnake.ConsoleClient.Navigation
 
         internal override void OpenAndPrintPage()
         {
-            Console.Clear();
-            Console.WriteLine();
-            Console.WriteLine(@"         _  _ _      _                          ");
-            Console.WriteLine(@"        | || (_)__ _| |_  ___ __ ___ _ _ ___ ___");
-            Console.WriteLine(@"        | __ | / _` | ' \(_-</ _/ _ \ '_/ -_|_-<");
-            Console.WriteLine(@"        |_||_|_\__, |_||_/__/\__\___/_| \___/__/");
-            Console.WriteLine(@"               |___/                            ");
-            Console.WriteLine();
-            Console.WriteLine(@"=========================================================");
-            Console.WriteLine();
+            InOut.Clear();
+            InOut.WriteLine();
+            InOut.WriteLine(@"         _  _ _      _                          ");
+            InOut.WriteLine(@"        | || (_)__ _| |_  ___ __ ___ _ _ ___ ___");
+            InOut.WriteLine(@"        | __ | / _` | ' \(_-</ _/ _ \ '_/ -_|_-<");
+            InOut.WriteLine(@"        |_||_|_\__, |_||_/__/\__\___/_| \___/__/");
+            InOut.WriteLine(@"               |___/                            ");
+            InOut.WriteLine();
+            InOut.WriteLine(@"=========================================================");
+            InOut.WriteLine();
 
             PrintHighscores();
 
-            Console.WriteLine();
-            Console.WriteLine("You have the following options:");
-            Console.WriteLine(" - Go Back (B)");
+            InOut.WriteLine();
+            InOut.WriteLine("You have the following options:");
+            InOut.WriteLine(" - Go Back (B)");
 
             var nextAction = ProcessInput();
             nextAction();
@@ -51,25 +52,25 @@ namespace WeepingSnake.ConsoleClient.Navigation
 
         protected override Action ProcessInput()
         {
-            Console.ReadKey();
+            InOut.ReadKey();
 
             return () =>
             {
                 if (GetPerson() == null)
                 {
-                    new StartPage(GetGameController()).OpenAndPrintPage();
+                    new StartPage(GetGameController(), InOut).OpenAndPrintPage();
                 }
                 else
                 {
-                    new UserPage((GetGameController(), GetPerson())).OpenAndPrintPage();
+                    new UserPage((GetGameController(), GetPerson()), InOut).OpenAndPrintPage();
                 }
             };
         }
 
         private void PrintHighscores()
         {
-            Console.WriteLine($"    Username | Max. Points | Total Points | Played Games");
-            Console.WriteLine("---------------------------------------------------------");
+            InOut.WriteLine($"    Username | Max. Points | Total Points | Played Games");
+            InOut.WriteLine("---------------------------------------------------------");
 
             var highscores = HighscoreEntry.GetHighscoreEntries();
 
@@ -94,11 +95,11 @@ namespace WeepingSnake.ConsoleClient.Navigation
                 var scoreBoardPlaceString = $"#{scoreBoardPlace}";
                 var userName = scoreBoardPlaceString + highscoreEntry.Username.PadLeft(12 - scoreBoardPlaceString.Length);
 
-                Console.WriteLine($"{userName} |{highscoreEntry.MaximumPointsInGame,12} |{highscoreEntry.TotalPoints,13} |{highscoreEntry.PlayedGames,13}");
+                InOut.WriteLine($"{userName} |{highscoreEntry.MaximumPointsInGame,12} |{highscoreEntry.TotalPoints,13} |{highscoreEntry.PlayedGames,13}");
             }
 
-            Console.WriteLine("---------------------------------------------------------");
-            Console.WriteLine();
+            InOut.WriteLine("---------------------------------------------------------");
+            InOut.WriteLine();
         }
     }
 }

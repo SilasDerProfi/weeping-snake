@@ -4,6 +4,7 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
+using WeepingSnake.ConsoleClient.IO;
 using WeepingSnake.Game;
 using WeepingSnake.Game.Geometry;
 using WeepingSnake.Game.Player;
@@ -17,7 +18,7 @@ namespace WeepingSnake.ConsoleClient.Navigation
         private Game.Game _currentGame;
         private (int Left, int Top) _gamefieldStartCursorPosition;
 
-        public GamePage((GameController, Player) data) : base (data)
+        public GamePage((GameController, Player) data, IOHandler ioHandler) : base (data, ioHandler)
         {
             _currentGame = GetPlayer().AssignedGame as Game.Game;
         }
@@ -35,7 +36,7 @@ namespace WeepingSnake.ConsoleClient.Navigation
 
         internal override void OpenAndPrintPage()
         {
-            ClearConsole();
+            ClearOutput();
 
             _currentGame.OnLoopTick += PrintGameState;
 
@@ -45,10 +46,10 @@ namespace WeepingSnake.ConsoleClient.Navigation
 
         protected override Action ProcessInput()
         {
-            ConsoleKeyInfo pressedKey;
-            while (GetPlayer().IsAlive && (pressedKey = Console.ReadKey()).Key != ConsoleKey.Escape)
+            ConsoleKey pressedKey;
+            while (GetPlayer().IsAlive && (pressedKey = InOut.ReadKey()) != ConsoleKey.Escape)
             {
-                GetGameController().DoAction(GetPlayer(), pressedKey.Key switch
+                GetGameController().DoAction(GetPlayer(), pressedKey switch
                 {
                     ConsoleKey.DownArrow => PlayerAction.Action.SLOW_DOWN,
                     ConsoleKey.UpArrow => PlayerAction.Action.SPEED_UP,
@@ -61,19 +62,19 @@ namespace WeepingSnake.ConsoleClient.Navigation
 
             _currentGame.OnLoopTick -= PrintGameState;
             _currentGame.Leave(GetPlayer());
-            Console.WriteLine();
-            Console.WriteLine("Game Over. Press any key.");
-            Console.ReadKey();
+            InOut.WriteLine();
+            InOut.WriteLine("Game Over. Press any key.");
+            InOut.ReadKey();
 
             return () =>
             {
                 if (GetPlayer().IsGuest)
                 {
-                    new StartPage(GetGameController()).OpenAndPrintPage();
+                    new StartPage(GetGameController(), InOut).OpenAndPrintPage();
                 }
                 else
                 {
-                    new UserPage((GetGameController(), GetPlayer().ControllingPerson)).OpenAndPrintPage();
+                    new UserPage((GetGameController(), GetPlayer().ControllingPerson), InOut).OpenAndPrintPage();
                 }
             };
         }
@@ -100,7 +101,7 @@ namespace WeepingSnake.ConsoleClient.Navigation
                     }
                     else
                     {
-                        ClearConsole();
+                        ClearOutput();
                         playerNumber = _knownPlayers.Count;
                         _knownPlayers.Add(path.Player as Player);
                     }
@@ -126,7 +127,7 @@ namespace WeepingSnake.ConsoleClient.Navigation
                 stringField += "\b\r\n";
             }
 
-            Console.SetCursorPosition(_gamefieldStartCursorPosition.Left, _gamefieldStartCursorPosition.Top);
+            InOut.SetCursorPosition(_gamefieldStartCursorPosition.Left, _gamefieldStartCursorPosition.Top);
 
             for(int playerNumber = 0; playerNumber < _knownPlayers.Count; playerNumber++)
             {
@@ -146,19 +147,19 @@ namespace WeepingSnake.ConsoleClient.Navigation
                 var name = player.PlayerId == GetPlayer().PlayerId ? "(you)" : "";
                 playerPointString += $"{name,10}";
 
-                Console.WriteLine(playerPointString);
+                InOut.WriteLine(playerPointString);
             }
 
-            Console.Write(stringField);
+            InOut.Write(stringField);
         }
 
-        private void ClearConsole()
+        private void ClearOutput()
         {
-            Console.Clear();
+            InOut.Clear();
 
-            Console.WriteLine("Turn: [Arrow Left] [Arrow Right] | Change Speed: [Arrow Up] [Arrow Down] | Jump: [Space] | Exit: [Esc]");
-            Console.WriteLine("======================================================================================================");
-            _gamefieldStartCursorPosition = Console.GetCursorPosition();
+            InOut.WriteLine("Turn: [Arrow Left] [Arrow Right] | Change Speed: [Arrow Up] [Arrow Down] | Jump: [Space] | Exit: [Esc]");
+            InOut.WriteLine("======================================================================================================");
+            _gamefieldStartCursorPosition = InOut.GetCursorPosition();
         }
 
         public static IEnumerable<(int, int)> PointsInRectangle(int aX, int aY, int bX, int bY)

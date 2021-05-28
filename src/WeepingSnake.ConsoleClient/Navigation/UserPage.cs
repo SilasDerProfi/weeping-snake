@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using WeepingSnake.ConsoleClient.IO;
 using WeepingSnake.Game;
 using WeepingSnake.Game.Person;
 
@@ -10,7 +11,7 @@ namespace WeepingSnake.ConsoleClient.Navigation
 {
     public class UserPage : UserInterface<(GameController, Person)>
     {
-        public UserPage((GameController, Person) data) : base(data)
+        public UserPage((GameController, Person) data, IOHandler ioHandler) : base(data, ioHandler)
         {
 
         }
@@ -27,16 +28,16 @@ namespace WeepingSnake.ConsoleClient.Navigation
 
         internal override void OpenAndPrintPage()
         {
-            Console.Clear();
-            Console.WriteLine($"Welcome {GetPerson().Username}!");
-            Console.WriteLine();
+            InOut.Clear();
+            InOut.WriteLine($"Welcome {GetPerson().Username}!");
+            InOut.WriteLine();
 
-            Console.WriteLine("You have the following options:");
-            Console.WriteLine(" - Join a Game (J)");
-            Console.WriteLine(" - Change your password (P)");
-            Console.WriteLine(" - Change your email address (M)");
-            Console.WriteLine(" - View Highscores (H)");
-            Console.WriteLine(" - Log out (L)");
+            InOut.WriteLine("You have the following options:");
+            InOut.WriteLine(" - Join a Game (J)");
+            InOut.WriteLine(" - Change your password (P)");
+            InOut.WriteLine(" - Change your email address (M)");
+            InOut.WriteLine(" - View Highscores (H)");
+            InOut.WriteLine(" - Log out (L)");
 
             var nextAction = ProcessInput();
             nextAction();
@@ -44,25 +45,25 @@ namespace WeepingSnake.ConsoleClient.Navigation
 
         protected override Action ProcessInput()
         {
-            var userInput = Console.ReadLine().ToUpper();
+            var userInput = InOut.ReadLine().ToUpper();
 
             if (userInput == "J")
             {
                 return () =>
                 {
                     var player = GetGameController().JoinGame(GetPerson());
-                    new GamePage((GetGameController(), player)).OpenAndPrintPage();
+                    new GamePage((GetGameController(), player), InOut).OpenAndPrintPage();
                 };
             }
             else if (userInput == "P")
             {
                 return () =>
                 {
-                    Console.Write("Please choose a password: ");
-                    var password = Console.ReadLine();
+                    InOut.Write("Please choose a password: ");
+                    var password = InOut.ReadLine();
 
-                    Console.Write("Please retype the password: ");
-                    var passwordRetyped = Console.ReadLine();
+                    InOut.Write("Please retype the password: ");
+                    var passwordRetyped = InOut.ReadLine();
 
                     var changeSuccessful = GetPerson().ChangePassword(password, passwordRetyped);
 
@@ -72,7 +73,7 @@ namespace WeepingSnake.ConsoleClient.Navigation
                     }
                     else
                     {
-                        PrintErrorAndNavigateTo(new UserPage((GetGameController(), GetPerson())));
+                        PrintErrorAndNavigateTo(new UserPage((GetGameController(), GetPerson()), InOut));
                     }
                 };
             }
@@ -80,8 +81,8 @@ namespace WeepingSnake.ConsoleClient.Navigation
             {
                 return () =>
                 {
-                    Console.Write("Please enter your email address: ");
-                    var mailAddress = Console.ReadLine();
+                    InOut.Write("Please enter your email address: ");
+                    var mailAddress = InOut.ReadLine();
 
                     var changeSuccessful = GetPerson().ChangeEmail(mailAddress);
 
@@ -91,7 +92,7 @@ namespace WeepingSnake.ConsoleClient.Navigation
                     }
                     else
                     {
-                        PrintErrorAndNavigateTo(new UserPage((GetGameController(), GetPerson())));
+                        PrintErrorAndNavigateTo(new UserPage((GetGameController(), GetPerson()), InOut));
                     }
                 };
             }
@@ -99,30 +100,30 @@ namespace WeepingSnake.ConsoleClient.Navigation
             {
                 return () =>
                 {
-                    new ShowHighscoresPage((GetGameController(), GetPerson())).OpenAndPrintPage();
+                    new ShowHighscoresPage((GetGameController(), GetPerson()), InOut).OpenAndPrintPage();
                 };
             }
             else if (userInput == "L")
             {
                 return () =>
                 {
-                    new StartPage(GetGameController()).OpenAndPrintPage();
+                    new StartPage(GetGameController(), InOut).OpenAndPrintPage();
                 };
             }
             else
             {
                 return () =>
                 {
-                    PrintErrorAndNavigateTo(new UserPage((GetGameController(), GetPerson())));
+                    PrintErrorAndNavigateTo(new UserPage((GetGameController(), GetPerson()), InOut));
                 };
             }
         }
 
         private void PrintChangeSuccessfulAndNavigateBack()
         {
-            Console.WriteLine("Changed successful. Press any key.");
-            Console.ReadKey();
-            new UserPage((GetGameController(), GetPerson())).OpenAndPrintPage();
+            InOut.WriteLine("Changed successful. Press any key.");
+            InOut.ReadKey();
+            new UserPage((GetGameController(), GetPerson()), InOut).OpenAndPrintPage();
         }
     }
 }
