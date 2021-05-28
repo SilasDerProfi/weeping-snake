@@ -35,7 +35,7 @@ namespace WeepingSnake.Game.Person
                 return;
             }
 
-            if (password != passwordRetyped)
+            if (password != passwordRetyped || String.IsNullOrEmpty(emailAddress))
             {
                 return;
             }
