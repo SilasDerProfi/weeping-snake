@@ -3,6 +3,7 @@ using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using WeepingSnake.Game.Person;
 using WeepingSnake.Game.Player;
 using WeepingSnake.Game.Structs;
@@ -10,31 +11,25 @@ using WeepingSnake.Game.Structs;
 namespace WeepingSnake.WebService.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
+    [Route("api/game")]
     public class GameController : ControllerBase
     {
         private readonly ILogger<GameController> _logger;
-        private readonly WeepingSnake.Game.GameController _gameBackendController;
 
         public GameController(ILogger<GameController> logger)
         {
             _logger = logger;
-            
-            var allowedPlaerCount = new PlayerRange(4, 10);
-            var boardDimensions = new BoardDimensions(600, 400);
-
-            _gameBackendController = new Game.GameController(allowedPlaerCount, boardDimensions);
         }
-
+        
         /// <summary>
         /// Register for a new game as guest. The result is a unique playerId (only valid for exactly this game).
         /// </summary>
         /// <returns>A unique player id for exactly one game.</returns>
         [HttpPut]
-        public Guid JoinGame()
+        public async Task<ActionResult<Guid>> JoinGame()
         {
-            var joinedPlayer = _gameBackendController.JoinGame();
-            return joinedPlayer.PlayerId;
+            var joinedPlayer = GameBackend.Controller.JoinGame();
+            return Ok(joinedPlayer.PlayerId);
         }
 
         /// <summary>
@@ -42,20 +37,18 @@ namespace WeepingSnake.WebService.Controllers
         /// </summary>
         /// <param name="personId">The personId of the one who wants to participate in a game.</param>
         /// <returns>A unique player id for exactly one game.</returns>
-        [HttpPut("{id}")]
-        public Guid JoinGame(Guid personId)
+        [HttpPut("{personId:guid}")]
+        public async Task<ActionResult<Guid>> JoinGame(Guid personId)
         {
-            var person = WeepingSnake.Game.Person.Person.GetById(personId);
+            var person = Person.GetById(personId);
 
             if (person != null)
             {
-                var joinedPlayer = _gameBackendController.JoinGame(person);
-                return joinedPlayer.PlayerId;
+                var joinedPlayer = GameBackend.Controller.JoinGame(person);
+                return Ok(joinedPlayer.PlayerId);
             }
-            else
-            {
-                return Guid.Empty;
-            }
+
+            return BadRequest("Invalid personId");
         }
 
         /// <summary>
@@ -63,13 +56,13 @@ namespace WeepingSnake.WebService.Controllers
         /// </summary>
         /// <param name="playerId">The id of the player for which the game state is requested.</param>
         /// <returns>The state of the game, if the specified player exists and is involved in a game.</returns>
-        [HttpGet("{id}")]
-        public object GetGameState(Guid playerId)
+        [HttpGet("{playerId:guid}")]
+        public async Task<ActionResult<object>> GetGameState(Guid playerId)
         {
-            var player = _gameBackendController.FindPlayer(playerId);
+            var player = GameBackend.Controller.FindPlayer(playerId);
 
             if (player == null)
-                return null;
+                return BadRequest("Invalid playerId");
 
             var playerData = new 
             { 
@@ -83,9 +76,7 @@ namespace WeepingSnake.WebService.Controllers
             var playerLinesStartingRoundIndex = Math.Max(0, currentRoundNumber - 6);
             var roundsWithPlayerLines = currentRoundNumber - playerLinesStartingRoundIndex;
 
-            var validPaths = allPaths.GetRange(playerLinesStartingRoundIndex, roundsWithPlayerLines).SelectMany(paths => paths).ToList();
-
-            var validGameDistances = player.AssignedGame.BoardPaths.SelectMany(paths => paths);
+            var validGameDistances = allPaths.GetRange(playerLinesStartingRoundIndex, roundsWithPlayerLines).SelectMany(paths => paths).ToList();
 
             var boardData = validGameDistances.Select(d => new
             {
@@ -105,157 +96,27 @@ namespace WeepingSnake.WebService.Controllers
                 Board = boardData
             };
 
-            return gameState;
+            return Ok(gameState);
         }
 
         /// <summary>
         /// Adds an action to be performed for a player.
         /// </summary>
         /// <param name="playerId">The id of the player that should perform this action.</param>
-        /// <param name="action">The action-Number to be performed.</param>
-        [HttpPost]
-        public void SendAction(Guid playerId, int actionNumber)
+        /// <param name="action">The action to be performed.</param>
+        [HttpPost("{playerId:guid}")]
+        public async Task<IActionResult> SendAction(Guid playerId, PlayerAction.Action action)
         {
-            var player = _gameBackendController.FindPlayer(playerId);
+            var player = GameBackend.Controller.FindPlayer(playerId);
             
             if(player == null)
             {
-                return;
+                return BadRequest("Invalid playerId");
             }
 
-            var action = Enum.GetValues<PlayerAction.Action>()[actionNumber];
+            GameBackend.Controller.DoAction(player, action);
 
-            _gameBackendController.DoAction(player, action);
-        }
-
-        /// <summary>
-        /// Request the current time of the server.
-        /// </summary>
-        /// <returns>The time of the server when the request was processed (DateTimeOffSet).</returns>
-        [HttpGet]
-        public DateTimeOffset GetServerTime()
-        {
-            var currentTime = DateTimeOffset.Now;
-
-            return currentTime;
-        }
-
-        /// <summary>
-        /// Registers a new Person
-        /// </summary>
-        /// <param name="email">Email as reference for the person (have to be unique)</param>
-        /// <param name="username">wished username (does not have to be unique)</param>
-        /// <param name="password">chosen password</param>
-        /// <param name="retypePassword">retyped password to avoid typos</param>
-        /// <returns>The personId of the registered person or <see cref="Guid.Empty"/> if registration failed</returns>
-        [HttpPut]
-        public Guid Register(string email, string username, string password, string retypePassword)
-        {
-            Person.Register(email, username, password, retypePassword);
-
-            var person = Person.Login(email, password);
-
-            if(person == null)
-            {
-                return Guid.Empty;
-            }
-            else
-            {
-                return person.PersonId;
-            }
-        }
-
-        /// <summary>
-        /// Login a already registered Person
-        /// </summary>
-        /// <param name="email">The email linked to the person</param>
-        /// <param name="password">The chosen password</param>
-        /// <returns>The personId of the registered person or <see cref="Guid.Empty"/> if login failed</returns>
-        [HttpGet]
-        public Guid Login(string email, string password)
-        {
-            var person = Person.Login(email, password);
-
-            if (person == null)
-            {
-                return Guid.Empty;
-            }
-            else
-            {
-                return person.PersonId;
-            }
-        }
-
-        /// <summary>
-        /// Returns the complete Highscore-List
-        /// </summary>
-        /// <returns>List of Highscore entries</returns>
-        [HttpGet]
-        public IEnumerable<object> GetHighscores()
-        {
-            var highscores = HighscoreEntry.GetHighscoreEntries();
-            highscores = highscores.OrderByDescending(h => h.MaximumPointsInGame).ToList();
-
-            for(int placement = 1; placement <= highscores.Count; placement++)
-            {
-                var highscoreEntry = highscores[placement];
-
-                var mappedHighscore = new
-                {
-                    Placement = $"#{placement}",
-                    UserName = highscoreEntry.Username,
-                    Highscore = highscoreEntry.MaximumPointsInGame,
-                    NumerOfPlayedGames = highscoreEntry.PlayedGames,
-                    HighScoreSum = highscoreEntry.TotalPoints
-                };
-
-                yield return mappedHighscore;
-            }
-        }
-
-        /// <summary>
-        /// Updates an email from a Person
-        /// </summary>
-        /// <param name="personId">The ID of the person whose email is to be changed.</param>
-        /// <param name="email">The new email.</param>
-        /// <returns><see cref="true"/> if the change was successful</returns>
-        [HttpPost]
-        public bool ChangeEmail(Guid personId, string email)
-        {
-            var person = Person.GetById(personId);
-
-            if (person == null)
-            {
-                return false;
-            }
-
-            return person.ChangeEmail(email);
-        }
-
-        /// <summary>
-        /// Updates a password from a Person
-        /// </summary>
-        /// <param name="personId">The ID of the person whose email is to be changed.</param>
-        /// <param name="oldPassword">The current password</param>
-        /// <param name="newPassword">The chosen password</param>
-        /// <param name="retypedNewPassword">The personId of the registered person or <see cref="Guid.Empty"/> if login failed</param>
-        /// <returns><see cref="true"/> if the change was successful</returns>
-        [HttpPost]
-        public bool ChangePassword(Guid personId, string oldPassword, string newPassword, string retypedNewPassword)
-        {
-            var person = Person.GetById(personId);
-
-            if (person == null)
-            {
-                return false;
-            }
-
-            if (Person.Login(person.MailAddress.Address, oldPassword) == null)
-            {
-                return false;
-            }
-
-            return person.ChangePassword(newPassword, retypedNewPassword);
+            return Ok();
         }
     }
 }
