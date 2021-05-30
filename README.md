@@ -7,7 +7,9 @@
 
 ## What is Weeping Snake?
 
-Weeping Snake is a kind of multiplayer snake. All details are in the [technical documentation](technical_documentation.pdf) (only in german language, because the repo was created within a lecture at a german university).
+Weeping Snake is a kind of multiplayer snake. All details are in the [technical_documentation.pdf](technical_documentation.pdf) (only in german language, because the repo was created within a lecture at a german university).
+
+Basically, this repo is a kind of coding dojo for the course Advanced Software Engineering at the [Baden-Wuerttemberg Cooperative State University Karlsruhe](https://www.karlsruhe.dhbw.de/en/general).
 
 ## Getting Started
 
