@@ -5,6 +5,9 @@
 ![Lines of Code](https://img.shields.io/tokei/lines/github/SilasDerProfi/weeping-snake)
 
 
+## What is Weeping Snake?
+
+Weeping Snake is a kind of multiplayer snake. All details are in the [technical documentation](technical_documentation.pdf) (only in german language, because the repo was created within a lecture at a german university).
 
 ## Getting Started
 
@@ -32,5 +35,3 @@ To build the code, you must run `dotnet test src` in the directory of your clone
 ### Run
 
 To run the code, you need to run `dotnet run --project src/WeepingSnake.ConsoleClient` in the directory of your clone
-
-
