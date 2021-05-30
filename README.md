@@ -37,3 +37,7 @@ To build the code, you must run `dotnet test src` in the directory of your clone
 ### Run
 
 To run the code, you need to run `dotnet run --project src/WeepingSnake.ConsoleClient` in the directory of your clone
+
+## A Gag
+
+What do you call a school director who teaches computer science? - Programming Principal
